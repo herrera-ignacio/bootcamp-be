@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import Log from "../utils/Log";
