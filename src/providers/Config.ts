@@ -46,7 +46,7 @@ class Config implements IMiddleware {
         databaseUser: process.env.DATABASE_USERNAME || "postgres",
         databasePassword: process.env.DATABASE_PASSWORD || "postgres",
         databaseHost: process.env.DATABASE_HOST || "localhost",
-        databasePort: !Number.isNaN(Number(process.env.DATABASE_PORT)) ? Number(process.env.DATABASE_PORT) : 5632,
+        databasePort: !Number.isNaN(Number(process.env.DATABASE_PORT)) ? Number(process.env.DATABASE_PORT) : 5432,
         databaseName: process.env.DATABASE_NAME || "mydb",
         databaseLogging: process.env.DATABASE_LOGGING?.toLowerCase() === "true",
         databaseSynchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),

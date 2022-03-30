@@ -1,2 +1,13 @@
-/node_modules
+# general configs
+.idea
+
+# typescript/js
+node_modules
+dist
+
+# yarn
+yarn-error.log
+
+# secrets
 .env
+ormconfig.json
