@@ -37,8 +37,8 @@ class Config implements IMiddleware {
     if (!Config.appConfig) {
       dotenv.config({ path: path.join(__dirname, "../../.env") });
       Config.appConfig = {
-        appName: process.env.APP_NAME || "My App",
-        appDescription: process.env.APP_DESCRIPTION || "Welcome to my app",
+        appName: process.env.APP_NAME || "Uncharted-scape-pods",
+        appDescription: process.env.APP_DESCRIPTION || "API for Agile Engine employees to make reservations",
         port: !Number.isNaN(Number(process.env.PORT)) ? Number(process.env.PORT) : 4000,
         isCORSEnabled: Boolean(process.env.CORS_ENABLED),
         appURL: process.env.APP_URL || "localhost",
