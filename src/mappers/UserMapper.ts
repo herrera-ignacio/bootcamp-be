@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import User from "../entities/User";
 import { IMapper } from "./IMapper";
 
