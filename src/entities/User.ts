@@ -1,3 +1,4 @@
+import { IsEmail } from "class-validator";
 import { 
   Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, 
 } from "typeorm";
@@ -14,6 +15,7 @@ export default class User {
   @UpdateDateColumn()
     updatedAt?: string;
   
-  @Column()
+  @Column({ type: "varchar", unique: true })
+  @IsEmail()
     email: string;
 }

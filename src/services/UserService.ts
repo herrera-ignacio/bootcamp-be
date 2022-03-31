@@ -45,7 +45,8 @@ export default class UserService{
 
   
   public async create(userData:User): Promise<User>{
-    return userData;
+    const user = await UserService.getRepository().save(userData);
+    return user;
   }
 
 

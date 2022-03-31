@@ -20,6 +20,7 @@ export class JWTCheck implements IMiddleware {
     Log.info(msg ?? JWTCheck.initMessage);
   }
 
+
   public static getOptions(): jwt.Options {
     const {
       auth0ServerAudience,

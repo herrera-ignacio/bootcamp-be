@@ -13,6 +13,7 @@ class UserController implements IController{
 
   public getAll: IRequestHandler = async (req, res) => {
     const users = await this.userService.getAll();
+    if (!users) res.sendStatus(404);
     res.status(200).json({
       data: users,
     });

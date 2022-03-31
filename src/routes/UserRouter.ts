@@ -1,6 +1,10 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
 import IRouter from "../types/IRouter";
+import ParamsValidator from "../middlewares/ParamsValidator";
+import BaseParamsValidator from "../validators/BaseParamsValidator";
+import BodyValidator from "../middlewares/BodyValidator";
+import CreateBodyValidator from "../validators/CreateBodyValidator";
 
 class UserRouter implements IRouter{
     
@@ -18,8 +22,8 @@ class UserRouter implements IRouter{
 
   initializeRoutes() {
     this.router.get(this.path, this.UserController.getAll);
-    this.router.get(`${this.path}/:id(\\d+)`, this.UserController.getById);
-    this.router.post(this.path, this.UserController.create);
+    this.router.get(`${this.path}/:id(\\d+)`, ParamsValidator(BaseParamsValidator), this.UserController.getById);
+    this.router.post(this.path, BodyValidator(CreateBodyValidator), this.UserController.create);
   }
 }
 
