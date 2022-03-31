@@ -15,6 +15,11 @@ class UserController {
       data: users,
     });
   };
+
+  public create: IRequestHandler = async (req, res) => {
+    const user = await this.userService.create(req.body);
+    res.status(201).json({ data: user });
+  };
 }
 
 export default UserController;

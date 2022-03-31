@@ -7,6 +7,10 @@ export default class UserService{
     return UserRepository();
   }
 
+  public async create(userData:any): Promise<any>{
+    return userData;
+  }
+
 
   public async getAll(): Promise<any>{
     return "User";

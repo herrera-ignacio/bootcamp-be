@@ -17,6 +17,7 @@ class UserRouter{
 
   initializeRoutes() {
     this.router.get(this.path, null, this.UserController.getAll);
+    this.router.post(this.path, this.UserController.create);
   }
 }
 
