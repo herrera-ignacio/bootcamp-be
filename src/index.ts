@@ -3,7 +3,7 @@ import "express-async-errors";
 import os from "os";
 import cluster from "cluster";
 import App from "./providers/App";
-// import Database from "./providers/Database";
+import Database from "./providers/Database";
 
 /**
  * Start development application running on single thread.
@@ -32,11 +32,9 @@ function initCluster(): void { // eslint-disable-line
   }
 }
 
-initSingleNode();
-
 /**
  * Establish database connection
  * then init server using either development or production-ready config.
  */
-// Database.init().then(() => initSingleNode());
+Database.init().then(() => initSingleNode());
 
