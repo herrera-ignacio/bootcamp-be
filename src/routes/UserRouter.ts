@@ -1,7 +1,8 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
+import IRouter from "../types/IRouter";
 
-class UserRouter{
+class UserRouter implements IRouter{
     
   public path = "/users";
 
@@ -16,7 +17,8 @@ class UserRouter{
   }
 
   initializeRoutes() {
-    this.router.get(this.path, null, this.UserController.getAll);
+    this.router.get(this.path, this.UserController.getAll);
+    this.router.get(`${this.path}/:id(\\d+)`, this.UserController.getById);
     this.router.post(this.path, this.UserController.create);
   }
 }

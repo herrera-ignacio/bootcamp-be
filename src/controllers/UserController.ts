@@ -1,7 +1,9 @@
 import { IRequestHandler } from "../types/IRequestHandler";
 import UserService from "../services/UserService";
+import { IController } from "../types/IController";
 
-class UserController {
+
+class UserController implements IController{
   protected readonly userService;
 
 
@@ -13,6 +15,16 @@ class UserController {
     const users = await this.userService.getAll();
     res.status(200).json({
       data: users,
+    });
+  };
+
+  public getById: IRequestHandler = async (req, res) => {
+    const id = Number(req.params.id);
+    const user = await this.userService.getById(id);
+    if (!user) res.sendStatus(404);
+    
+    res.status(200).json({
+      data:user,
     });
   };
 
