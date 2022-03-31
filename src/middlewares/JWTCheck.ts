@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import Log from "../utils/Log";
@@ -21,7 +20,7 @@ export class JWTCheck implements IMiddleware {
     Log.info(msg ?? JWTCheck.initMessage);
   }
 
-  public getOptions(): jwt.Options {
+  public static getOptions(): jwt.Options {
     const {
       auth0ServerAudience,
       auth0jwksUri,
@@ -44,7 +43,7 @@ export class JWTCheck implements IMiddleware {
 
   public use() {
     if (this.handler) return this.handler;
-    this.handler = jwt(this.getOptions());
+    this.handler = jwt(JWTCheck.getOptions());
     return this.handler;
   }
 }
