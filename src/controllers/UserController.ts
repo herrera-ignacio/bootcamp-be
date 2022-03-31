@@ -1,16 +1,21 @@
 import { IRequestHandler } from "../types/IRequestHandler";
 import UserService from "../services/UserService";
+import User from "../entities/User";
 import { IController } from "../types/IController";
+import { UserDto, UserMapper } from "../mappers/UserMapper";
+import { IMapper } from "../mappers/IMapper";
 
 
 class UserController implements IController{
   protected readonly userService;
 
 
-  constructor(userService: UserService = new UserService()){
+  constructor(userService: UserService = new UserService(), userMapper: IMapper<User, UserDto> = new UserMapper()) {
     this.userService = userService;
+    this.userMapper = userMapper;
   }
 
+  protected readonly userMapper;
   public getAll: IRequestHandler = async (req, res) => {
     const users = await this.userService.getAll();
     if (!users) res.sendStatus(404);
