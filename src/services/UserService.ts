@@ -50,15 +50,29 @@ export default class UserService{
     return user;
   }
 
-  public async updateById(id: number, userUpdateDate: UserUpdateBodyValidator): Promise<User> {
+  /**
+   * Updates user by Id
+   * @param id
+   */
+
+  public async updateById(id: number, userUpdateData: UserUpdateBodyValidator): Promise<User> {
     const repo = UserService.getRepository();
     const user = await this.getById(id);
 
     if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
 
-    repo.merge(user, userUpdateDate);
+    repo.merge(user, userUpdateData);
     return UserService.getRepository().save(user);
   }
 
+  /**
+   * Deletes user by id
+   * @param id
+   */
 
+  public async deleteById(id:number): Promise<void>{
+    const repo = UserService.getRepository();
+    const dataAffected = await repo.delete({ id });
+    if (dataAffected.affected === 0) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
+  }
 }

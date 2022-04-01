@@ -6,6 +6,7 @@ import { UserDto, UserMapper } from "../mappers/UserMapper";
 import { IMapper } from "../mappers/IMapper";
 
 
+
 class UserController implements IController{
   protected readonly userService;
 
@@ -41,9 +42,14 @@ class UserController implements IController{
   };
 
   public updateById: IRequestHandler = async (req, res) => {
-    const userUpdatePayload = req.body;
-    const user = await this.userService.updateById(Number(req.params.id), userUpdatePayload);
+    const user = await this.userService.updateById(Number(req.params.id), req.body);
     res.status(200).json({ data: this.userMapper.toDto(user) });
+  };
+
+  public deleteById: IRequestHandler = async (req, res) => {
+    const id = Number(req.params.id);
+    await this.userService.deleteById(id);
+    res.status(201).json({ data: `User ${id} was deleted` });
   };
 }
 
