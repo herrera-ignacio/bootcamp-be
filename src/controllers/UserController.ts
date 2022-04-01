@@ -16,6 +16,7 @@ class UserController implements IController{
   }
 
   protected readonly userMapper;
+  
   public getAll: IRequestHandler = async (req, res) => {
     const users = await this.userService.getAll();
     if (!users) res.sendStatus(404);
