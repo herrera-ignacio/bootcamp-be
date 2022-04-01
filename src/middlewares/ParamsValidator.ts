@@ -2,6 +2,7 @@ import { validate, ValidationError } from "class-validator";
 import { plainToInstance } from "class-transformer";
 import HttpException from "../exceptions/HttpException";
 import { IRequestHandler } from "../types/IRequestHandler";
+import Log from "../utils/Log";
 
 /**
  * Validate interface of req.params
@@ -19,6 +20,7 @@ const ParamsValidator = (
   .then((errors: ValidationError[]) => {
     if (errors.length > 0) {
       const message = errors.map((error: ValidationError) => Object.values(error.constraints)).join(", ");
+      Log.error(message);
       next(new HttpException(400, message));
     } else {
       next();
