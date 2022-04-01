@@ -27,4 +27,15 @@ export default class User {
   @Column({ type: "varchar", unique: true })
   @IsEmail()
     email: string;
+
+  @Column({ type: "varchar", nullable: true })
+    firstName?: string;
+
+  @Column({ type: "varchar", nullable: true })
+    lastName?: string;
+
+  @Column({
+    default: UserRole.CONTRACTOR,
+  })
+    role: UserRole;
 }
