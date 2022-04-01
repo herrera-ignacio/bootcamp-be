@@ -3,6 +3,7 @@ import UserRepository from "../repositories/UserRepository";
 // import { IService } from "../types/IService";
 import User from "../entities/User";
 import NotFoundException from "../exceptions/NotFoundException";
+import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
 
 export default class UserService{  
 
@@ -47,6 +48,16 @@ export default class UserService{
   public async create(userData:User): Promise<User>{
     const user = await UserService.getRepository().save(userData);
     return user;
+  }
+
+  public async updateById(id: number, userUpdateDate: UserUpdateBodyValidator): Promise<User> {
+    const repo = UserService.getRepository();
+    const user = await this.getById(id);
+
+    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
+
+    repo.merge(user, userUpdateDate);
+    return UserService.getRepository().save(user);
   }
 
 

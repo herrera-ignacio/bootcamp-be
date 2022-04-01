@@ -16,6 +16,7 @@ class UserController implements IController{
   }
 
   protected readonly userMapper;
+
   public getAll: IRequestHandler = async (req, res) => {
     const users = await this.userService.getAll();
     if (!users) res.sendStatus(404);
@@ -37,6 +38,12 @@ class UserController implements IController{
   public create: IRequestHandler = async (req, res) => {
     const user = await this.userService.create(req.body);
     res.status(201).json({ data: this.userMapper.toDto(user) });
+  };
+
+  public updateById: IRequestHandler = async (req, res) => {
+    const userUpdatePayload = req.body;
+    const user = await this.userService.updateById(Number(req.params.id), userUpdatePayload);
+    res.status(200).json({ data: this.userMapper.toDto(user) });
   };
 }
 
