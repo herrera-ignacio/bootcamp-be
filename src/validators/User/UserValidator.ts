@@ -19,6 +19,7 @@ export default class UserValidator {
   public lastName?: string;
   
   @IsEnum(UserRole)
+  @IsOptional()
   public role: UserRole;
 }
   

@@ -1,7 +1,6 @@
 import { 
-  IsString, IsNotEmpty, IsEnum, 
+  IsString, IsNotEmpty,
 } from "class-validator";
-import { UserRole } from "../entities/User";
 
 
 /**
@@ -13,6 +12,4 @@ export default class CreateBodyValidator {
   @IsString()
   public email: string;
 
-  @IsEnum(UserRole)
-  public role: UserRole;
 }
