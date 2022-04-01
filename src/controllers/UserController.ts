@@ -31,13 +31,13 @@ class UserController implements IController{
     if (!user) res.sendStatus(404);
     
     res.status(200).json({
-      data:user,
+      data:this.userMapper.toDto(user),
     });
   };
 
   public create: IRequestHandler = async (req, res) => {
     const user = await this.userService.create(req.body);
-    res.status(201).json({ data: user });
+    res.status(201).json({ data: this.userMapper.toDto(user) });
   };
 }
 
