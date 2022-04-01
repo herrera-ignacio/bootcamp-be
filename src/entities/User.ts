@@ -3,6 +3,15 @@ import {
   Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, 
 } from "typeorm";
 
+export enum UserRole {
+  ADMIN = "ADMIN",
+  DEVELOPER = "DEVELOPER",
+  DESIGNER = "DESIGNER",
+  PM = "PROJECT MANAGER",
+  SM = "SCRUM MASTER",
+  HR = "HR",
+  CONTRACTOR = "CONTRACTOR",
+}
 
 @Entity()
 export default class User {
@@ -18,4 +27,15 @@ export default class User {
   @Column({ type: "varchar", unique: true })
   @IsEmail()
     email: string;
+  
+  @Column({ type: "varchar", nullable: true })
+    firstName: string;
+
+  @Column({ type: "varchar", nullable: true })
+    lastName: string;
+
+  @Column({
+    default: UserRole.CONTRACTOR,
+  })
+    role: UserRole;
 }
