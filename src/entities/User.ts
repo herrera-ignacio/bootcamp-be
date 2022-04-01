@@ -3,6 +3,15 @@ import {
   Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, 
 } from "typeorm";
 
+export enum UserRole {
+  ADMIN = "ADMIN",
+  DEVELOPER = "DEVELOPER",
+  DESIGNER = "DESIGNER",
+  PM = "PROJECT MANAGER",
+  SM = "SCRUM MASTER",
+  HR = "HR",
+  CONTRACTOR = "CONTRACTOR",
+}
 
 @Entity()
 export default class User {
