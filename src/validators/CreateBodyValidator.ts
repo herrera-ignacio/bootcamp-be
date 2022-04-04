@@ -1,4 +1,6 @@
-import { IsString, IsNotEmpty } from "class-validator";
+import { 
+  IsString, IsNotEmpty,
+} from "class-validator";
 
 
 /**
@@ -9,4 +11,5 @@ export default class CreateBodyValidator {
   @IsNotEmpty()
   @IsString()
   public email: string;
+
 }
