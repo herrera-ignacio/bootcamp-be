@@ -28,10 +28,10 @@ export default class User {
   @IsEmail()
     email: string;
 
-  @Column({ type: "varchar", nullable: true })
+  @Column({ nullable: true })
     firstName?: string;
 
-  @Column({ type: "varchar", nullable: true })
+  @Column({ nullable: true })
     lastName?: string;
 
   @Column({

@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import UserRepository from "../repositories/UserRepository";
-// import { IService } from "../types/IService";
+import { IService } from "../types/IService";
 import User from "../entities/User";
 import NotFoundException from "../exceptions/NotFoundException";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
 
-export default class UserService{  
+export default class UserService implements IService<User>{  
 
   private static getRepository(): ReturnType<typeof UserRepository> {
     return UserRepository();
