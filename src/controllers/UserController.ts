@@ -49,7 +49,7 @@ class UserController implements IController{
   public deleteById: IRequestHandler = async (req, res) => {
     const id = Number(req.params.id);
     await this.userService.deleteById(id);
-    res.status(201).json({ data: `User ${id} was deleted` });
+    res.status(204).json({ data: `User ${id} was deleted` });
   };
 }
 
