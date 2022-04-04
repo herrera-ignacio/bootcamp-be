@@ -24,7 +24,7 @@ export default class User {
   @UpdateDateColumn()
     updatedAt?: string;
   
-  @Column({ type: "varchar", unique: true })
+  @Column({ unique: true })
   @IsEmail()
     email: string;
 
