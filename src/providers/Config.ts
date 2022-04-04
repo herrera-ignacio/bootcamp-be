@@ -41,7 +41,7 @@ class Config implements IMiddleware {
         appDescription: process.env.APP_DESCRIPTION || "API for Agile Engine employees to make reservations",
         port: !Number.isNaN(Number(process.env.PORT)) ? Number(process.env.PORT) : 4000,
         isCORSEnabled: Boolean(process.env.CORS_ENABLED),
-        appURL: process.env.APP_URL, // || "localhost",
+        appURL: process.env.APP_URL || "localhost",
         apiPrefix: process.env.API_PREFIX || "",
         databaseUser: process.env.DATABASE_USERNAME || "postgres",
         databasePassword: process.env.DATABASE_PASSWORD || "postgres",

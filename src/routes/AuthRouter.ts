@@ -1,8 +1,7 @@
 import { Router } from "express";
 import AuthController from "../controllers/AuthController";
 import IRouter from "../types/IRouter";
-// eslint-disable-next-line import/no-named-as-default
-import JWTCheck from "../middlewares/JWTCheck";
+import  JWTCheck  from "../middlewares/JWTCheck";
 import OIDCheck from "../middlewares/OIDCheck";
 
 /**
