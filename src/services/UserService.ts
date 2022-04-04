@@ -4,6 +4,7 @@ import UserRepository from "../repositories/UserRepository";
 import User from "../entities/User";
 import NotFoundException from "../exceptions/NotFoundException";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
+import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
 
 export default class UserService{  
 
@@ -56,7 +57,7 @@ export default class UserService{
   */
 
   
-  public async create(userData:User): Promise<User>{
+  public async create(userData:UserCreateBodyValidator): Promise<User>{
     const user = await UserService.getRepository().save(userData);
     return user;
   }

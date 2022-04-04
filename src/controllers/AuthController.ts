@@ -19,7 +19,6 @@ class AuthController extends UserController{
   }
 
   public onSuccess = async  (req:RequestWithOIDC & RequestWithAuth, res:Response, next:NextFunction ) => {
-    console.log(req);
     let user:User;
 
     try {
@@ -27,7 +26,7 @@ class AuthController extends UserController{
     } catch (error) {
       if (error instanceof NotFoundException){
         const { email } = req.user;
-        user = await this.userService.create({ email, role: UserRole.CONTRACTOR, id:0 });
+        user = await this.userService.create({ email, role: UserRole.CONTRACTOR });
       } else {
         next(error);
       }
