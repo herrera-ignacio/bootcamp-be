@@ -1,5 +1,5 @@
 import { Router } from "express";
-// import AuthController from "../controllers/AuthController";
+import AuthController from "../controllers/AuthController";
 import IRouter from "../types/IRouter";
 // eslint-disable-next-line import/no-named-as-default
 import JWTCheck from "../middlewares/JWTCheck";
@@ -13,7 +13,7 @@ class AuthRouter implements IRouter {
 
   public router: Router;
 
-  // private authController = new AuthController();
+  private authController = new AuthController();
 
   constructor() {
     this.router = Router();
@@ -25,7 +25,7 @@ class AuthRouter implements IRouter {
      * Validate OAuth2 Bearer Token Authentication,
      * and persist user if first login.
      */
-    this.router.post(`${this.path}/onSuccess`, JWTCheck.use(), OIDCheck.use(), (req, res)=>{res.status(200).json({ data: "success" });});
+    this.router.post(`${this.path}/onSuccess`, JWTCheck.use(), OIDCheck.use(), this.authController.onSuccess);
   }
 }
 

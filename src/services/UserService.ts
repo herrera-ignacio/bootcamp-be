@@ -40,6 +40,17 @@ export default class UserService{
   }
 
   /**
+   * Get all the specific user by email
+   * @param email
+  */
+
+  public async getByEmail(email:string): Promise<User>{
+    const user = await UserService.getRepository().findByEmail(email);
+    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("email", email));
+    return user;
+  }
+
+  /**
    * Creates a new user
    * @param userData
   */
