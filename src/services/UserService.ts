@@ -6,6 +6,7 @@ import NotFoundException from "../exceptions/NotFoundException";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
 
+
 export default class UserService implements IService<User>{  
 
   private static getRepository(): ReturnType<typeof UserRepository> {
