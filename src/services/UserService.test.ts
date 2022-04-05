@@ -30,6 +30,7 @@ describe(
         );
 
         const res = await new UserService().getById(userMock.id);
+        console.log(res);
 
         // Then 
 
