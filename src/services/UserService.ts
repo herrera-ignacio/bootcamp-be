@@ -5,11 +5,12 @@ import User from "../entities/User";
 import NotFoundException from "../exceptions/NotFoundException";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
+import IRepository from "../types/IRepository";
 
 
 export default class UserService implements IService<User>{  
 
-  private static getRepository(): ReturnType<typeof UserRepository> {
+  public getRepository(): IRepository<User> {
     return UserRepository();
   }
 
@@ -26,7 +27,7 @@ export default class UserService implements IService<User>{
   */
 
   public async getAll(): Promise<User[]>{
-    const users = await UserService.getRepository().find();
+    const users = await this.getRepository().find();
     return users;
   }
 
@@ -36,7 +37,7 @@ export default class UserService implements IService<User>{
   */
 
   public async getById(id:number): Promise<User>{
-    const user = await UserService.getRepository().findById(id);
+    const user = await this.getRepository().findById(id);
     if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
     return user;
   }
@@ -47,7 +48,7 @@ export default class UserService implements IService<User>{
   */
 
   public async getByEmail(email:string): Promise<User>{
-    const user = await UserService.getRepository().findByEmail(email);
+    const user = await this.getRepository().findByEmail(email);
     if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("email", email));
     return user;
   }
@@ -59,7 +60,7 @@ export default class UserService implements IService<User>{
 
   
   public async create(userData:UserCreateBodyValidator): Promise<User>{
-    const user = await UserService.getRepository().save(userData);
+    const user = await this.getRepository().save(userData);
     return user;
   }
 
@@ -69,13 +70,13 @@ export default class UserService implements IService<User>{
    */
 
   public async updateById(id: number, userUpdateData: UserUpdateBodyValidator): Promise<User> {
-    const repo = UserService.getRepository();
+    const repo = this.getRepository();
     const user = await this.getById(id);
 
     if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
 
     repo.merge(user, userUpdateData);
-    return UserService.getRepository().save(user);
+    return this.getRepository().save(user);
   }
 
   /**
@@ -84,7 +85,7 @@ export default class UserService implements IService<User>{
    */
 
   public async deleteById(id:number): Promise<void>{
-    const repo = UserService.getRepository();
+    const repo = this.getRepository();
     const dataAffected = await repo.delete({ id });
     if (dataAffected.affected === 0) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
   }
