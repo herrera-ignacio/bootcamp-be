@@ -1,11 +1,13 @@
 /* eslint-disable class-methods-use-this */
 import UserRepository from "../repositories/UserRepository";
-// import { IService } from "../types/IService";
+import { IService } from "../types/IService";
 import User from "../entities/User";
 import NotFoundException from "../exceptions/NotFoundException";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
+import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
 
-export default class UserService{  
+
+export default class UserService implements IService<User>{  
 
   private static getRepository(): ReturnType<typeof UserRepository> {
     return UserRepository();
@@ -40,12 +42,23 @@ export default class UserService{
   }
 
   /**
+   * Get all the specific user by email
+   * @param email
+  */
+
+  public async getByEmail(email:string): Promise<User>{
+    const user = await UserService.getRepository().findByEmail(email);
+    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("email", email));
+    return user;
+  }
+
+  /**
    * Creates a new user
    * @param userData
   */
 
   
-  public async create(userData:User): Promise<User>{
+  public async create(userData:UserCreateBodyValidator): Promise<User>{
     const user = await UserService.getRepository().save(userData);
     return user;
   }
