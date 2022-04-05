@@ -37,8 +37,14 @@ export default class UserService implements IService<User>{
   */
 
   public async getById(id:number): Promise<User>{
-    const user = await this.getRepository().findById(id);
-    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
+    let user;
+    try {
+      user = await this.getRepository().findById(id);
+      if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
+    } catch (error) {
+      console.log(error);
+    }
+    
     return user;
   }
 

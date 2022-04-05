@@ -9,8 +9,7 @@ describe(
     
         const user = getUserMock();
         const userDto = new UserMapper().toDto(user);
-        
-        console.log(userDto);
+      
 
         expect(userDto).toEqual({
           id: user.id,
