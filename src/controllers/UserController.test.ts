@@ -44,6 +44,23 @@ describe(
     );
 
     it(
+      "getById should bubble up exception", async () => {
+        // Given
+        const fakeService = sinon.createStubInstance(UserService);
+        const fakeReq = getRequestMock({ params: { id: "13" } });
+        const fakeRes = getResponseMock();
+        const controller = new UserController(fakeService);
+
+        // When
+        fakeService.getById.throws(new NotFoundException());
+
+        // Then
+        await expect(controller.getById(fakeReq, fakeRes as any, null)).rejects.toThrow(NotFoundException);
+        expect(fakeService.getById.calledOnceWithExactly(13)).toBeTruthy();
+      },
+    );
+
+    it(
       "create should return 201 status code and user on success", async () => {
         // Given
         const userMock = getUserMock();
@@ -156,7 +173,7 @@ describe(
     /* Test for delete endpoint */
 
     it(
-      "deleteById should return 204 status and bubble up", async () =>{
+      "deleteById should return 204 status on success", async () =>{
         // Given 
 
         const fakeService = sinon.createStubInstance(UserService);
@@ -177,9 +194,21 @@ describe(
       },
     );
 
+    it(
+      "deleteById should bubble up exception", async () => {
+        // Given
+        const fakeService = sinon.createStubInstance(UserService);
+        const fakeReq = getRequestMock({ params: { id: "13" } });
+        const fakeRes = getResponseMock();
+        const controller = new UserController(fakeService);
 
+        // When
+        fakeService.deleteById.throws(new NotFoundException());
 
-
-
+        // Then
+        await expect(controller.deleteById(fakeReq, fakeRes as any, null)).rejects.toThrow(NotFoundException);
+        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
+      },
+    );
   },
 );

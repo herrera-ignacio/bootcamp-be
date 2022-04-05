@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">86.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/30</span>
+                <span class='fraction'>26/30</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56% </span>
+                <span class="strong">88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/25</span>
+                <span class='fraction'>22/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -173,7 +173,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -228,8 +228,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -238,13 +238,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -269,8 +269,8 @@ import IRepository from "../types/IRepository";
 &nbsp;
 export default class UserService implements IService&lt;User&gt;{  
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >getRepository(</span>): IRepository&lt;User&gt; {
-<span class="cstat-no" title="statement not covered" >    return UserRepository();</span>
+  public getRepository(): IRepository&lt;User&gt; {
+    return UserRepository();
   }
 &nbsp;
   /**
@@ -324,9 +324,9 @@ export default class UserService implements IService&lt;User&gt;{
   */
 &nbsp;
   
-  public <span class="fstat-no" title="function not covered" >async </span>create(userData:UserCreateBodyValidator): Promise&lt;User&gt;{
-    const user = <span class="cstat-no" title="statement not covered" >await this.getRepository().save(userData);</span>
-<span class="cstat-no" title="statement not covered" >    return user;</span>
+  public async create(userData:UserCreateBodyValidator): Promise&lt;User&gt;{
+    const user = await this.getRepository().save(userData);
+    return user;
   }
 &nbsp;
   /**
@@ -334,14 +334,14 @@ export default class UserService implements IService&lt;User&gt;{
    * @param id
    */
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >async </span>updateById(id: number, userUpdateData: UserUpdateBodyValidator): Promise&lt;User&gt; {
-    const repo = <span class="cstat-no" title="statement not covered" >this.getRepository();</span>
-    const user = <span class="cstat-no" title="statement not covered" >await this.getById(id);</span>
+  public async updateById(id: number, userUpdateData: UserUpdateBodyValidator): Promise&lt;User&gt; {
+    const repo = this.getRepository();
+    const user = await this.getById(id);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!user) <span class="cstat-no" title="statement not covered" >throw new NotFoundException(UserService.notFoundErrorMessage("id", id));</span></span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!user) <span class="cstat-no" title="statement not covered" >throw new NotFoundException(UserService.notFoundErrorMessage("id", id));</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    repo.merge(user, userUpdateData);</span>
-<span class="cstat-no" title="statement not covered" >    return this.getRepository().save(user);</span>
+    repo.merge(user, userUpdateData);
+    return this.getRepository().save(user);
   }
 &nbsp;
   /**
@@ -361,7 +361,7 @@ export default class UserService implements IService&lt;User&gt;{
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 05 2022 16:02:49 GMT-0500 (hora estándar de Colombia)
+                at Tue Apr 05 2022 17:40:42 GMT-0500 (hora estándar de Colombia)
             </div>
         <script src="../../prettify.js"></script>
         <script>
