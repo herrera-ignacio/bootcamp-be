@@ -24,7 +24,7 @@ describe(
         // Given
         const userMock = getUserMock();
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id:"1" } } );
+        const fakeReq = getRequestMock({ params: { id:"13" } } );
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
@@ -51,7 +51,7 @@ describe(
         // Given 
 
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id:"1" } });
+        const fakeReq = getRequestMock({ params: { id:"13" } });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
