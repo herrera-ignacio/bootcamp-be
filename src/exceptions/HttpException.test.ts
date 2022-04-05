@@ -4,7 +4,7 @@ describe(
   "HttpException", () =>{
     it(
       "Should have 500 status code and message by default",  () =>{
-        const e = new HttpException(500, "Something went wrong!");
+        const e = new HttpException();
 
         expect(e.status).toBe(500);
         expect(e.message).toBe("Something went wrong!");
@@ -13,7 +13,7 @@ describe(
 
     it(
       "Should support custom status", () =>{
-        const e = new HttpException(400, "My message");
+        const e = new HttpException(400);
         
         expect(e.status).toBe(400);
       },
