@@ -37,14 +37,10 @@ export default class UserService implements IService<User>{
   */
 
   public async getById(id:number): Promise<User>{
-    let user;
-    try {
-      user = await this.getRepository().findById(id);
-      if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
-    } catch (error) {
-      console.log(error);
-    }
-    
+
+   
+    const user = await this.getRepository().findOneBy({ id });
+    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));    
     return user;
   }
 
@@ -53,8 +49,8 @@ export default class UserService implements IService<User>{
    * @param email
   */
 
-  public async getByEmail(email:string): Promise<User>{
-    const user = await this.getRepository().findByEmail(email);
+  public async getByEmail(email:string): Promise<User>{ 
+    const user = await this.getRepository().findOneBy({ email });
     if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("email", email));
     return user;
   }
@@ -76,13 +72,14 @@ export default class UserService implements IService<User>{
    */
 
   public async updateById(id: number, userUpdateData: UserUpdateBodyValidator): Promise<User> {
-    const repo = this.getRepository();
     const user = await this.getById(id);
+    const repo = this.getRepository();
+    
 
-    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
-
-    repo.merge(user, userUpdateData);
-    return this.getRepository().save(user);
+    return repo.save({
+      ...user,
+      ...userUpdateData,
+    });
   }
 
   /**

@@ -24,13 +24,14 @@ describe(
 
         // When
 
+
         fakeRepo.findOneBy.resolves(userMock);
         sandbox.replace(
           UserService.prototype, "getRepository", () => fakeRepo,
         );
 
         const res = await new UserService().getById(userMock.id);
-        console.log(res);
+
 
         // Then 
 
@@ -49,6 +50,7 @@ describe(
         const fakeRepo = stubInterface<IRepository<User>>();
 
         // When
+
         fakeRepo.findOneBy.resolves(null);
         sandbox.replace(
           UserService.prototype, "getRepository", () => fakeRepo,
@@ -58,7 +60,7 @@ describe(
 
         // Then
         await expect(userService.getById(999)).rejects.toThrow(NotFoundException);
-        expect(fakeRepo.findOneBy.calledOnceWithExactly({ id:999 })).toBeTruthy();
+        expect(fakeRepo.findOneBy.calledOnceWithExactly({ id: 999 })).toBeTruthy();
 
       },
     );
@@ -69,8 +71,9 @@ describe(
       "getByEmail on success", async () =>{
         
         // Given
-        const fakeRepo = stubInterface<IRepository<User>>();
         const userMock = getUserMock();
+        const fakeRepo = stubInterface<IRepository<User>>();
+       
 
         // When
 
@@ -79,11 +82,11 @@ describe(
           UserService.prototype, "getRepository", () => fakeRepo,
         );
 
-        const res = new UserService().getByEmail(userMock.email);
+        const res = await new UserService().getByEmail(userMock.email);
 
         // Then
 
-        await expect(fakeRepo.findOneBy.calledOnceWithExactly( { email: userMock.email } )).toBeTruthy();
+        expect(fakeRepo.findOneBy.calledOnceWithExactly( { email: userMock.email } )).toBeTruthy();
         expect(res).toBe(userMock);
 
       },

@@ -24,7 +24,7 @@ describe(
         // Given
         const userMock = getUserMock();
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id:"13" } } );
+        const fakeReq = getRequestMock({ params: { id:"1" } } );
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
@@ -47,7 +47,7 @@ describe(
       "getById should bubble up exception", async () => {
         // Given
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id: "13" } });
+        const fakeReq = getRequestMock({ params: { id: "1" } });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
@@ -56,7 +56,7 @@ describe(
 
         // Then
         await expect(controller.getById(fakeReq, fakeRes as any, null)).rejects.toThrow(NotFoundException);
-        expect(fakeService.getById.calledOnceWithExactly(13)).toBeTruthy();
+        expect(fakeService.getById.calledOnceWithExactly(1)).toBeTruthy();
       },
     );
 
@@ -177,7 +177,7 @@ describe(
         // Given 
 
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id:"13" } });
+        const fakeReq = getRequestMock({ params: { id:"1" } });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
@@ -198,7 +198,7 @@ describe(
       "deleteById should bubble up exception", async () => {
         // Given
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id: "13" } });
+        const fakeReq = getRequestMock({ params: { id: "1" } });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
