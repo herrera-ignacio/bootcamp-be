@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1649279686275" clover="3.2.0">
-  <project timestamp="1649279686276" name="All files">
-    <metrics statements="318" coveredstatements="262" conditionals="231" coveredconditionals="138" methods="90" coveredmethods="54" elements="639" coveredelements="454" complexity="0" loc="318" ncloc="318" packages="20" files="28" classes="28"/>
+<coverage generated="1649281955308" clover="3.2.0">
+  <project timestamp="1649281955312" name="All files">
+    <metrics statements="312" coveredstatements="260" conditionals="225" coveredconditionals="137" methods="90" coveredmethods="54" elements="627" coveredelements="451" complexity="0" loc="312" ncloc="312" packages="20" files="28" classes="28"/>
     <package name="dist.controllers">
-      <metrics statements="29" coveredstatements="23" conditionals="13" coveredconditionals="8" methods="7" coveredmethods="6"/>
+      <metrics statements="25" coveredstatements="22" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="6"/>
       <file name="UserController.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/controllers/UserController.js">
-        <metrics statements="29" coveredstatements="23" conditionals="13" coveredconditionals="8" methods="7" coveredmethods="6"/>
+        <metrics statements="25" coveredstatements="22" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="6"/>
         <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
         <line num="3" count="1" type="cond" truecount="3" falsecount="1"/>
         <line num="5" count="1" type="stmt"/>
@@ -15,26 +15,22 @@
         <line num="12" count="8" type="stmt"/>
         <line num="15" count="8" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="23" count="8" type="stmt"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
         <line num="32" count="8" type="stmt"/>
         <line num="33" count="2" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="36" count="8" type="stmt"/>
         <line num="37" count="2" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="40" count="8" type="stmt"/>
-        <line num="41" count="2" type="stmt"/>
-        <line num="42" count="2" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
       </file>
     </package>
     <package name="dist.entities">
@@ -271,33 +267,31 @@
       </file>
     </package>
     <package name="src.controllers">
-      <metrics statements="24" coveredstatements="20" conditionals="4" coveredconditionals="1" methods="6" coveredmethods="5"/>
+      <metrics statements="22" coveredstatements="19" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="5"/>
       <file name="UserController.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/controllers/UserController.ts">
-        <metrics statements="24" coveredstatements="20" conditionals="4" coveredconditionals="1" methods="6" coveredmethods="5"/>
+        <metrics statements="22" coveredstatements="19" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="5"/>
         <line num="2" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="15" count="8" type="stmt"/>
         <line num="16" count="8" type="stmt"/>
         <line num="21" count="8" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="29" count="8" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
         <line num="30" count="2" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="32" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="39" count="8" type="stmt"/>
-        <line num="40" count="2" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="44" count="8" type="stmt"/>
-        <line num="45" count="2" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="49" count="8" type="stmt"/>
-        <line num="50" count="2" type="stmt"/>
-        <line num="51" count="2" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="56" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="37" count="8" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="42" count="8" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="47" count="8" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.entities">
