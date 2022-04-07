@@ -8,15 +8,16 @@ import Config from "../providers/Config";
  * Extract JWT from the X-OIDC header as an JWT
  * It will populate req.user
  */
-class OIDCheck extends JWTCheckMiddleware {
+export class OIDCheckMiddleware extends JWTCheckMiddleware {
   protected static initMessage = "OIDCheck :: Mounting X-OIDC JWT validator...";
 
   constructor() {
-    super(OIDCheck.initMessage);
+    super(OIDCheckMiddleware.initMessage);
   }
 
   public getOptions(): jwt.Options {
     const baseOptions = JWTCheckMiddleware.prototype.getOptions.call(this);
+    console.log(baseOptions);
     const { auth0ClientAudience } = Config.config();
     return {
       ...baseOptions,
@@ -29,4 +30,4 @@ class OIDCheck extends JWTCheckMiddleware {
   }
 }
 
-export default new OIDCheck();
+export default new OIDCheckMiddleware();

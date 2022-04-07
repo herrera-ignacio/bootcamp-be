@@ -4,6 +4,7 @@ import IRouter from "../types/IRouter";
 import  JWTCheck  from "../middlewares/JWTCheck";
 import OIDCheck from "../middlewares/OIDCheck";
 
+
 /**
  * Routes for root/home path
  */

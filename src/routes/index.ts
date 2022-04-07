@@ -9,7 +9,8 @@ import AuthRouter from "./AuthRouter";
 const router = Router();
 
 router.use((new HomeRouter()).router);
-router.use((new UserRouter()).router);
 router.use((new AuthRouter()).router);
+router.use((new UserRouter()).router);
+
 
 export default router;
