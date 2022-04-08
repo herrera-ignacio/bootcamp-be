@@ -1,18 +1,19 @@
+import { Request } from "express";
 import UserService from "../services/UserService";
-import { UserRole } from "../entities/User";
+import User, { UserRole } from "../entities/User";
 import HttpException from "../exceptions/HttpException";
 import { IRequestHandler } from "../types/IRequestHandler";
 
 
 
-const AdminAuthorization = ( // eslint-disable-line @typescript-eslint/no-explicit-any
+const AdminAuthorization = (
 ): IRequestHandler  => 
-  async (req:any, res, next): Promise<any> => {
+  async (req:Request, res, next): Promise<User> => {
 
     const userService = new UserService(); 
-
+    let user;
     if (req.auth && req.auth.sub) {
-      const user = await userService.getByAuth0_id(req.auth.sub);
+      user = await userService.getByAuth0_id(req.auth.sub);
       if (user.role === UserRole.ADMIN) {
         next();
       } else {
@@ -20,7 +21,7 @@ const AdminAuthorization = ( // eslint-disable-line @typescript-eslint/no-explic
       }
       
     }
-  
+    return user;
   };
 
 export default AdminAuthorization;

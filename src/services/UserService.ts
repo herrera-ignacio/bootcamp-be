@@ -56,8 +56,8 @@ export default class UserService implements IService<User>{
   }
 
   /**
-   * Get all the specific user by email
-   * @param email
+   * Get all the specific user by auth0_id
+   * @param auth0_id
   */
 
   public async getByAuth0_id(auth0_id:string): Promise<User>{
