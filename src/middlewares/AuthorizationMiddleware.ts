@@ -15,6 +15,7 @@ const AuthorizationMiddleware = (
     const userService = new UserService(); 
 
     // Validate
+    console.log(req.auth);
     if (req.auth && req.auth.sub) {
       user = await userService.getByAuth0_id(req.auth.sub);
       if (user.role === UserRole.ADMIN) {
