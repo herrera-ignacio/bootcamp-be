@@ -1,10 +1,15 @@
 /* eslint-disable class-methods-use-this */
-import User from "../entities/User";
+import User, { UserRole } from "../entities/User";
 import { IMapper } from "./IMapper";
 
 export interface UserDto {
   id: number;
   email: string;
+  firstName:string,
+  lastName:string;
+  createdAt:Date;
+  updatedAt:Date;
+  role:UserRole;
 }
 
 /**
@@ -15,6 +20,11 @@ export class UserMapper implements IMapper<User, UserDto> {
     return {
       id: u.id,
       email: u.email,
+      firstName: u.firstName,
+      lastName: u.lastName,
+      createdAt: new Date(u.createdAt),
+      updatedAt: new Date(u.updatedAt),
+      role: u.role,
     };
   }
 }
