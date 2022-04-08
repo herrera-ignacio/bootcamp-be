@@ -10,8 +10,10 @@ const AdminAuthorization = (
 ): IRequestHandler  => 
   async (req:Request, res, next): Promise<User> => {
 
-    const userService = new UserService(); 
+    // Given 
     let user;
+    const userService = new UserService(); 
+   
     if (req.auth && req.auth.sub) {
       user = await userService.getByAuth0_id(req.auth.sub);
       if (user.role === UserRole.ADMIN) {
@@ -21,6 +23,8 @@ const AdminAuthorization = (
       }
       
     }
+
+
     return user;
   };
 
