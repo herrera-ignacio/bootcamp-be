@@ -1,7 +1,8 @@
 import { IsEmail } from "class-validator";
 import { 
-  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, 
+  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn,
 } from "typeorm";
+import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
 
 export enum UserRole {
   ADMIN = "ADMIN",
@@ -14,7 +15,7 @@ export enum UserRole {
 }
 
 @Entity()
-export default class User {
+export default class User extends EntityWithFactoryMethod {
   @PrimaryGeneratedColumn()
     id: number;
 
@@ -23,6 +24,9 @@ export default class User {
   
   @UpdateDateColumn()
     updatedAt?: string;
+
+  @Column({ nullable: true })
+    auth0_id?:string;
   
   @Column({ unique: true })
   @IsEmail()

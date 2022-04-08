@@ -26,7 +26,7 @@ class AuthController extends UserController{
     } catch (error) {
       if (error instanceof NotFoundException){
         const { email } = req.user;
-        user = await this.userService.create({ email, role: UserRole.CONTRACTOR });
+        user = await this.userService.create({ email, role: UserRole.CONTRACTOR, auth0_id:req.auth.sub });
       } else {
         next(error);
       }

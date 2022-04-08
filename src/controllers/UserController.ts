@@ -20,7 +20,6 @@ class UserController implements IController{
   
   public getAll: IRequestHandler = async (req, res) => {
     const users = await this.userService.getAll();
-    if (!users) res.sendStatus(404);
     res.status(200).json({
       data: users,
     });
@@ -29,7 +28,6 @@ class UserController implements IController{
   public getById: IRequestHandler = async (req, res) => {
     const id = Number(req.params.id);
     const user = await this.userService.getById(id);
-    if (!user) res.sendStatus(404);
     
     res.status(200).json({
       data:this.userMapper.toDto(user),
@@ -49,7 +47,7 @@ class UserController implements IController{
   public deleteById: IRequestHandler = async (req, res) => {
     const id = Number(req.params.id);
     await this.userService.deleteById(id);
-    res.status(204).json({ data: `User ${id} was deleted` });
+    res.sendStatus(204);
   };
 }
 

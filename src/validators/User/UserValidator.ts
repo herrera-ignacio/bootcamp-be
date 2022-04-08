@@ -17,6 +17,10 @@ export default class UserValidator {
   @IsString()
   @IsOptional()
   public lastName?: string;
+
+  @IsString()
+  @IsOptional()
+  public auth0_id?: string;
   
   @IsEnum(UserRole)
   @IsOptional()
