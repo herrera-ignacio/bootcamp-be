@@ -6,7 +6,7 @@ import { IAuthorizedRequest } from "../types/IAuthorizedRequest";
 
 
 
-const AdminAuthorization = (
+const AuthorizationMiddleware = (
 ): IRequestHandler  => 
   async (req: IAuthorizedRequest, res, next): Promise<User> => {
 
@@ -29,5 +29,5 @@ const AdminAuthorization = (
     return user;
   };
 
-export default AdminAuthorization;
+export default AuthorizationMiddleware;
 
