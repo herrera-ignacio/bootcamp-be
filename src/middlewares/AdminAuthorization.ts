@@ -12,11 +12,8 @@ const AdminAuthorization = ( // eslint-disable-line @typescript-eslint/no-explic
 
     const userService = new UserService(); 
 
-    if (req) {
-      Log.info(req.user);
-      console.log(req.user);
-      console.log(req.auth);
-      const user = await userService.getByEmail(req.user.email);
+    if (req.auth && req.auth.sub) {
+      const user = await userService.getById(req.auth.userId);
       if (user.role === UserRole.ADMIN) {
         Log.info(JSON.stringify(user));
         next();
