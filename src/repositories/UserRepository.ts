@@ -12,6 +12,10 @@ const UserRepository = () => Database.getConnection().getRepository(User).extend
   findByEmail(email: string): Promise<User> {
     return this.findOne({ where: { email } });
   },
+
+  getByAuth0_id(auth0_id: string): Promise<User> {
+    return this.findOne({ where: { auth0_id } });
+  },
 });
 
 export default UserRepository;

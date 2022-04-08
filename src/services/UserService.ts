@@ -53,6 +53,17 @@ export default class UserService implements IService<User>{
   }
 
   /**
+   * Get all the specific user by email
+   * @param email
+  */
+
+   public async getByAuth0_id(auth0_id:string): Promise<User>{
+    const user = await UserService.getRepository().getByAuth0_id(auth0_id);
+    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("auth0_id", auth0_id));
+    return user;
+  }
+
+  /**
    * Creates a new user
    * @param userData
   */
