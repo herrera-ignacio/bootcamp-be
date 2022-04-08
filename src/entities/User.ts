@@ -1,6 +1,6 @@
 import { IsEmail } from "class-validator";
 import { 
-  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, 
+  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn,
 } from "typeorm";
 
 export enum UserRole {
@@ -23,6 +23,9 @@ export default class User {
   
   @UpdateDateColumn()
     updatedAt?: string;
+
+  @Column({ nullable: true })
+    auth0_id?:string;
   
   @Column({ unique: true })
   @IsEmail()
