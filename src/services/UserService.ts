@@ -61,7 +61,7 @@ export default class UserService implements IService<User>{
   */
 
    public async getByAuth0_id(auth0_id:string): Promise<User>{
-    const user = await UserService.getRepository().getByAuth0_id(auth0_id);
+    const user = await this.getRepository().findOneBy({auth0_id});
     if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("auth0_id", auth0_id));
     return user;
   }
