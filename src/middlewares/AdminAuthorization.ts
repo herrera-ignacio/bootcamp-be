@@ -13,7 +13,6 @@ const AdminAuthorization = (
     // Given 
     let user;
     const userService = new UserService(); 
-    console.log(req);
 
     // Validate
     if (req.auth && req.auth.sub) {
