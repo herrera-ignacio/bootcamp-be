@@ -9,8 +9,6 @@ import UserUpdateParamsValidator from "../validators/User/UserUpdateParamsValida
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
 import AdminAuthorization from "../middlewares/AdminAuthorization";
 import JWTCheck from "../middlewares/JWTCheck";
-import OIDCheck from "../middlewares/OIDCheck";
-// import AuthCheck from "../middlewares/AuthCheck";
 
 
 
@@ -32,17 +30,16 @@ class UserRouter implements IRouter{
     this.router.get(this.path, this.UserController.getAll);
     this.router.get(`${this.path}/:id(\\d+)`, ParamsValidator(BaseParamsValidator),
       JWTCheck.use(),
-      OIDCheck.use(),
       AdminAuthorization(),
       this.UserController.getById);
     this.router.post(this.path, BodyValidator(UserCreateBodyValidator),
-      JWTCheck.use(), OIDCheck.use(), AdminAuthorization(),
+      JWTCheck.use(), AdminAuthorization(),
       this.UserController.create);
     this.router.patch(`${this.path}/:id(\\d+)`, ParamsValidator(UserUpdateParamsValidator), BodyValidator(UserUpdateBodyValidator, true),
-      JWTCheck.use(), OIDCheck.use(), AdminAuthorization(),
+      JWTCheck.use(), AdminAuthorization(),
       this.UserController.updateById);
     this.router.delete(`${this.path}/:id(\\d+)`, 
-      JWTCheck.use(), OIDCheck.use(), AdminAuthorization(),
+      JWTCheck.use(), AdminAuthorization(),
       this.UserController.deleteById);
   }
 }
