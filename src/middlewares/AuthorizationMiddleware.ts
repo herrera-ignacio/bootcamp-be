@@ -1,5 +1,5 @@
 import UserService from "../services/UserService";
-import User, { UserRole } from "../entities/User";
+import { UserRole } from "../entities/User";
 import HttpException from "../exceptions/HttpException";
 import { IRequestHandler } from "../types/IRequestHandler";
 import { IAuthorizedRequest } from "../types/IAuthorizedRequest";
@@ -8,7 +8,7 @@ import { IAuthorizedRequest } from "../types/IAuthorizedRequest";
 
 const AuthorizationMiddleware = ( allowedRoles: UserRole[],
 ): IRequestHandler  => 
-  async (req: IAuthorizedRequest, res, next): Promise<User> => {
+  async (req: IAuthorizedRequest, res, next): Promise<void> => {
 
     // Given 
     const userService = new UserService(); 
@@ -20,7 +20,6 @@ const AuthorizationMiddleware = ( allowedRoles: UserRole[],
       next(new HttpException(403, "Forbidden"));
     }
       
-    return user;
   };
 
 export default AuthorizationMiddleware;
