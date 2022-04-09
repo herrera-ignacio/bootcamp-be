@@ -5,14 +5,15 @@ import User from "../entities/User";
 /**
  * Concrete repository for Users
  */
-const UserRepository = (): Repository <User> => Database.getConnection().getRepository(User).extend({
-  findById(id: number): Promise<User> {
-    return this.findOne({ where: { id } });
-  },
+const userRepository = (): Repository <User> => Database.getConnection()
+  .getRepository(User).extend({
+    findByEmail(email: string): Promise<User> {
+      return this.findOne({ where: { email } });
+    },
 
-  findByEmail(email: string): Promise<User> {
-    return this.findOne({ where: { email } });
-  },
-});
+    findById(id: number): Promise<User> {
+      return this.findOne({ where: { id } });
+    },
+  });
 
-export default UserRepository;
+export default userRepository;

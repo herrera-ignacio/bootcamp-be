@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import UserRepository from "../repositories/UserRepository";
+import userRepository from "../repositories/UserRepository";
 import { IService } from "../types/IService";
 import User from "../entities/User";
 import NotFoundException from "../exceptions/NotFoundException";
@@ -8,10 +8,10 @@ import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator"
 import IRepository from "../types/IRepository";
 
 
-export default class UserService implements IService<User>{  
+export default class UserService implements IService<User> {
 
   public getRepository(): IRepository<User> {
-    return UserRepository();
+    return userRepository();
   }
 
   /**
@@ -20,14 +20,17 @@ export default class UserService implements IService<User>{
    * @param value
    */
 
-  private static notFoundErrorMessage = (key:string, value: string | number) => `User ${key}:${value} not found`;
+  private static notFoundErrorMessage = (
+    key: string, value: string | number,
+  ) => `User ${key}:${value} not found`;
 
   /**
    * Get all the registered users
   */
 
-  public async getAll(): Promise<User[]>{
+  public async getAll(): Promise<User[]> {
     const users = await this.getRepository().find();
+
     return users;
   }
 
@@ -36,11 +39,16 @@ export default class UserService implements IService<User>{
    * @param id
   */
 
-  public async getById(id:number): Promise<User>{
+  public async getById(id: number): Promise<User> {
 
-   
+
     const user = await this.getRepository().findOneBy({ id });
-    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));    
+
+    if (!user) {
+      throw new NotFoundException(UserService.notFoundErrorMessage(
+        "id", id,
+      ));
+    }
     return user;
   }
 
@@ -49,9 +57,14 @@ export default class UserService implements IService<User>{
    * @param email
   */
 
-  public async getByEmail(email:string): Promise<User>{ 
+  public async getByEmail(email: string): Promise<User> {
     const user = await this.getRepository().findOneBy({ email });
-    if (!user) throw new NotFoundException(UserService.notFoundErrorMessage("email", email));
+
+    if (!user) {
+      throw new NotFoundException(UserService.notFoundErrorMessage(
+        "email", email,
+      ));
+    }
     return user;
   }
 
@@ -60,9 +73,10 @@ export default class UserService implements IService<User>{
    * @param userData
   */
 
-  
-  public async create(userData:UserCreateBodyValidator): Promise<User>{
+
+  public async create(userData: UserCreateBodyValidator): Promise<User> {
     const user = await this.getRepository().save(userData);
+
     return user;
   }
 
@@ -71,10 +85,12 @@ export default class UserService implements IService<User>{
    * @param id
    */
 
-  public async updateById(id: number, userUpdateData: UserUpdateBodyValidator): Promise<User> {
+  public async updateById(
+    id: number, userUpdateData: UserUpdateBodyValidator,
+  ): Promise<User> {
     const user = await this.getById(id);
     const repo = this.getRepository();
-    
+
 
     return repo.save({
       ...user,
@@ -87,9 +103,14 @@ export default class UserService implements IService<User>{
    * @param id
    */
 
-  public async deleteById(id:number): Promise<void>{
+  public async deleteById(id: number): Promise<void> {
     const repo = this.getRepository();
     const dataAffected = await repo.delete({ id });
-    if (dataAffected.affected === 0) throw new NotFoundException(UserService.notFoundErrorMessage("id", id));
+
+    if (dataAffected.affected === 0) {
+      throw new NotFoundException(UserService.notFoundErrorMessage(
+        "id", id,
+      ));
+    }
   }
 }

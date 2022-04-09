@@ -18,6 +18,7 @@ class OIDCheck extends JWTCheckMiddleware {
   public getOptions(): jwt.Options {
     const baseOptions = JWTCheckMiddleware.prototype.getOptions.call(this);
     const { auth0ClientAudience } = Config.config();
+
     return {
       ...baseOptions,
       audience: auth0ClientAudience,

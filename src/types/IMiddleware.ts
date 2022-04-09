@@ -1,5 +1,8 @@
 import {
-  Application, Request, Response, NextFunction,
+  Application,
+  Request,
+  Response,
+  NextFunction,
 } from "express";
 
 abstract class IMiddleware {
@@ -8,7 +11,9 @@ abstract class IMiddleware {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  static get? = () => (_req: Request, _res: Response, _next: NextFunction) => {
+  static get? = () => (
+    _req: Request, _res: Response, _next: NextFunction,
+  ) => {
   };
 }
 

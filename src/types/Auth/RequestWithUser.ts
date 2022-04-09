@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { UserIdentity } from "../User/RequestWithUser";
 
 export interface RequestWithAuth extends Request {
   auth: {
@@ -10,13 +11,6 @@ export interface RequestWithAuth extends Request {
     azp: string;
     scope: string;
   }
-}
-
-export interface UserIdentity {
-  nickname: string;
-  email: string;
-  email_verified: string;
-  picture: string;
 }
 
 export interface RequestWithOIDC extends Request {

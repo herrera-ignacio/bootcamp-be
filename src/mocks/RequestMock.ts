@@ -7,10 +7,10 @@ export type RequestParams = {
 };
 
 const getRequestMock = (params: RequestParams = {}) => ({
-  body:params.body ?? {},
+  body   : params.body ?? {},
   headers: params.headers ?? {},
-  params: params.params ?? {},
-  query: params.query ?? {},
+  params : params.params ?? {},
+  query  : params.query ?? {},
 } as unknown as Request
 );
 
