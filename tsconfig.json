@@ -1,5 +1,4 @@
-
-  {
+{
     "compilerOptions": {
       "emitDecoratorMetadata": true, // needed for typeorm
       "experimentalDecorators": true, // needed for typeorm
