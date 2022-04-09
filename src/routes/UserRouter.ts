@@ -9,6 +9,7 @@ import UserUpdateParamsValidator from "../validators/User/UserUpdateParamsValida
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
 import AuthorizationMiddleware from "../middlewares/AuthorizationMiddleware";
 import JWTCheck from "../middlewares/JWTCheck";
+import { UserRole } from "../entities/User";
 
 
 
@@ -30,16 +31,16 @@ class UserRouter implements IRouter{
     this.router.get(this.path, this.UserController.getAll);
     this.router.get(`${this.path}/:id(\\d+)`, ParamsValidator(BaseParamsValidator),
       JWTCheck.use(),
-      AuthorizationMiddleware(),
+      AuthorizationMiddleware([ UserRole.ADMIN, UserRole.CONTRACTOR ]),
       this.UserController.getById);
     this.router.post(this.path, BodyValidator(UserCreateBodyValidator),
-      JWTCheck.use(), AuthorizationMiddleware(),
+      JWTCheck.use(), AuthorizationMiddleware([ UserRole.ADMIN ]),
       this.UserController.create);
     this.router.patch(`${this.path}/:id(\\d+)`, ParamsValidator(UserUpdateParamsValidator), BodyValidator(UserUpdateBodyValidator, true),
-      JWTCheck.use(), AuthorizationMiddleware(),
+      JWTCheck.use(), AuthorizationMiddleware([ UserRole.ADMIN ]),
       this.UserController.updateById);
     this.router.delete(`${this.path}/:id(\\d+)`, 
-      JWTCheck.use(), AuthorizationMiddleware(),
+      JWTCheck.use(), AuthorizationMiddleware([ UserRole.ADMIN ]),
       this.UserController.deleteById);
   }
 }
