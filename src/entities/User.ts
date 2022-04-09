@@ -1,6 +1,10 @@
 import { IsEmail } from "class-validator";
-import { 
-  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, 
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
 
@@ -21,10 +25,10 @@ export default class User extends EntityWithFactoryMethod {
 
   @CreateDateColumn()
     createdAt?: string;
-  
+
   @UpdateDateColumn()
     updatedAt?: string;
-  
+
   @Column({ unique: true })
   @IsEmail()
     email: string;

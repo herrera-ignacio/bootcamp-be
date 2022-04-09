@@ -6,7 +6,9 @@ export default class HttpException extends Error {
 
   public message: string;
 
-  constructor(status = 500, message = "Something went wrong!") {
+  constructor(
+    status = 500, message = "Something went wrong!",
+  ) {
     super(message);
     this.status = status;
     this.message = message;
