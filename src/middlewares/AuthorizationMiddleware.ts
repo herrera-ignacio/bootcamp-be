@@ -7,8 +7,9 @@ import { IAuthorizedRequest } from "../types/IAuthorizedRequest";
 
 
 const AuthorizationMiddleware = ( allowedRoles: UserRole[],
-): IRequestHandler  => 
-  async (req: IAuthorizedRequest, res, next): Promise<void> => {
+): IRequestHandler  =>
+  async (
+    req: IAuthorizedRequest, res, next): Promise<void> => {
 
     // Given 
     const userService = new UserService(); 
