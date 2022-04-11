@@ -1,4 +1,7 @@
-import { createConnection, getConnection as getTypeOrmConnection } from "typeorm";
+import {
+  createConnection,
+  getConnection as getTypeOrmConnection,
+} from "typeorm";
 import Log from "../utils/Log";
 import Config from "./Config";
 
@@ -9,25 +12,33 @@ class Database {
   public static init(): Promise<void> {
     Log.info("Database :: Connecting...");
     const {
-      databasePassword, databaseUser, databaseSynchronize, databaseLogging, databaseHost, databaseName, databasePort,
+      databaseHost,
+      isDatabaseLogging,
+      databaseName,
+      databasePassword,
+      isDatabaseSynchronize,
+      databasePort,
+      databaseUser,
     } = Config.config();
+
     return createConnection({
-      type: "postgres",
-      host: databaseHost,
-      port: databasePort,
-      username: databaseUser,
-      password: databasePassword,
       database: databaseName,
       entities: [
         `${__dirname}/../entities/*.js`,
       ],
-      synchronize: databaseSynchronize,
-      logging: databaseLogging,
       extra: {
         ssl: {
           rejectUnauthorized: false,
         },
       },
+      host       : databaseHost,
+      logging    : isDatabaseLogging,
+      password   : databasePassword,
+      port       : databasePort,
+      synchronize: isDatabaseSynchronize,
+      type       : "postgres",
+      username   : databaseUser,
+
     }).then(() => Log.info("Database :: Connected"));
   }
 
@@ -37,3 +48,4 @@ class Database {
 }
 
 export default Database;
+

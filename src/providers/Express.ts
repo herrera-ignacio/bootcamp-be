@@ -62,12 +62,16 @@ class Express {
   public init(): void {
     const { port } = Config.config();
 
-    this.express.listen(port, () => {
+    this.express.listen(
+      port, () => {
       // eslint-disable-next-line no-console
-      Log.info(`⚡️[server]: Server is running at localhost:${port}`);
-    }).on("error", (_error) => {
-      Log.error(_error.message);
-    });
+        Log.info(`⚡️[server]: Server is running at localhost:${port}`);
+      },
+    ).on(
+      "error", (_error) => {
+        Log.error(_error.message);
+      },
+    );
   }
 }
 

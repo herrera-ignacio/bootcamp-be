@@ -17,13 +17,16 @@ function initSingleNode(): void {
  */
 function initCluster(): void { // eslint-disable-line
   if (cluster.isPrimary) {
-    const CPUS = os.cpus();
-    CPUS.forEach(() => cluster.fork());
+    const cpus = os.cpus();
+
+    cpus.forEach(() => cluster.fork());
 
     /**
      * Run Worker periodically
      */
-    setTimeout(() => App.loadWorker(), 1000 * 10);
+    setTimeout(
+      () => App.loadWorker(), 1000 * 10,
+    );
   } else {
     /**
      * Run the Server on Clusters
@@ -36,5 +39,5 @@ function initCluster(): void { // eslint-disable-line
  * Establish database connection
  * then init server using either development or production-ready config.
  */
-Database.init().then(() => initSingleNode());
+Database.init().then(() => initSingleNode()).catch(() => {});
 

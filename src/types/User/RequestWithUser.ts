@@ -1,9 +1,9 @@
 import { Request } from "express";
 
 export interface UserIdentity{
+  email: string,
+  emailVerified: string,
   nickname: string,
-  email:string,
-  email_verified: string,
   picture: string
 }
 

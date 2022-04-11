@@ -7,6 +7,7 @@ class Log {
   constructor() {
     const dateString = `${this.today.getFullYear()}-${(this.today.getMonth() + 1)}-${this.today.getDate()}`;
     const timeString = `${this.today.getHours()}:${this.today.getMinutes()}:${this.today.getSeconds()}`;
+
     this.linePrefix = `[${dateString} ${timeString}`;
   }
 
