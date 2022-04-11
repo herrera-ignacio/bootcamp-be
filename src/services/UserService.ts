@@ -56,7 +56,6 @@ export default class UserService implements IService<User> {
 
 
 
-
   /**
    * Creates a new user
    * @param userData
@@ -101,7 +100,6 @@ export default class UserService implements IService<User> {
       throw new NotFoundException(UserService.notFoundErrorMessage(
         "id", id,
       ));
-
     }
   }
 }

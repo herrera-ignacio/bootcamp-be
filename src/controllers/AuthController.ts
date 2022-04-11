@@ -39,7 +39,6 @@ class AuthController extends UserController {
       );
     } catch (error) {
       if (error instanceof NotFoundException) {
-
         const { email } = req.user;
 
         user = await this.userService.create({

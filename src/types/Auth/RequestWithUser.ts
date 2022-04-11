@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { UserIdentity } from "../User/RequestWithUser";
 
 export interface RequestWithAuth extends Request {
   auth: {

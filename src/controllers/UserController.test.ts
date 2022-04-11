@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// noinspection JSVoidFunctionReturnValueUsed
+
 import sinon from "sinon";
 import UserController from "./UserController";
 import getUserMock from "../mocks/UserMock";

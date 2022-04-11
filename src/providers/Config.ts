@@ -27,7 +27,7 @@ type AppConfig = {
 /**
  * Handles injecting environment configuration & secrets
  */
-class Config implements IMiddleware {
+export default class Config implements IMiddleware {
   private static appConfig: AppConfig;
 
   /**
@@ -78,5 +78,3 @@ class Config implements IMiddleware {
     _express.locals.app = this.config();
   }
 }
-
-export default Config;

@@ -4,6 +4,7 @@ import os from "os";
 import cluster from "cluster";
 import App from "./providers/App";
 import Database from "./providers/Database";
+import Log from "./utils/Log";
 
 /**
  * Start development application running on single thread.
@@ -39,5 +40,7 @@ function initCluster(): void { // eslint-disable-line
  * Establish database connection
  * then init server using either development or production-ready config.
  */
-Database.init().then(() => initSingleNode()).catch(() => {});
+Database.init()
+  .then(() => initSingleNode())
+  .catch(err => Log.error(`[DATABASE] Failed to connect: ${err}`));
 
