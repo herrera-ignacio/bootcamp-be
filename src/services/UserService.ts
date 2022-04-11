@@ -51,55 +51,8 @@ export default class UserService implements IService<User> {
 
   }
 
-  /**
-   * Get all the specific user by id
-   * @param id
-  */
-
-  public async getById(id: number): Promise<User> {
 
 
-    const user = await this.getRepository().findOneBy({ id });
-
-    if (!user) {
-      throw new NotFoundException(UserService.notFoundErrorMessage(
-        "id", id,
-      ));
-    }
-    return user;
-  }
-
-  /**
-   * Get all the specific user by email
-   * @param email
-  */
-
-  public async getByEmail(email: string): Promise<User> {
-    const user = await this.getRepository().findOneBy({ email });
-
-    if (!user) {
-      throw new NotFoundException(UserService.notFoundErrorMessage(
-        "email", email,
-      ));
-    }
-    return user;
-  }
-
-  /**
-   * Get all the specific user by auth0_id
-   * @param auth0_id
-  */
-
-  public async getByAuth0Id(auth0Id: string): Promise<User> {
-    const user = await this.getRepository().findOneBy({ auth0Id });
-
-    if (!user) {
-      throw new NotFoundException(UserService.notFoundErrorMessage(
-        "auth0Id", auth0Id,
-      ));
-    }
-    return user;
-  }
 
   /**
    * Creates a new user
@@ -121,7 +74,9 @@ export default class UserService implements IService<User> {
   public async updateById(
     id: number, userUpdateData: UserUpdateBodyValidator,
   ): Promise<User> {
-    const user = await this.getById(id);
+    const user = await this.getByKey(
+      "id", id,
+    );
     const repo = this.getRepository();
 
     return repo.save({

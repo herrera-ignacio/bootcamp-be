@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { AuthData } from "../types/Auth/RequestWithUser";
+import { AuthData } from "../types/Auth/RequestWithAuth";
 
 export type RequestParams = {
   [k in "headers" | "params" | "query"]?: Record<string, string>;

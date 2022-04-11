@@ -15,6 +15,7 @@ describe(
           createdAt: new Date(user.createdAt),
           email    : user.email,
           firstName: user.firstName,
+          id       : user.id,
           lastName : user.lastName,
           role     : user.role,
           updatedAt: new Date(user.updatedAt),

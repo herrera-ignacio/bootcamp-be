@@ -10,6 +10,7 @@ import UserService from "./UserService";
 describe(
   "UserService", () => {
     const sandbox = sinon.createSandbox();
+
     afterEach(() => sandbox.restore());
 
     /* GET REQUESTS */
@@ -30,10 +31,12 @@ describe(
           UserService.prototype, "getRepository", () => fakeRepo,
         );
 
-        const res = await new UserService().getById(userMock.id);
+        const res = await new UserService().getByKey(
+          "id", userMock.id,
+        );
 
 
-        // Then 
+        // Then
 
         expect(fakeRepo.findOneBy.calledOnceWithExactly({ id: userMock.id })).toBeTruthy();
         expect(res).toEqual(userMock);
@@ -44,9 +47,9 @@ describe(
     /* Get By Id. Not Found. */
 
     it(
-      "getById Not Found", async () =>{
-        
-        // Given 
+      "getById Not Found", async () => {
+
+        // Given
         const fakeRepo = stubInterface<IRepository<User>>();
 
         // When
@@ -59,7 +62,9 @@ describe(
         const userService = new UserService();
 
         // Then
-        await expect(userService.getById(999)).rejects.toThrow(NotFoundException);
+        await expect(userService.getByKey(
+          "id", 999,
+        )).rejects.toThrow(NotFoundException);
         expect(fakeRepo.findOneBy.calledOnceWithExactly({ id: 999 })).toBeTruthy();
 
       },
@@ -68,12 +73,12 @@ describe(
     /* Get By Email Success */
 
     it(
-      "getByEmail on success", async () =>{
-        
+      "getByEmail on success", async () => {
+
         // Given
         const userMock = getUserMock();
         const fakeRepo = stubInterface<IRepository<User>>();
-       
+
 
         // When
 
@@ -82,7 +87,9 @@ describe(
           UserService.prototype, "getRepository", () => fakeRepo,
         );
 
-        const res = await new UserService().getByEmail(userMock.email);
+        const res = await new UserService().getByKey(
+          "email", userMock.email,
+        );
 
         // Then
 
@@ -98,16 +105,21 @@ describe(
       "getByEmail not found", async () => {
         // Given
         const fakeRepo = stubInterface<IRepository<User>>();
-  
+
         // When
         fakeRepo.findOneBy.resolves(null);
         sandbox.replace(
           UserService.prototype, "getRepository", () => fakeRepo,
         );
-  
+
         // Then
-        await expect(new UserService().getByEmail("test@example.com")).rejects.toThrow(NotFoundException);
-        expect(fakeRepo.findOneBy.calledOnceWithExactly({ email: "test@example.com" })).toBeTruthy();
+        await expect(new UserService().getByKey(
+          "email",
+          "test@example.com",
+        ))
+          .rejects.toThrow(NotFoundException);
+        expect(fakeRepo.findOneBy.
+          calledOnceWithExactly({ email: "test@example.com" })).toBeTruthy();
       },
     );
 
@@ -120,31 +132,31 @@ describe(
           email: "test@example.com",
           role : UserRole.CONTRACTOR,
         };
-  
+
         // When
         fakeRepo.save.resolves(userMock);
         sandbox.replace(
           UserService.prototype, "getRepository", () => fakeRepo,
         );
         const res = await new UserService().create(userInput);
-  
+
         // Then
         expect(fakeRepo.save.calledOnceWithExactly(userInput)).toBeTruthy();
         expect(res).toEqual(userMock);
       },
     );
-  
+
     it(
       "create fails due to missing params", async () => {
         // Given
         const fakeRepo = stubInterface<IRepository<User>>();
-  
+
         // When
         fakeRepo.save.throws();
         sandbox.replace(
           UserService.prototype, "getRepository", () => fakeRepo,
         );
-  
+
         // Then
         await expect(new UserService().create({
           email: undefined,
@@ -155,7 +167,7 @@ describe(
         expect(fakeRepo.save.calledOnce).toBeTruthy();
       },
     );
-  
+
     it(
       "updateById success", async () => {
         // Given
@@ -165,12 +177,12 @@ describe(
           email: "new@example.com",
         };
         const fakeRepo = stubInterface<IRepository<User>>();
-        const getById = sinon.fake.resolves(userMock);
-  
+        const getByKey = sinon.fake.resolves(userMock);
+
         // When
         fakeRepo.save.resolvesArg(0);
         sandbox.replace(
-          UserService.prototype, "getById", getById,
+          UserService.prototype, "getByKey", getByKey,
         );
         sandbox.replace(
           UserService.prototype, "getRepository", () => fakeRepo,
@@ -178,9 +190,9 @@ describe(
         const res = await new UserService().updateById(
           userMock.id, { email: expectedUser.email },
         );
-  
+
         // Then
-        expect(getById.calledOnceWithExactly(userMock.id)).toBeTruthy();
+        expect(getByKey.calledOnceWithExactly("id", userMock.id)).toBeTruthy();
         expect(fakeRepo.save.calledOnceWithExactly({
           ...userMock,
           email: expectedUser.email,
@@ -188,26 +200,26 @@ describe(
         expect(res).toEqual(expectedUser);
       },
     );
-  
+
     it(
       "updateById not found", async () => {
         // Given
-        const getById = sinon.fake.throws(new NotFoundException(""));
-  
+        const getByKey = sinon.fake.throws(new NotFoundException(""));
+
         // When
         sandbox.replace(
-          UserService.prototype, "getById", getById,
+          UserService.prototype, "getByKey", getByKey,
         );
         const userService = new UserService();
-  
+
         // Then
         await expect(userService.updateById(
           999, {},
         )).rejects.toThrow(NotFoundException);
-        expect(getById.calledOnceWithExactly(999)).toBeTruthy();
+        expect(getByKey.calledOnceWithExactly("id", 999)).toBeTruthy();
       },
     );
-  
+
 
     /* DELETE REQUEST */
 
@@ -220,7 +232,7 @@ describe(
         // when
         fakeRepo.delete.resolves({
           affected: 1,
-          raw: undefined,
+          raw     : undefined,
         });
 
         sandbox.replace(
@@ -229,23 +241,23 @@ describe(
 
         const res = await new UserService().deleteById(1);
 
-        // Then 
+        // Then
 
-        expect(fakeRepo.delete.calledOnceWithExactly({ id:1 })).toBeTruthy();
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
         expect(res).toBeUndefined();
       },
     );
 
     it(
       "deleteById should throw when not found", async () => {
-        
+
         // Given
         const fakeRepo = stubInterface<IRepository<User>>();
 
         // When
         fakeRepo.delete.resolves({
           affected: 0,
-          raw: undefined,
+          raw     : undefined,
         });
 
         sandbox.replace(
@@ -258,7 +270,7 @@ describe(
 
         await expect(userService.deleteById(1)).rejects.toThrow(NotFoundException);
         expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
-        
+
       },
     );
 

@@ -34,7 +34,9 @@ class AuthController extends UserController {
     let user: User;
 
     try {
-      user = await this.userService.getByEmail(req.user.email);
+      user = await this.userService.getByKey(
+        "email", req.user.email,
+      );
     } catch (error) {
       if (error instanceof NotFoundException) {
 
