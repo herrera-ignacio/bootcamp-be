@@ -25,13 +25,10 @@ const bodyValidator = (
 )
   .then((errors: ValidationError[]) => {
     if (errors.length > 0) {
-<<<<<<< HEAD
+
       const message = errors.map((error: ValidationError) =>
         Object.values(error.constraints)).join(", ");
-=======
-      const message = errors.map((error: ValidationError) => Object.values(error.constraints))
-        .join(", ");
->>>>>>> 6f4ef28e4d7be5d9499e05d6b3fb5700aecb8404
+
 
       next(new HttpException(
         400, message,
