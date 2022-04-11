@@ -13,12 +13,6 @@ export interface RequestWithAuth extends Request {
   }
 }
 
-export interface UserIdentity {
-  nickname: string;
-  email: string;
-  emailVerified: string;
-  picture: string;
-}
 
 export interface RequestWithOIDC extends Request {
   user: UserIdentity;
