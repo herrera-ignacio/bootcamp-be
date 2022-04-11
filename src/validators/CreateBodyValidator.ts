@@ -1,5 +1,6 @@
-import { 
-  IsString, IsNotEmpty,
+import {
+  IsString,
+  IsNotEmpty,
 } from "class-validator";
 
 

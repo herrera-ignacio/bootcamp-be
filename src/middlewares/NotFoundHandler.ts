@@ -1,4 +1,8 @@
-import { Application, Request, Response } from "express";
+import {
+  Application,
+  Request,
+  Response,
+} from "express";
 import Log from "../utils/Log";
 import IMiddleware from "../types/IMiddleware";
 
@@ -8,14 +12,18 @@ import IMiddleware from "../types/IMiddleware";
 class NotFoundHandler implements IMiddleware {
   public static mount(_express: Application) {
     Log.info("Middlewares :: Mounting 'NotFoundHandler'");
-    _express.use("*", (req: Request, res: Response) => {
-      const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-      const errorMessage = `Path ${req.originalUrl} not found`;
+    _express.use(
+      "*", (
+        req: Request, res: Response,
+      ) => {
+        const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+        const errorMessage = `Path ${req.originalUrl} not found`;
 
-      Log.error(`${errorMessage} [IP: ${ip}]`);
+        Log.error(`${errorMessage} [IP: ${ip}]`);
 
-      res.status(404).json({ errorMessage });
-    });
+        res.status(404).json({ errorMessage });
+      },
+    );
   }
 }
 

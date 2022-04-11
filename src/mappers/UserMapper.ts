@@ -5,11 +5,11 @@ import { IMapper } from "./IMapper";
 export interface UserDto {
   id: number;
   email: string;
-  firstName:string,
-  lastName:string;
-  createdAt:Date;
-  updatedAt:Date;
-  role:UserRole;
+  firstName: string,
+  lastName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  role: UserRole;
 }
 
 /**
@@ -18,13 +18,13 @@ export interface UserDto {
 export class UserMapper implements IMapper<User, UserDto> {
   toDto(u: User): UserDto {
     return {
-      id: u.id,
-      email: u.email,
-      firstName: u.firstName,
-      lastName: u.lastName,
       createdAt: new Date(u.createdAt),
+      email    : u.email,
+      firstName: u.firstName,
+      id       : u.id,
+      lastName : u.lastName,
+      role     : u.role,
       updatedAt: new Date(u.updatedAt),
-      role: u.role,
     };
   }
 }

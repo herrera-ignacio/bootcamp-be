@@ -1,12 +1,6 @@
-import { Request } from "express";
-
-export interface UserIdentity{
+export interface UserIdentity {
   nickname: string,
-  email:string,
-  email_verified: string,
+  email: string,
+  emailVerified: string,
   picture: string
-}
-
-export interface RequesWithOIDC extends Request{
-  user: UserIdentity;
 }

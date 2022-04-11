@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// noinspection JSVoidFunctionReturnValueUsed
+
 import sinon from "sinon";
 import UserController from "./UserController";
 import getUserMock from "../mocks/UserMock";
@@ -7,12 +10,15 @@ import UserService from "../services/UserService";
 import { UserMapper } from "../mappers/UserMapper";
 import NotFoundException from "../exceptions/NotFoundException";
 import User from "../entities/User";
-import { UserCreateBody, UserCreateRequest } from "../types/User/UserCreateRequest";
+import {
+  UserCreateBody,
+  UserCreateRequest,
+} from "../types/User/UserCreateRequest";
 import { UserUpdateBody } from "../types/User/UserUpdateRequest";
 
 
 describe(
-  "UserController", ()=>{
+  "UserController", () => {
     const sandbox = sinon.createSandbox();
 
     afterEach(() => sandbox.restore());
@@ -20,11 +26,11 @@ describe(
     /* Test for getById endpoint */
 
     it(
-      "getById should return 200 and user on success and found user", async () =>{
+      "getById should return 200 and user on success and found user", async () => {
         // Given
         const userMock = getUserMock();
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id:"1" } } );
+        const fakeReq = getRequestMock({ params: { id: "1" } } );
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
@@ -32,12 +38,15 @@ describe(
 
         fakeService.getById.resolves(userMock);
 
-        await controller.getById(fakeReq, fakeRes as any, null);
+        await controller.getById(
+          fakeReq, fakeRes as any, null,
+        );
 
         // Then
 
         expect(fakeService.getById.calledOnceWithExactly(userMock.id)).toBeTruthy();
-        expect(fakeRes.json.calledOnceWithExactly({ data: new UserMapper().toDto(userMock) })).toBeTruthy();
+        expect(fakeRes.json.calledOnceWithExactly({ data: new UserMapper().toDto(userMock) }))
+          .toBeTruthy();
         expect(fakeRes.status.calledOnceWithExactly(200)).toBeTruthy();
 
       },
@@ -55,7 +64,9 @@ describe(
         fakeService.getById.throws(new NotFoundException());
 
         // Then
-        await expect(controller.getById(fakeReq, fakeRes as any, null)).rejects.toThrow(NotFoundException);
+        await expect(controller.getById(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow(NotFoundException);
         expect(fakeService.getById.calledOnceWithExactly(1)).toBeTruthy();
       },
     );
@@ -76,14 +87,14 @@ describe(
         });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
-  
+
         // When
         fakeService.create.resolves(userMock);
-  
+
         await controller.create(
           fakeReq, fakeRes as any, null,
         );
-  
+
         // Then
         expect(fakeService.create.calledOnceWithExactly(userCreateBody)).toBeTruthy();
         expect(fakeRes.json.calledOnceWithExactly({ data: new UserMapper().toDto(userMock) }))
@@ -91,7 +102,7 @@ describe(
         expect(fakeRes.status.calledOnceWithExactly(201)).toBeTruthy();
       },
     );
-  
+
     it(
       "create should should bubble up exception", async () => {
         // Given
@@ -99,10 +110,10 @@ describe(
         const fakeReq = getRequestMock({});
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
-  
+
         // When
         fakeService.create.throws();
-  
+
         // Then
         await expect(controller.create(
           fakeReq, fakeRes as any, null,
@@ -110,7 +121,7 @@ describe(
         expect(fakeService.create.calledOnce).toBeTruthy();
       },
     );
-  
+
     it(
       "updateById should return 200 and user on success", async () => {
         // Given
@@ -126,14 +137,14 @@ describe(
         });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
-  
+
         // When
         fakeService.updateById.resolves(expectedUser);
-  
+
         await controller.updateById(
           fakeReq, fakeRes as any, null,
         );
-  
+
         // Then
         expect(fakeService.updateById.calledOnceWithExactly(
           Number(fakeReq.params.id), userUpdateBody,
@@ -143,7 +154,7 @@ describe(
         expect(fakeRes.status.calledOnceWithExactly(200)).toBeTruthy();
       },
     );
-  
+
     it(
       "updateById should bubble up exception", async () => {
         // Given
@@ -155,10 +166,10 @@ describe(
         });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
-  
+
         // When
         fakeService.updateById.throws();
-  
+
         // Then
         await expect(controller.updateById(
           fakeReq, fakeRes as any, null,
@@ -167,17 +178,17 @@ describe(
           Number(fakeReq.params.id), userUpdateBody,
         )).toBeTruthy();
       },
-    );  
-      
+    );
+
 
     /* Test for delete endpoint */
 
     it(
-      "deleteById should return 204 status on success", async () =>{
-        // Given 
+      "deleteById should return 204 status on success", async () => {
+        // Given
 
         const fakeService = sinon.createStubInstance(UserService);
-        const fakeReq = getRequestMock({ params: { id:"1" } });
+        const fakeReq = getRequestMock({ params: { id: "1" } });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
@@ -188,8 +199,11 @@ describe(
 
         // Then
 
-        await expect(controller.deleteById( fakeReq, fakeRes as any, null )).rejects.toThrow(NotFoundException);
-        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
+        await expect(controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow(NotFoundException);
+        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
+          .toBeTruthy();
 
       },
     );
@@ -206,8 +220,11 @@ describe(
         fakeService.deleteById.throws(new NotFoundException());
 
         // Then
-        await expect(controller.deleteById(fakeReq, fakeRes as any, null)).rejects.toThrow(NotFoundException);
-        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
+        await expect(controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow(NotFoundException);
+        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
+          .toBeTruthy();
       },
     );
   },
