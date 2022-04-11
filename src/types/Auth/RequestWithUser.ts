@@ -15,7 +15,7 @@ export interface RequestWithAuth extends Request {
 export interface UserIdentity {
   nickname: string;
   email: string;
-  email_verified: string;
+  emailVerified: string;
   picture: string;
 }
 

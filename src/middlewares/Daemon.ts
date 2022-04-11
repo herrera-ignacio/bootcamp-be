@@ -1,4 +1,7 @@
-import { Application, json } from "express";
+import {
+  Application,
+  json,
+} from "express";
 import Config from "../providers/Config";
 import CORS from "./CORS";
 import Http from "./Http";

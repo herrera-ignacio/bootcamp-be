@@ -16,7 +16,9 @@ class HomeRouter implements IRouter {
   }
 
   initializeRoutes() {
-    this.router.get(this.path, HomeController.index);
+    this.router.get(
+      this.path, HomeController.index,
+    );
   }
 }
 

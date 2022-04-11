@@ -14,7 +14,7 @@ describe(
 
     it(
       "Should support custom message", () => {
-        const e = new NotAuthorizedException();
+        const e = new NotAuthorizedException("My message");
 
         expect(e.message).toBe("My message");
       },

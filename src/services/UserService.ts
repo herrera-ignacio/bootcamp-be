@@ -95,7 +95,7 @@ export default class UserService implements IService<User> {
 
     if (!user) {
       throw new NotFoundException(UserService.notFoundErrorMessage(
-        "auth0_id", auth0Id,
+        "auth0Id", auth0Id,
       ));
     }
     return user;

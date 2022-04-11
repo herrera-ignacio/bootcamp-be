@@ -25,7 +25,9 @@ class AuthRouter implements IRouter {
      * Validate OAuth2 Bearer Token Authentication,
      * and persist user if first login.
      */
-    this.router.post(`${this.path}/onSuccess`, JWTCheck.use(), OIDCheck.use(), this.authController.onSuccess);
+    this.router.post(
+      `${this.path}/onSuccess`, JWTCheck.use(), OIDCheck.use(), this.authController.onSuccess,
+    );
   }
 }
 

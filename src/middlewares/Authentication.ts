@@ -37,7 +37,7 @@ export class AuthenticationMiddleware implements IMiddleware {
 
       try {
         const user = await this.userService.getByKey(
-          "auth0_id", req.auth.sub,
+          "auth0Id", req.auth.sub,
         );
 
         req.auth.isAuthenticated = true;
