@@ -6,12 +6,9 @@
       "esModuleInterop": true,
       "target": "esnext",
       "noImplicitAny": true,
-      "moduleResolution": "node",
-      "typeRoots": [
-        "@types",
-        "./node_modules/@types",
-      ],     
+      "moduleResolution": "node",   
       "sourceMap": true,
+      "typeRoots": ["./node_modules/@types"],
       "outDir": "dist",
       "baseUrl": ".",
       "paths": {

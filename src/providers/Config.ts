@@ -16,8 +16,8 @@ type AppConfig = {
   databaseHost: string;
   databasePort: number;
   databaseName: string;
-  databaseSynchronize: boolean;
-  databaseLogging: boolean;
+  isDatabaseSynchronize: boolean;
+  isDatabaseLogging: boolean;
   auth0ServerAudience: string;
   auth0ClientAudience: string;
   auth0Issuer: string;
@@ -51,16 +51,16 @@ class Config implements IMiddleware {
         auth0jwksUri       : process.env.AUTH0_JWKS_URI,
         auth0ServerAudience: process.env.AUTH0_SERVER_AUDIENCE,
         databaseHost       : process.env.DATABASE_HOST || "localhost",
-        databaseLogging    : process.env.DATABASE_LOGGING?.toLowerCase() === "true",
         databaseName       : process.env.DATABASE_NAME || "mydb",
         databasePassword   : process.env.DATABASE_PASSWORD || "postgres",
         databasePort       : !Number.isNaN(Number(process.env.DATABASE_PORT))
           ? Number(process.env.DATABASE_PORT)
           : 5432,
-        databaseSynchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
-        databaseUser       : process.env.DATABASE_USERNAME || "postgres",
-        isCORSEnabled      : Boolean(process.env.CORS_ENABLED),
-        port               : !Number.isNaN(Number(process.env.PORT))
+        databaseUser         : process.env.DATABASE_USERNAME || "postgres",
+        isCORSEnabled        : Boolean(process.env.CORS_ENABLED),
+        isDatabaseLogging    : process.env.DATABASE_LOGGING?.toLowerCase() === "true",
+        isDatabaseSynchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
+        port                 : !Number.isNaN(Number(process.env.PORT))
           ? Number(process.env.PORT)
           : 4000,
       };

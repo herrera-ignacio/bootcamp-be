@@ -33,7 +33,7 @@ describe(
 
         // When
 
-        fakeService.getById.resolves(userMock);
+        fakeService.getByKey.resolves(userMock);
 
         await controller.getById(
           fakeReq, fakeRes as any, null,
@@ -61,7 +61,7 @@ describe(
         const controller = new UserController(fakeService);
 
         // When
-        fakeService.getById.throws(new NotFoundException());
+        fakeService.getByKey.throws(new NotFoundException());
 
         // Then
         await expect(controller.getById(

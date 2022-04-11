@@ -113,7 +113,7 @@ module.exports = {
 		"operator-assignment": "error",
 		"operator-linebreak": "error",
 		"max-len": ["error", { code: 100, ignoreTemplateLiterals: true }],
-		"max-params": ["error", 3],
+		"max-params": ["error", 4],
 		"max-nested-callbacks": ["error", 3],
 		"max-depth": ["error", 2],
 		"padding-line-between-statements": [

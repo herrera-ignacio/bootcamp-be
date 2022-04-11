@@ -13,12 +13,10 @@ class Database {
     Log.info("Database :: Connecting...");
     const {
       databaseHost,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      databaseLogging,
+      isDatabaseLogging,
       databaseName,
       databasePassword,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      databaseSynchronize,
+      isDatabaseSynchronize,
       databasePort,
       databaseUser,
     } = Config.config();
@@ -34,10 +32,10 @@ class Database {
         },
       },
       host       : databaseHost,
-      logging    : databaseLogging,
+      logging    : isDatabaseLogging,
       password   : databasePassword,
       port       : databasePort,
-      synchronize: databaseSynchronize,
+      synchronize: isDatabaseSynchronize,
       type       : "postgres",
       username   : databaseUser,
 
