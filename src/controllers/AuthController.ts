@@ -33,17 +33,19 @@ class AuthController extends UserController {
   ) => {
     let user: User;
 
+    console.log(req);
     try {
       user = await this.userService.getByKey(
-        "email", req.user.email,
+        "auth0Id", req.auth.sub,
       );
     } catch (error) {
       if (error instanceof NotFoundException) {
         const { email } = req.user;
 
         user = await this.userService.create({
+          auth0Id: req.auth.sub,
           email,
-          role: UserRole.CONTRACTOR,
+          role   : UserRole.CONTRACTOR,
         });
       } else {
         next(error);
