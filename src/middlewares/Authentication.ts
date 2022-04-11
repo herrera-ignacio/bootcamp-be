@@ -32,14 +32,20 @@ export class AuthenticationMiddleware implements IMiddleware {
     return async (
       req: RequestWithAuth, _res: Response, next: NextFunction,
     ) => {
-      // req.auth is pupulated by JWTCheck Middleware and sub is the user id that auth0Id token returns
+
+      /*
+      req.auth is pupulated by JWTCheck Middleware
+      and sub is the user id that auth0Id token returns
+       */
+
       if (!req.auth?.sub) throw new NotAuthenticatedException();
 
       try {
         const user = await this.userService.getByKey(
           "auth0Id", req.auth.sub,
         );
-        //Add two more keys to the object auth to use them in the next middleware
+
+        // Add two more keys to the object auth to use them in the next middleware
         req.auth.isAuthenticated = true;
         req.auth.user = user;
 

@@ -192,7 +192,9 @@ describe(
         );
 
         // Then
-        expect(getByKey.calledOnceWithExactly("id", userMock.id)).toBeTruthy();
+        expect(getByKey.calledOnceWithExactly(
+          "id", userMock.id,
+        )).toBeTruthy();
         expect(fakeRepo.save.calledOnceWithExactly({
           ...userMock,
           email: expectedUser.email,
@@ -216,7 +218,9 @@ describe(
         await expect(userService.updateById(
           999, {},
         )).rejects.toThrow(NotFoundException);
-        expect(getByKey.calledOnceWithExactly("id", 999)).toBeTruthy();
+        expect(getByKey.calledOnceWithExactly(
+          "id", 999,
+        )).toBeTruthy();
       },
     );
 
