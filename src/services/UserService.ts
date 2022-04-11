@@ -34,6 +34,9 @@ export default class UserService implements IService<User> {
     return users;
   }
 
+  /**
+   * Get one single user from their id, email or auth0Id
+  */
 
   public async getByKey(
     key: string,
