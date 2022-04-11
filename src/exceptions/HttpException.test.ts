@@ -1,32 +1,33 @@
 import HttpException from "./HttpException";
 
 describe(
-  "HttpException", () =>{
+  "HttpException", () => {
     it(
-      "Should have 500 status code and message by default",  () =>{
+      "Should have 500 status code and message by default",  () => {
         const e = new HttpException();
 
         expect(e.status).toBe(500);
         expect(e.message).toBe("Something went wrong!");
-      }, 
+      },
     );
 
     it(
-      "Should support custom status", () =>{
+      "Should support custom status", () => {
         const e = new HttpException(400);
-        
+
         expect(e.status).toBe(400);
       },
     );
 
     it(
-      "Should support custom message", () =>{
-        const e = new HttpException(400, "My message");
+      "Should support custom message", () => {
+        const e = new HttpException(
+          400, "My message",
+        );
 
         expect(e.message).toBe("My message");
       },
     );
 
-    
   },
 );

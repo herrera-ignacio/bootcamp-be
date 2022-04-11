@@ -7,27 +7,69 @@ import BodyValidator from "../middlewares/BodyValidator";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
 import UserUpdateParamsValidator from "../validators/User/UserUpdateParamsValidator";
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
+import authentication  from "../middlewares/Authentication";
+import authorization from "../middlewares/Authorization";
+import JWTCheck from "../middlewares/JWTCheck";
 
-class UserRouter implements IRouter{
-    
+
+
+class UserRouter implements IRouter {
+
   public path = "/users";
 
   public router: Router;
 
-  private UserController = new UserController();
+  private userController = new UserController();
 
-  constructor(){
+  constructor() {
     this.router = Router();
     this.initializeRoutes();
 
   }
 
   initializeRoutes() {
-    this.router.get(this.path, this.UserController.getAll);
-    this.router.get(`${this.path}/:id(\\d+)`, ParamsValidator(BaseParamsValidator), this.UserController.getById);
-    this.router.post(this.path, BodyValidator(UserCreateBodyValidator), this.UserController.create);
-    this.router.patch(`${this.path}/:id(\\d+)`, ParamsValidator(UserUpdateParamsValidator), BodyValidator(UserUpdateBodyValidator, true), this.UserController.updateById);
-    this.router.delete(`${this.path}/:id(\\d+)`, this.UserController.deleteById);
+    this.router.get(
+      this.path, this.userController.getAll,
+    );
+
+    this.router.get(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      authentication.use(),
+      authorization.use(),
+      ParamsValidator(BaseParamsValidator),
+      this.userController.getById,
+    );
+
+    this.router.post(
+      this.path,
+      JWTCheck.use(),
+      authentication.use(),
+      authorization.use(),
+      BodyValidator(UserCreateBodyValidator),
+      this.userController.create,
+    );
+
+    this.router.patch(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      authentication.use(),
+      authorization.use(),
+      ParamsValidator(UserUpdateParamsValidator),
+      BodyValidator(
+        UserUpdateBodyValidator, true,
+      ),
+      this.userController.updateById,
+    );
+
+
+    this.router.delete(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      authentication.use(),
+      authorization.use(),
+      this.userController.deleteById,
+    );
   }
 }
 

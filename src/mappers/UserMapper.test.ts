@@ -6,19 +6,18 @@ describe(
 
     it(
       "User to UserDto", () => {
-    
+
         const user = getUserMock();
         const userDto = new UserMapper().toDto(user);
-      
+
 
         expect(userDto).toEqual({
-          id: user.id,
           createdAt: new Date(user.createdAt),
-          updatedAt: new Date(user.updatedAt),
+          email    : user.email,
           firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          role: user.role,
+          lastName : user.lastName,
+          role     : user.role,
+          updatedAt: new Date(user.updatedAt),
         });
       },
     );

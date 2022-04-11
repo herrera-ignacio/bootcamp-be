@@ -1,32 +1,49 @@
-import { NextFunction,  Response } from "express";
+import {
+  NextFunction,
+  Response,
+} from "express";
 import UserController from "./UserController";
 import { UserMapper } from "../mappers/UserMapper";
 import UserService from "../services/UserService";
 import NotFoundException from "../exceptions/NotFoundException";
-import { RequestWithOIDC, RequestWithAuth } from "../types/Auth/RequestWithUser";
+import {
+  RequestWithOIDC,
+  RequestWithAuth,
+} from "../types/Auth/RequestWithUser";
 import User, { UserRole } from "../entities/User";
 
 
 
-class AuthController extends UserController{
+class AuthController extends UserController {
 
   constructor(
     userService: UserService = new UserService(),
     userMapper: UserMapper = new UserMapper(),
 
-  ){
-    super(userService, userMapper);
+  ) {
+    super(
+      userService, userMapper,
+    );
   }
 
-  public onSuccess = async  (req:RequestWithOIDC & RequestWithAuth, res:Response, next:NextFunction ) => {
-    let user:User;
+  public onSuccess = async  (
+    req: RequestWithOIDC & RequestWithAuth,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    let user: User;
 
     try {
       user = await this.userService.getByEmail(req.user.email);
     } catch (error) {
-      if (error instanceof NotFoundException){
+      if (error instanceof NotFoundException) {
+
         const { email } = req.user;
-        user = await this.userService.create({ email, role: UserRole.CONTRACTOR });
+
+        user = await this.userService.create({
+          email,
+          role: UserRole.CONTRACTOR,
+        });
       } else {
         next(error);
       }

@@ -11,12 +11,10 @@ class CORS implements IMiddleware {
   public static mount(_express: Application) {
     Log.info("Middlewares :: Mounting 'CORS'...");
 
-    _express.use(cors(
-      {
-        origin: Config.config().appURL,
-        allowedHeaders: [ "Authorization", "Content-Type", "x-oidc" ],
-      },
-    ));
+    _express.use(cors({
+      allowedHeaders: [ "Authorization", "Content-Type", "x-oidc" ],
+      origin        : Config.config().appURL,
+    }));
   }
 }
 

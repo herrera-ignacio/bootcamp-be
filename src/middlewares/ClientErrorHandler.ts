@@ -1,5 +1,8 @@
 import {
-  Application, NextFunction, Request, Response,
+  Application,
+  NextFunction,
+  Request,
+  Response,
 } from "express";
 import { QueryFailedError } from "typeorm";
 import Log from "../utils/Log";
@@ -11,7 +14,12 @@ import HttpException from "../exceptions/HttpException";
  * Handle exceptions thrown from controllers/services.
  */
 class ClientErrorHandler implements IMiddleware {
-  private static handler: IRequestErrorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+  private static handler: IRequestErrorHandler = (
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
     if (err) {
       console.error(err);
       Log.error(err.message);

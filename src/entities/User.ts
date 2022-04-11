@@ -1,6 +1,11 @@
 import { IsEmail } from "class-validator";
-import { 
-  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, 
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  Index,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
 
@@ -19,12 +24,20 @@ export default class User extends EntityWithFactoryMethod {
   @PrimaryGeneratedColumn()
     id: number;
 
+  @Index({
+    unique: true,
+    where : "'auth0Id' IS NOT NULL",
+  })
+
   @CreateDateColumn()
     createdAt?: string;
-  
+
   @UpdateDateColumn()
     updatedAt?: string;
-  
+
+  @Column({ nullable: true })
+    auth0Id?: string;
+
   @Column({ unique: true })
   @IsEmail()
     email: string;
@@ -37,6 +50,7 @@ export default class User extends EntityWithFactoryMethod {
 
   @Column({
     default: UserRole.CONTRACTOR,
+    enum   : UserRole,
   })
     role: UserRole;
 }

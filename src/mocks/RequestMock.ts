@@ -1,17 +1,20 @@
 import { Request } from "express";
+import { AuthData } from "../types/Auth/RequestWithUser";
 
 export type RequestParams = {
   [k in "headers" | "params" | "query"]?: Record<string, string>;
 } & {
   body?: Record<string, string | boolean | number>;
+  auth?: AuthData;
 };
 
-const getRequestMock = (params: RequestParams = {}) => ({
-  body:params.body ?? {},
+const getRequestMock = <T= Request>(params: RequestParams = {}) => ({
+  auth   : params.auth ?? {},
+  body   : params.body ?? {},
   headers: params.headers ?? {},
-  params: params.params ?? {},
-  query: params.query ?? {},
-} as unknown as Request
+  params : params.params ?? {},
+  query  : params.query ?? {},
+} as unknown as T
 );
 
 export default getRequestMock;
