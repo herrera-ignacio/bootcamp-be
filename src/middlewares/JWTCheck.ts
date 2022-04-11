@@ -28,7 +28,6 @@ export class JWTCheckMiddleware implements IMiddleware {
       auth0Issuer,
     } = Config.config();
 
-    console.log(auth0ServerAudience);
     return {
       algorithms     : [ "RS256" ],
       audience       : auth0ServerAudience,
@@ -46,7 +45,6 @@ export class JWTCheckMiddleware implements IMiddleware {
   public use() {
     if (this.handler) return this.handler;
     this.handler = jwt(this.getOptions());
-    console.log(this.handler);
     return this.handler;
   }
 }

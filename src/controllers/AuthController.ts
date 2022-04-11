@@ -33,7 +33,6 @@ class AuthController extends UserController {
   ) => {
     let user: User;
 
-    console.log(req);
     try {
       user = await this.userService.getByKey(
         "auth0Id", req.auth.sub,
