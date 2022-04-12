@@ -36,7 +36,7 @@ describe(
 
         // When
 
-        fakeService.getById.resolves(userMock);
+        fakeService.getByKey.resolves(userMock);
 
         await controller.getById(
           fakeReq, fakeRes as any, null,
@@ -44,9 +44,12 @@ describe(
 
         // Then
 
-        expect(fakeService.getById.calledOnceWithExactly(userMock.id)).toBeTruthy();
-        expect(fakeRes.json.calledOnceWithExactly({ data: new UserMapper().toDto(userMock) }))
-          .toBeTruthy();
+        expect(fakeService.getByKey.calledOnceWithExactly(
+          "id", userMock.id,
+        )).toBeTruthy();
+        expect(fakeRes.json.calledOnceWithExactly({
+          data: new UserMapper().toDto(userMock),
+        })).toBeTruthy();
         expect(fakeRes.status.calledOnceWithExactly(200)).toBeTruthy();
 
       },
@@ -61,13 +64,15 @@ describe(
         const controller = new UserController(fakeService);
 
         // When
-        fakeService.getById.throws(new NotFoundException());
+        fakeService.getByKey.throws(new NotFoundException());
 
         // Then
         await expect(controller.getById(
           fakeReq, fakeRes as any, null,
         )).rejects.toThrow(NotFoundException);
-        expect(fakeService.getById.calledOnceWithExactly(1)).toBeTruthy();
+        expect(fakeService.getByKey.calledOnceWithExactly(
+          "id", 1,
+        )).toBeTruthy();
       },
     );
 
@@ -202,8 +207,8 @@ describe(
         await expect(controller.deleteById(
           fakeReq, fakeRes as any, null,
         )).rejects.toThrow(NotFoundException);
-        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
-          .toBeTruthy();
+        expect(fakeService.deleteById.
+          calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
 
       },
     );
@@ -223,8 +228,8 @@ describe(
         await expect(controller.deleteById(
           fakeReq, fakeRes as any, null,
         )).rejects.toThrow(NotFoundException);
-        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
-          .toBeTruthy();
+        expect(fakeService.deleteById.
+          calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
       },
     );
   },

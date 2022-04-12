@@ -16,8 +16,8 @@ type AppConfig = {
   databaseHost: string;
   databasePort: number;
   databaseName: string;
-  shouldDatabaseSynchronize: boolean;
-  shouldDatabaseLog: boolean;
+  isDatabaseSynchronize: boolean;
+  isDatabaseLogging: boolean;
   auth0ServerAudience: string;
   auth0ClientAudience: string;
   auth0Issuer: string;
@@ -40,11 +40,10 @@ export default class Config implements IMiddleware {
           __dirname, "../../.env",
         ),
       });
-
       Config.appConfig = {
         apiPrefix     : process.env.API_PREFIX || "",
         appDescription: process.env.APP_DESCRIPTION
-          || "API for Agile Engine employees to make reservations",
+        || "API for Agile Engine employees to make reservations",
         appName            : process.env.APP_NAME || "Uncharted-scape-pods",
         appURL             : process.env.APP_URL || "localhost",
         auth0ClientAudience: process.env.AUTH0_CLIENT_AUDIENCE,
@@ -57,13 +56,13 @@ export default class Config implements IMiddleware {
         databasePort       : !Number.isNaN(Number(process.env.DATABASE_PORT))
           ? Number(process.env.DATABASE_PORT)
           : 5432,
-        databaseUser : process.env.DATABASE_USERNAME || "postgres",
-        isCORSEnabled: Boolean(process.env.CORS_ENABLED),
-        port         : !Number.isNaN(Number(process.env.PORT))
+        databaseUser         : process.env.DATABASE_USERNAME || "postgres",
+        isCORSEnabled        : Boolean(process.env.CORS_ENABLED),
+        isDatabaseLogging    : process.env.DATABASE_LOGGING?.toLowerCase() === "true",
+        isDatabaseSynchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
+        port                 : !Number.isNaN(Number(process.env.PORT))
           ? Number(process.env.PORT)
           : 4000,
-        shouldDatabaseLog        : process.env.DATABASE_LOGGING?.toLowerCase() === "true",
-        shouldDatabaseSynchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
       };
     }
 

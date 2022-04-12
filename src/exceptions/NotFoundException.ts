@@ -6,7 +6,8 @@ import HttpException from "./HttpException";
 export default class NotFoundException extends HttpException {
   constructor(message?: string) {
     super(
-      404, message ?? "Entity not found",
+      404,
+      message ?? "Entity not found",
     );
   }
 }

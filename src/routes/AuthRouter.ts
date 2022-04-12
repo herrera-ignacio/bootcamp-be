@@ -25,7 +25,10 @@ class AuthRouter implements IRouter {
      * and persist user if first login.
      */
     this.router.post(
-      `${this.path}/onSuccess`, JWTCheck.use(), OIDCheck.use(), this.authController.onSuccess,
+      `${this.path}/onSuccess`,
+      JWTCheck.use(),
+      OIDCheck.use(),
+      this.authController.onSuccess,
     );
   }
 }
