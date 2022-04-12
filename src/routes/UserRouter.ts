@@ -34,9 +34,6 @@ class UserRouter implements IRouter {
 
     this.router.get(
       `${this.path}/:id(\\d+)`,
-      JWTCheck.use(),
-      authentication.use(),
-      authorization.use(),
       ParamsValidator(BaseParamsValidator),
       this.userController.getById,
     );
