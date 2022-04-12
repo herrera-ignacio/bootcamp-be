@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -23,11 +24,19 @@ export default class User extends EntityWithFactoryMethod {
   @PrimaryGeneratedColumn()
     id: number;
 
+  @Index({
+    unique: true,
+    where : "'auth0Id' IS NOT NULL",
+  })
+
   @CreateDateColumn()
     createdAt?: string;
 
   @UpdateDateColumn()
     updatedAt?: string;
+
+  @Column({ nullable: true })
+    auth0Id?: string;
 
   @Column({ unique: true })
   @IsEmail()
@@ -41,6 +50,7 @@ export default class User extends EntityWithFactoryMethod {
 
   @Column({
     default: UserRole.CONTRACTOR,
+    enum   : UserRole,
   })
     role: UserRole;
 }

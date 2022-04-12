@@ -35,38 +35,26 @@ export default class UserService implements IService<User> {
   }
 
   /**
-   * Get all the specific user by id
-   * @param id
+   * Get one single user from their id, email or auth0Id
   */
 
-  public async getById(id: number): Promise<User> {
-
-
-    const user = await this.getRepository().findOneBy({ id });
+  public async getByKey(
+    key: string,
+    val: number | string,
+  ): Promise<User> {
+    const user = await this.getRepository().findOneBy({ [key]: val });
 
     if (!user) {
       throw new NotFoundException(UserService.notFoundErrorMessage(
-        "id", id,
+        key, val,
       ));
     }
+
     return user;
+
   }
 
-  /**
-   * Get all the specific user by email
-   * @param email
-  */
 
-  public async getByEmail(email: string): Promise<User> {
-    const user = await this.getRepository().findOneBy({ email });
-
-    if (!user) {
-      throw new NotFoundException(UserService.notFoundErrorMessage(
-        "email", email,
-      ));
-    }
-    return user;
-  }
 
   /**
    * Creates a new user
@@ -88,9 +76,10 @@ export default class UserService implements IService<User> {
   public async updateById(
     id: number, userUpdateData: UserUpdateBodyValidator,
   ): Promise<User> {
-    const user = await this.getById(id);
+    const user = await this.getByKey(
+      "id", id,
+    );
     const repo = this.getRepository();
-
 
     return repo.save({
       ...user,

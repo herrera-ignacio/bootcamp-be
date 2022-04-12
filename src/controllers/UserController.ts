@@ -38,7 +38,9 @@ class UserController implements IController {
     req, res,
   ) => {
     const id = Number(req.params.id);
-    const user = await this.userService.getById(id);
+    const user = await this.userService.getByKey(
+      "id", id,
+    );
 
     res.status(200).json({
       data: this.userMapper.toDto(user),
