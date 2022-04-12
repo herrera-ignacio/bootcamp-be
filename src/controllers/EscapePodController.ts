@@ -15,21 +15,21 @@ class EscapePodController implements IController {
 
 
   constructor(
-    userService: EscapePodService = new EscapePodService(),
-    userMapper: IMapper<EscapePod, EscapePodDto> = new EscapePodMapper(),
+    escapePodService: EscapePodService = new EscapePodService(),
+    escapePodMapper: IMapper<EscapePod, EscapePodDto> = new EscapePodMapper(),
   ) {
-    this.escapePodService = userService;
-    this.userMapper = userMapper;
+    this.escapePodService = escapePodService;
+    this.escapePodMapper = escapePodMapper;
   }
 
-  protected readonly userMapper;
+  protected readonly escapePodMapper;
 
   public create: IRequestHandler = async (
     req, res,
   ) => {
-    const user = await this.escapePodService.create(req.body);
+    const escapePod = await this.escapePodService.create(req.body);
 
-    res.status(201).json({ data: this.userMapper.toDto(user) });
+    res.status(201).json({ data: this.escapePodMapper.toDto(escapePod) });
   };
 
 }

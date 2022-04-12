@@ -20,7 +20,7 @@ export default class EscapePodService implements IService<EscapePod> {
 
   private static notFoundErrorMessage = (
     key: string, value: string | number,
-  ) => `User ${key}:${value} not found`;
+  ) => `EscapePod ${key}:${value} not found`;
 
 
   public async create(escapePodData: EscapePodCreateBodyValidator): Promise<EscapePod> {
