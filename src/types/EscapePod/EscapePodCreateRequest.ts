@@ -1,8 +1,6 @@
 import { Request } from "express";
 
-export interface EscapePodCreateBody extends Record<string, string>{
-
-}
+export type EscapePodCreateBody = Record<string, string>;
 
 export interface EscapePodCreateRequest extends Request{
   body: EscapePodCreateBody;
