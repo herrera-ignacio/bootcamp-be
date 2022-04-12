@@ -14,18 +14,18 @@ export default class EscapePodService implements IService<EscapePod> {
   }
 
   getByKey(
-    key: string, val: string | number, options: any,
+    _key: string, _val: string | number, _options: any,
   ): Promise<EscapePod> {
     throw new NotImplementedException();
   }
 
   updateById(
-    id: number, data: any,
+    _id: number, _data: any,
   ): Promise<EscapePod> {
     throw new NotImplementedException();
   }
 
-  deleteById(id: number): Promise<void> {
+  deleteById(_id: number): Promise<void> {
     throw new NotImplementedException();
   }
 
