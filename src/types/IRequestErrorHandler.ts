@@ -8,5 +8,4 @@ export type IRequestErrorHandler = (
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
-) => void;
+  next: NextFunction) => void;

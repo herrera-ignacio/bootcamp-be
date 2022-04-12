@@ -16,7 +16,10 @@ import HttpException from "../exceptions/HttpException";
 class ClientErrorHandler implements IMiddleware {
   // eslint-disable-next-line max-params
   private static handler: IRequestErrorHandler = (
-    err: Error, req: Request, res: Response, next: NextFunction,
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction,
   ) => {
     if (err) {
       console.error(err);

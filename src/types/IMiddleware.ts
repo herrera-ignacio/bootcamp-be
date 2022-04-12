@@ -11,10 +11,13 @@ abstract class IMiddleware {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  static get? = () => (
+
+  static use? = () => (
+
     _req: Request, _res: Response, _next: NextFunction,
   ) => {
   };
 }
 
 export default IMiddleware;
+

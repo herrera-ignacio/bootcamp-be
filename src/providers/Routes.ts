@@ -13,7 +13,8 @@ class Routes implements IMiddleware {
     const { apiPrefix } = Config.config();
 
     _express.use(
-      `${apiPrefix}`, apiRouter,
+      `${apiPrefix}`,
+      apiRouter,
     );
   }
 }

@@ -27,19 +27,24 @@ class AuthController extends UserController {
   }
 
   public onSuccess = async  (
-    req: RequestWithOIDC & RequestWithAuth, res: Response, next: NextFunction,
+    req: RequestWithOIDC & RequestWithAuth,
+    res: Response,
+    next: NextFunction,
   ) => {
     let user: User;
 
     try {
-      user = await this.userService.getByEmail(req.user.email);
+      user = await this.userService.getByKey(
+        "auth0Id", req.auth.sub,
+      );
     } catch (error) {
       if (error instanceof NotFoundException) {
         const { email } = req.user;
 
         user = await this.userService.create({
+          auth0Id: req.auth.sub,
           email,
-          role: UserRole.CONTRACTOR,
+          role   : UserRole.CONTRACTOR,
         });
       } else {
         next(error);

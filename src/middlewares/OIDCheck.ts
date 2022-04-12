@@ -7,12 +7,14 @@ import Config from "../providers/Config";
  * Authentication middleware for id_token
  * Extract JWT from the X-OIDC header as an JWT
  * It will populate req.user
+ * This should only be used during user sign up; X-OIDC is an application token
+ * that will not be present in most requests.
  */
-class OIDCheck extends JWTCheckMiddleware {
+class OIDCheckMiddleware extends JWTCheckMiddleware {
   protected static initMessage = "OIDCheck :: Mounting X-OIDC JWT validator...";
 
   constructor() {
-    super(OIDCheck.initMessage);
+    super(OIDCheckMiddleware.initMessage);
   }
 
   public getOptions(): jwt.Options {
@@ -30,4 +32,4 @@ class OIDCheck extends JWTCheckMiddleware {
   }
 }
 
-export default new OIDCheck();
+export default new OIDCheckMiddleware();

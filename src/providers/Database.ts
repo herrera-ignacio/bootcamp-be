@@ -12,13 +12,13 @@ class Database {
   public static init(): Promise<void> {
     Log.info("Database :: Connecting...");
     const {
-      databasePassword,
-      databaseUser,
       databaseHost,
+      isDatabaseLogging,
       databaseName,
+      databasePassword,
+      isDatabaseSynchronize,
       databasePort,
-      shouldDatabaseLog,
-      shouldDatabaseSynchronize,
+      databaseUser,
     } = Config.config();
 
     return createConnection({
@@ -32,12 +32,13 @@ class Database {
         },
       },
       host       : databaseHost,
-      logging    : shouldDatabaseLog,
+      logging    : isDatabaseLogging,
       password   : databasePassword,
       port       : databasePort,
-      synchronize: shouldDatabaseSynchronize,
+      synchronize: isDatabaseSynchronize,
       type       : "postgres",
       username   : databaseUser,
+
     }).then(() => Log.info("Database :: Connected"));
   }
 
@@ -47,3 +48,4 @@ class Database {
 }
 
 export default Database;
+
