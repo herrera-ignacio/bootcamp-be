@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1649856312943" clover="3.2.0">
-  <project timestamp="1649856312944" name="All files">
-    <metrics statements="546" coveredstatements="470" conditionals="373" coveredconditionals="255" methods="151" coveredmethods="101" elements="1070" coveredelements="826" complexity="0" loc="546" ncloc="546" packages="22" files="52" classes="52"/>
+<coverage generated="1649857997888" clover="3.2.0">
+  <project timestamp="1649857997889" name="All files">
+    <metrics statements="537" coveredstatements="461" conditionals="366" coveredconditionals="249" methods="148" coveredmethods="98" elements="1051" coveredelements="808" complexity="0" loc="537" ncloc="537" packages="22" files="50" classes="50"/>
     <package name="dist.controllers">
       <metrics statements="44" coveredstatements="39" conditionals="18" coveredconditionals="14" methods="12" coveredmethods="10"/>
       <file name="EscapePodController.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/controllers/EscapePodController.js">
@@ -231,24 +231,15 @@
       </file>
     </package>
     <package name="dist.mocks">
-      <metrics statements="44" coveredstatements="34" conditionals="59" coveredconditionals="43" methods="14" coveredmethods="9"/>
-      <file name="EscapePod.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/mocks/EscapePod.js">
-        <metrics statements="6" coveredstatements="6" conditionals="7" coveredconditionals="6" methods="2" coveredmethods="2"/>
-        <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
-        <line num="3" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-      </file>
+      <metrics statements="38" coveredstatements="28" conditionals="52" coveredconditionals="37" methods="12" coveredmethods="7"/>
       <file name="EscapePodMock.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/mocks/EscapePodMock.js">
         <metrics statements="6" coveredstatements="6" conditionals="7" coveredconditionals="6" methods="2" coveredmethods="2"/>
-        <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
-        <line num="3" count="2" type="cond" truecount="3" falsecount="1"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="4" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
+        <line num="2" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="3" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="5" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
       </file>
       <file name="RequestMock.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/mocks/RequestMock.js">
         <metrics statements="3" coveredstatements="3" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
@@ -614,18 +605,12 @@
       </file>
     </package>
     <package name="src.mocks">
-      <metrics statements="19" coveredstatements="19" conditionals="11" coveredconditionals="11" methods="5" coveredmethods="5"/>
-      <file name="EscapePod.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/mocks/EscapePod.ts">
-        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-      </file>
+      <metrics statements="16" coveredstatements="16" conditionals="11" coveredconditionals="11" methods="4" coveredmethods="4"/>
       <file name="EscapePodMock.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/mocks/EscapePodMock.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="4" count="4" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
       </file>
       <file name="RequestMock.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/mocks/RequestMock.ts">
         <metrics statements="2" coveredstatements="2" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>

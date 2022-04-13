@@ -15,7 +15,6 @@ describe(
 
     /* GET REQUESTS */
 
-    /* Get By Id Success */
 
     it(
       "getById success", async () => {
@@ -24,8 +23,6 @@ describe(
         const fakeRepo = stubInterface<IRepository<EscapePod>>();
 
         // When
-
-
         fakeRepo.findOneBy.resolves(escapePodMock);
         sandbox.replace(
           EscapePodService.prototype, "getRepository", () => fakeRepo,
@@ -43,8 +40,6 @@ describe(
       },
 
     );
-
-    /* Get By Id. Not Found. */
 
     it(
       "getById Not Found", async () => {

@@ -22,8 +22,6 @@ describe(
 
     afterEach(() => sandbox.restore());
 
-    /* Test for getById endpoint */
-
     it(
       "getById should return 200 and escapePod on success and found escapePod", async () => {
         // Given
@@ -36,6 +34,8 @@ describe(
         // When
 
         fakeService.getByKey.resolves(escapePodMock);
+
+        // Then
 
         await controller.getById(
           fakeReq, fakeRes as any, null,
@@ -57,6 +57,7 @@ describe(
 
     it(
       "getById should bubble up exception", async () => {
+        // Given
         const fakeService = sinon.createStubInstance(EscapePodService);
         const fakeReq = getRequestMock({ params: { id: "1" } });
         const fakeRes = getResponseMock();
@@ -118,6 +119,8 @@ describe(
     it(
       "updateById should bubble up exception", async () => {
 
+        // Given
+
         const escapePodUpdateBody: EscapePodUpdateBody = { createdAt: "2022-04-12T23:57:29.804Z" };
         const fakeService = sinon.createStubInstance(EscapePodService);
         const fakeReq = getRequestMock({
@@ -125,12 +128,13 @@ describe(
           params: { id: "1" },
         });
 
+        // When
         const fakeRes = getResponseMock();
         const controller = new EscapePodController(fakeService);
 
         fakeService.updateById.throws();
 
-
+        // Then
         await expect(controller.updateById(
           fakeReq, fakeRes as any, null,
         )).rejects.toThrow();

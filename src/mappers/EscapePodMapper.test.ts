@@ -1,5 +1,5 @@
 import { EscapePodMapper } from "./EscapePodMapper";
-import getEscapePodMock from "../mocks/EscapePod";
+import getEscapePodMock from "../mocks/EscapePodMock";
 
 describe(
   "EscapePodMapper", () => {
