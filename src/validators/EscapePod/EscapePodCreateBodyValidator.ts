@@ -4,6 +4,6 @@ import { EscapePodCreateBody } from "../../types/EscapePod/EscapePodCreateReques
    * Validate escapePod's create request body
    */
 export default class EscapePodCreateBodyValidator implements EscapePodCreateBody {
-  [x: string]: string;
+  [x: string]: string | number;
 
 }

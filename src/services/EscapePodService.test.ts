@@ -64,6 +64,50 @@ describe(
     );
 
     it(
+      "create success", async () => {
+        const escapePodMock = getEscapePodMock();
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+        const userInput = {};
+
+        // When
+        fakeRepo.save.resolves(escapePodMock);
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        // Then
+        const res = await new EscapePodService().create(userInput);
+
+        expect(fakeRepo.save.calledOnceWithExactly(userInput)).toBeTruthy();
+        expect(res).toEqual(escapePodMock);
+
+      },
+
+    );
+
+    it(
+      "create fails due to missing params", async () => {
+
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+
+        fakeRepo.save.throws();
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        await expect(new EscapePodService().create({
+          createdAt: undefined,
+          updatedAt: undefined,
+        }))
+          .rejects.
+          toThrow();
+
+        expect(fakeRepo.save.calledOnce).toBeTruthy();
+
+      },
+    );
+
+    it(
       "updateById success", async () => {
         // Given
         const escapePodMock = getEscapePodMock();
