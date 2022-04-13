@@ -6,7 +6,7 @@ import EscapePod from "../entities/EscapePod";
 import EscapePodCreateBodyValidator from "../validators/EscapePod/EscapePodCreateBodyValidator";
 import IRepository from "../types/IRepository";
 import NotImplementedException from "../exceptions/NotImplementedException";
-import EscapePodUpdateBodyValidator from "../validators/EscapePod/EscapePodUpdateBodyValidator"
+import EscapePodUpdateBodyValidator from "../validators/EscapePod/EscapePodUpdateBodyValidator";
 import NotFoundException from "../exceptions/NotFoundException";
 
 
@@ -36,12 +36,16 @@ export default class EscapePodService implements IService<EscapePod> {
   ) => `EscapePod ${key}:${value} not found`;
 
 
-  public async getByKey(key: string, val: string | number, options?:any): Promise<EscapePod>{
+  public async getByKey(
+    key: string, val: string | number,
+  ): Promise<EscapePod> {
 
-    const escapePod = await this.getRepository().findOneBy({ [key]:val });
+    const escapePod = await this.getRepository().findOneBy({ [key]: val });
 
     if (!escapePod) {
-      throw new NotFoundException(EscapePodService.notFoundErrorMessage(key, val));
+      throw new NotFoundException(EscapePodService.notFoundErrorMessage(
+        key, val,
+      ));
     }
 
     return escapePod;
@@ -54,11 +58,15 @@ export default class EscapePodService implements IService<EscapePod> {
     return escapePod;
   }
 
-  public async updateById(id: number, escapedPodData: EscapePodUpdateBodyValidator): Promise<EscapePod>{
+  public async updateById(
+    id: number, escapedPodData: EscapePodUpdateBodyValidator,
+  ): Promise<EscapePod> {
 
-    const escapedPod = await this.getByKey("id", id);
+    const escapedPod = await this.getByKey(
+      "id", id,
+    );
 
-    const repo = this.getRepository()
+    const repo = this.getRepository();
 
     return repo.save({
       ...escapedPod,
@@ -66,6 +74,6 @@ export default class EscapePodService implements IService<EscapePod> {
     });
   }
 
-  
+
 
 }

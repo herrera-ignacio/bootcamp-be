@@ -35,7 +35,7 @@ class EscapePodRouter implements IRouter {
     this.router.patch(
       `${this.path}/:id(\\d+)`,
       ParamsValidator(EscapePodUpdateParamsValidator),
-      
+
       this.escapePodController.updateById,
     );
   }
