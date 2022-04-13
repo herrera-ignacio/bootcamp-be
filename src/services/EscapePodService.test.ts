@@ -164,5 +164,56 @@ describe(
       },
     );
 
+    it(
+      "deleteById success", async () => {
+
+        // Given
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+
+        // when
+        fakeRepo.delete.resolves({
+          affected: 1,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new EscapePodService().deleteById(1);
+
+        // Then
+
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+        expect(res).toBeUndefined();
+      },
+    );
+
+    it(
+      "deleteById should throw when not found", async () => {
+
+        // Given
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+
+        // When
+        fakeRepo.delete.resolves({
+          affected: 0,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const escapePodService = new EscapePodService();
+
+        // Then
+
+        await expect(escapePodService.deleteById(1)).rejects.toThrow(NotFoundException);
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+
+      },
+    );
+
   },
 );
