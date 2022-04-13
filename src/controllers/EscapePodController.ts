@@ -24,6 +24,21 @@ class EscapePodController implements IController {
 
   protected readonly escapePodMapper;
 
+
+  public getById: IRequestHandler = async (
+    req, res,
+  ) => {
+    const id = Number(req.params.id);
+    const escapePod = await this.escapePodService.getByKey(
+      "id", id,
+    );
+
+    res.status(200).json({
+      data: this.escapePodMapper.toDto(escapePod),
+    });
+  };
+
+
   public create: IRequestHandler = async (
     req, res,
   ) => {
@@ -31,6 +46,22 @@ class EscapePodController implements IController {
 
     res.status(201).json({ data: this.escapePodMapper.toDto(escapePod) });
   };
+
+
+  public updateById: IRequestHandler = async (
+    req, res,
+  ) => {
+    const id = Number(req.params.id);
+    const escapedPod = await this.escapePodService.updateById(
+      id,
+      req.body,
+    );
+
+    res.status(200).json({
+      data: this.escapePodMapper.toDto(escapedPod),
+    });
+  };
+
 
 }
 
