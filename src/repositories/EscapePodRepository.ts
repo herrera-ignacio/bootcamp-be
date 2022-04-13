@@ -7,9 +7,6 @@ import EscapePod from "../entities/EscapePod";
  */
 const escapePodRepository = (): Repository <EscapePod> => Database.getConnection()
   .getRepository(EscapePod).extend({
-    findByEmail(email: string): Promise<EscapePod> {
-      return this.findOne({ where: { email } });
-    },
 
     findById(id: number): Promise<EscapePod> {
       return this.findOne({ where: { id } });

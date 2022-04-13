@@ -65,5 +65,68 @@ describe(
       },
     );
 
+    /* UPDATE REQUESTS */
+
+    /* Update By Id. Success */
+
+    it(
+      "updateById success", async () => {
+
+        // Given
+        const escapePodMock = getEscapePodMock();
+        const expectedEscapePod = {
+          ...escapePodMock,
+          createdAt: "2022-04-12T23:57:29.804Z",
+        };
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+        const getByKey = sinon.fake.resolves(escapePodMock);
+
+        // When
+        fakeRepo.save.resolvesArg(0);
+        sandbox.replace(
+          EscapePodService.prototype, "getByKey", getByKey,
+        );
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+        const res = await new EscapePodService().updateById(
+          escapePodMock.id, { createdAt: expectedEscapePod.createdAt },
+        );
+
+        // Then
+        expect(getByKey.calledOnceWithExactly(
+          "id", escapePodMock.id,
+        )).toBeTruthy();
+        expect(fakeRepo.save.calledOnceWithExactly({
+          ...escapePodMock,
+          createdAt: expectedEscapePod.createdAt,
+        })).toBeTruthy();
+        expect(res).toEqual(expectedEscapePod);
+      },
+
+    );
+
+    it(
+      "updateById not found", async () => {
+        // Given
+        const getByKey = sinon.fake.throws(new NotFoundException(""));
+
+        // When
+        sandbox.replace(
+          EscapePodService.prototype, "getByKey", getByKey,
+        );
+        const escapePodService = new EscapePodService();
+
+        // Then
+        await expect(escapePodService.updateById(
+          999, {},
+        )).rejects.toThrow(NotFoundException);
+        expect(getByKey.calledOnceWithExactly(
+          "id", 999,
+        )).toBeTruthy();
+      },
+    );
+
+
   },
 );

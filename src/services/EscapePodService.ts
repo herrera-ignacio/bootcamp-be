@@ -61,12 +61,11 @@ export default class EscapePodService implements IService<EscapePod> {
   public async updateById(
     id: number, escapedPodData: EscapePodUpdateBodyValidator,
   ): Promise<EscapePod> {
+    const repo = this.getRepository();
 
     const escapedPod = await this.getByKey(
       "id", id,
     );
-
-    const repo = this.getRepository();
 
     return repo.save({
       ...escapedPod,
