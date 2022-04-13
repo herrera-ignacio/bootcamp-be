@@ -136,14 +136,6 @@
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
 <a name='L73'></a><a href='#L73'>73</a>
-<<<<<<< HEAD
-<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-=======
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
@@ -156,7 +148,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,10 +172,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<<<<<<< HEAD
-=======
 <span class="cline-any cline-yes">6x</span>
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,13 +181,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<<<<<<< HEAD
-=======
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -221,14 +206,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<<<<<<< HEAD
-=======
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -241,11 +223,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<<<<<<< HEAD
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-=======
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as path from "path";
 import * as dotenv from "dotenv";
 import { Application } from "express";
@@ -264,13 +241,8 @@ type AppConfig = {
   databaseHost: string;
   databasePort: number;
   databaseName: string;
-<<<<<<< HEAD
-  databaseSynchronize: boolean;
-  databaseLogging: boolean;
-=======
   isDatabaseSynchronize: boolean;
   isDatabaseLogging: boolean;
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
   auth0ServerAudience: string;
   auth0ClientAudience: string;
   auth0Issuer: string;
@@ -280,11 +252,7 @@ type AppConfig = {
 /**
  * Handles injecting environment configuration &amp; secrets
  */
-<<<<<<< HEAD
-class Config implements IMiddleware {
-=======
 export default class Config implements IMiddleware {
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
   private static appConfig: AppConfig;
 &nbsp;
   /**
@@ -292,27 +260,6 @@ export default class Config implements IMiddleware {
    */
   public <span class="fstat-no" title="function not covered" >static </span>config(): AppConfig {
 <span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!Config.appConfig) {</span>
-<<<<<<< HEAD
-<span class="cstat-no" title="statement not covered" >      dotenv.config({ path: path.join(__dirname, "../../.env") });</span>
-<span class="cstat-no" title="statement not covered" >      Config.appConfig = {</span>
-        appName: process.env.APP_NAME || "Uncharted-scape-pods",
-        appDescription: process.env.APP_DESCRIPTION || "API for Agile Engine employees to make reservations",
-        port: !Number.isNaN(Number(process.env.PORT)) ? Number(process.env.PORT) : 4000,
-        isCORSEnabled: Boolean(process.env.CORS_ENABLED),
-        appURL: process.env.APP_URL || "localhost",
-        apiPrefix: process.env.API_PREFIX || "",
-        databaseUser: process.env.DATABASE_USERNAME || "postgres",
-        databasePassword: process.env.DATABASE_PASSWORD || "postgres",
-        databaseHost: process.env.DATABASE_HOST || "localhost",
-        databasePort: !Number.isNaN(Number(process.env.DATABASE_PORT)) ? Number(process.env.DATABASE_PORT) : 5432,
-        databaseName: process.env.DATABASE_NAME || "mydb",
-        databaseLogging: process.env.DATABASE_LOGGING?.toLowerCase() === "true",
-        databaseSynchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
-        auth0ServerAudience: process.env.AUTH0_SERVER_AUDIENCE,
-        auth0ClientAudience: process.env.AUTH0_CLIENT_AUDIENCE,
-        auth0Issuer: process.env.AUTH0_ISSUER,
-        auth0jwksUri: process.env.AUTH0_JWKS_URI,
-=======
 <span class="cstat-no" title="statement not covered" >      dotenv.config({</span>
         path: path.join(
           __dirname, "../../.env",
@@ -341,7 +288,6 @@ export default class Config implements IMiddleware {
         port                 : !Number.isNaN(Number(process.env.PORT))
           ? Number(process.env.PORT)
           : 4000,
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
       };
     }
 &nbsp;
@@ -357,11 +303,6 @@ export default class Config implements IMiddleware {
 <span class="cstat-no" title="statement not covered" >    _express.locals.app = this.config();</span>
   }
 }
-<<<<<<< HEAD
-&nbsp;
-export default Config;
-=======
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -369,11 +310,7 @@ export default Config;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-<<<<<<< HEAD
-                at Fri Apr 08 2022 09:24:18 GMT-0500 (Colombia Standard Time)
-=======
-                at Wed Apr 13 2022 08:53:14 GMT-0500 (Colombia Standard Time)
->>>>>>> 015dc2dfaf3fcad7017f3218e80d721b8ef4dbef
+                at Wed Apr 13 2022 14:51:49 GMT-0500 (Colombia Standard Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
