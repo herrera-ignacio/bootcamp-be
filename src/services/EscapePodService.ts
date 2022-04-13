@@ -76,7 +76,7 @@ export default class EscapePodService implements IService<EscapePod> {
 
     const repo = this.getRepository();
 
-    const affectedData = await repo.delete(id);
+    const affectedData = await repo.delete({ id });
 
     if (affectedData.affected === 0) {
       throw new NotFoundException(EscapePodService.notFoundErrorMessage(
