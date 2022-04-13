@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1649854212450" clover="3.2.0">
-  <project timestamp="1649854212451" name="All files">
-    <metrics statements="537" coveredstatements="465" conditionals="366" coveredconditionals="249" methods="148" coveredmethods="104" elements="1051" coveredelements="818" complexity="0" loc="537" ncloc="537" packages="22" files="50" classes="50"/>
+<coverage generated="1649854863939" clover="3.2.0">
+  <project timestamp="1649854863939" name="All files">
+    <metrics statements="537" coveredstatements="461" conditionals="366" coveredconditionals="249" methods="148" coveredmethods="98" elements="1051" coveredelements="808" complexity="0" loc="537" ncloc="537" packages="22" files="50" classes="50"/>
     <package name="dist.controllers">
       <metrics statements="44" coveredstatements="39" conditionals="18" coveredconditionals="14" methods="12" coveredmethods="10"/>
       <file name="EscapePodController.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/controllers/EscapePodController.js">
@@ -284,7 +284,7 @@
       </file>
     </package>
     <package name="dist.providers">
-      <metrics statements="39" coveredstatements="26" conditionals="63" coveredconditionals="31" methods="13" coveredmethods="6"/>
+      <metrics statements="39" coveredstatements="25" conditionals="63" coveredconditionals="31" methods="13" coveredmethods="5"/>
       <file name="Config.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/providers/Config.js">
         <metrics statements="27" coveredstatements="18" conditionals="56" coveredconditionals="25" methods="9" coveredmethods="4"/>
         <line num="2" count="6" type="cond" truecount="4" falsecount="1"/>
@@ -316,7 +316,7 @@
         <line num="77" count="6" type="stmt"/>
       </file>
       <file name="Database.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/providers/Database.js">
-        <metrics statements="12" coveredstatements="8" conditionals="7" coveredconditionals="6" methods="4" coveredmethods="2"/>
+        <metrics statements="12" coveredstatements="7" conditionals="7" coveredconditionals="6" methods="4" coveredmethods="1"/>
         <line num="2" count="6" type="cond" truecount="3" falsecount="0"/>
         <line num="3" count="12" type="cond" truecount="3" falsecount="1"/>
         <line num="5" count="6" type="stmt"/>
@@ -327,14 +327,14 @@
         <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
         <line num="39" count="6" type="stmt"/>
       </file>
     </package>
     <package name="dist.repositories">
-      <metrics statements="17" coveredstatements="14" conditionals="14" coveredconditionals="12" methods="7" coveredmethods="3"/>
+      <metrics statements="17" coveredstatements="14" conditionals="14" coveredconditionals="12" methods="7" coveredmethods="2"/>
       <file name="EscapePodRepository.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/repositories/EscapePodRepository.js">
-        <metrics statements="8" coveredstatements="7" conditionals="7" coveredconditionals="6" methods="3" coveredmethods="2"/>
+        <metrics statements="8" coveredstatements="7" conditionals="7" coveredconditionals="6" methods="3" coveredmethods="1"/>
         <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
         <line num="3" count="4" type="cond" truecount="3" falsecount="1"/>
         <line num="5" count="2" type="stmt"/>
@@ -358,9 +358,9 @@
       </file>
     </package>
     <package name="dist.services">
-      <metrics statements="43" coveredstatements="36" conditionals="20" coveredconditionals="18" methods="16" coveredmethods="11"/>
+      <metrics statements="43" coveredstatements="35" conditionals="20" coveredconditionals="18" methods="16" coveredmethods="10"/>
       <file name="EscapePodService.js" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/dist/services/EscapePodService.js">
-        <metrics statements="20" coveredstatements="16" conditionals="9" coveredconditionals="8" methods="8" coveredmethods="5"/>
+        <metrics statements="20" coveredstatements="15" conditionals="9" coveredconditionals="8" methods="8" coveredmethods="4"/>
         <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
         <line num="3" count="6" type="cond" truecount="3" falsecount="1"/>
         <line num="5" count="2" type="stmt"/>
@@ -369,7 +369,7 @@
         <line num="10" count="2" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
         <line num="26" count="2" type="stmt"/>
         <line num="28" count="2" type="stmt"/>
         <line num="29" count="2" type="cond" truecount="2" falsecount="0"/>
@@ -636,7 +636,7 @@
       </file>
     </package>
     <package name="src.providers">
-      <metrics statements="19" coveredstatements="9" conditionals="21" coveredconditionals="0" methods="5" coveredmethods="1"/>
+      <metrics statements="19" coveredstatements="8" conditionals="21" coveredconditionals="0" methods="5" coveredmethods="0"/>
       <file name="Config.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/providers/Config.ts">
         <metrics statements="10" coveredstatements="4" conditionals="21" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="6" type="stmt"/>
@@ -651,7 +651,7 @@
         <line num="78" count="0" type="stmt"/>
       </file>
       <file name="Database.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/providers/Database.ts">
-        <metrics statements="9" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <metrics statements="9" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="1" count="6" type="stmt"/>
         <line num="5" count="6" type="stmt"/>
         <line num="6" count="6" type="stmt"/>
@@ -659,14 +659,14 @@
         <line num="22" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
         <line num="50" count="6" type="stmt"/>
       </file>
     </package>
     <package name="src.repositories">
-      <metrics statements="12" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="1"/>
+      <metrics statements="12" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
       <file name="EscapePodRepository.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/repositories/EscapePodRepository.ts">
-        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
@@ -685,16 +685,16 @@
       </file>
     </package>
     <package name="src.services">
-      <metrics statements="39" coveredstatements="32" conditionals="3" coveredconditionals="3" methods="14" coveredmethods="9"/>
+      <metrics statements="39" coveredstatements="31" conditionals="3" coveredconditionals="3" methods="14" coveredmethods="8"/>
       <file name="EscapePodService.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/services/EscapePodService.ts">
-        <metrics statements="18" coveredstatements="14" conditionals="1" coveredconditionals="1" methods="7" coveredmethods="4"/>
+        <metrics statements="18" coveredstatements="13" conditionals="1" coveredconditionals="1" methods="7" coveredmethods="3"/>
         <line num="3" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
         <line num="10" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
         <line num="34" count="2" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="43" count="2" type="stmt"/>
@@ -703,9 +703,9 @@
         <line num="51" count="1" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
         <line num="58" count="0" type="stmt"/>
-        <line num="64" count="2" type="stmt"/>
-        <line num="66" count="1" type="stmt"/>
-        <line num="70" count="1" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="71" count="1" type="stmt"/>
       </file>
       <file name="UserService.ts" path="/mnt/c/Users/JUAN DAVID/AgileEngine/uncharted-scaped-pods-project/src/services/UserService.ts">
         <metrics statements="21" coveredstatements="18" conditionals="2" coveredconditionals="2" methods="7" coveredmethods="5"/>
