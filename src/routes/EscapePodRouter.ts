@@ -41,8 +41,8 @@ class EscapePodRouter implements IRouter {
       this.escapePodController.updateById,
     );
 
-    this.router.post(
-      this.path, BodyValidator(EscapePodCreateBodyValidator), this.escapePodController.create,
+    this.router.delete(
+      `${this.path}/:id(\\d+)`, ParamsValidator(BaseParamsValidator), this.escapePodController.deleteById,
     );
 
   }
