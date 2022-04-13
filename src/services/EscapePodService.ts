@@ -18,6 +18,7 @@ export default class EscapePodService implements IService<EscapePod> {
 
 
   deleteById(_id: number): Promise<void> {
+
     throw new NotImplementedException();
   }
 
@@ -51,6 +52,7 @@ export default class EscapePodService implements IService<EscapePod> {
     return escapePod;
 
   }
+
 
   public async create(escapePodData: EscapePodCreateBodyValidator): Promise<EscapePod> {
     const escapePod = await this.getRepository().save(escapePodData);

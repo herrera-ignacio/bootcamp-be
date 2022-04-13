@@ -2,12 +2,13 @@ import sinon from "sinon";
 import { stubInterface } from "ts-sinon";
 import NotFoundException from "../exceptions/NotFoundException";
 import EscapePod  from "../entities/EscapePod";
-import getEscapePodMock from "../mocks/EscapePod";
+import getEscapePodMock from "../mocks/EscapePodMock";
 import IRepository from "../types/IRepository";
 import EscapePodService from "./EscapePodService";
 
+
 describe(
-  "UserService", () => {
+  "EscapePodService", () => {
     const sandbox = sinon.createSandbox();
 
     afterEach(() => sandbox.restore());
@@ -23,6 +24,8 @@ describe(
         const fakeRepo = stubInterface<IRepository<EscapePod>>();
 
         // When
+
+
         fakeRepo.findOneBy.resolves(escapePodMock);
         sandbox.replace(
           EscapePodService.prototype, "getRepository", () => fakeRepo,
@@ -55,8 +58,8 @@ describe(
         );
 
         const escapePodService = new EscapePodService();
-        // Then
 
+        // Then
         await expect(escapePodService.getByKey(
           "id", 999,
         )).rejects.toThrow(NotFoundException);
@@ -65,13 +68,8 @@ describe(
       },
     );
 
-    /* UPDATE REQUESTS */
-
-    /* Update By Id. Success */
-
     it(
       "updateById success", async () => {
-
         // Given
         const escapePodMock = getEscapePodMock();
         const expectedEscapePod = {
@@ -126,7 +124,6 @@ describe(
         )).toBeTruthy();
       },
     );
-
 
   },
 );

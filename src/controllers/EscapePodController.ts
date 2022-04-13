@@ -24,6 +24,7 @@ class EscapePodController implements IController {
 
   protected readonly escapePodMapper;
 
+
   public getById: IRequestHandler = async (
     req, res,
   ) => {
@@ -37,6 +38,7 @@ class EscapePodController implements IController {
     });
   };
 
+
   public create: IRequestHandler = async (
     req, res,
   ) => {
@@ -44,6 +46,7 @@ class EscapePodController implements IController {
 
     res.status(201).json({ data: this.escapePodMapper.toDto(escapePod) });
   };
+
 
   public updateById: IRequestHandler = async (
     req, res,
@@ -58,6 +61,7 @@ class EscapePodController implements IController {
       data: this.escapePodMapper.toDto(escapedPod),
     });
   };
+
 
 }
 
