@@ -7,6 +7,7 @@ import ParamsValidator from "../middlewares/ParamsValidator";
 import EscapePodUpdateParamsValidator from "../validators/EscapePod/EscapePodUpdateParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
 
+
 class EscapePodRouter implements IRouter {
 
   public path = "/escapePods";
@@ -23,6 +24,7 @@ class EscapePodRouter implements IRouter {
 
   initializeRoutes() {
 
+
     this.router.get(
       `${this.path}/:id(\\d+)`,
       ParamsValidator(BaseParamsValidator),
@@ -38,6 +40,10 @@ class EscapePodRouter implements IRouter {
 
       this.escapePodController.updateById,
     );
+
+    this.router.post(
+      this.path, BodyValidator(EscapePodCreateBodyValidator), this.escapePodController.create,
+
   }
 }
 
