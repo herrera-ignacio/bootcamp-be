@@ -43,6 +43,7 @@ class EscapePodRouter implements IRouter {
 
     this.router.post(
       this.path, BodyValidator(EscapePodCreateBodyValidator), this.escapePodController.create,
+    );
 
   }
 }
