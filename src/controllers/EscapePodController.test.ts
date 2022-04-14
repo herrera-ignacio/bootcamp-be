@@ -24,6 +24,29 @@ describe(
     afterEach(() => sandbox.restore());
 
     it(
+      "getAll should call EscapePodsService and return 200", async () => {
+
+        // Given
+        const escapePodsMock = [ getEscapePodMock(), getEscapePodMock(), getEscapePodMock() ];
+        const fakeService = sinon.createStubInstance(EscapePodService);
+        const fakeReq = getRequestMock();
+        const fakeRes = getResponseMock();
+        const controller = new EscapePodController(fakeService);
+
+        // When
+        fakeService.getAll.resolves(escapePodsMock);
+
+        await controller.getAll(
+          fakeReq, fakeRes as any, null,
+        );
+
+        // Then
+        expect(fakeService.getAll.called).toBeTruthy();
+        expect(fakeRes.status.calledOnceWithExactly(200)).toBeTruthy();
+      },
+    );
+
+    it(
       "getById should return 200 and escapePod on success and found escapePod", async () => {
         // Given
         const escapePodMock = getEscapePodMock();
