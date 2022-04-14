@@ -62,6 +62,17 @@ class EscapePodController implements IController {
     });
   };
 
+  public deleteById: IRequestHandler = async (
+    req, res,
+  ) => {
+    const id = Number(req.params.id);
+
+    await this.escapePodService.deleteById(id);
+
+    res.sendStatus(204);
+
+  };
+
 
 }
 

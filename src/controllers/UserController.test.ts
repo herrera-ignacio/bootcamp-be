@@ -23,7 +23,6 @@ describe(
 
     afterEach(() => sandbox.restore());
 
-    /* Test for getById endpoint */
 
     it(
       "getById should return 200 and user on success and found user", async () => {
@@ -186,30 +185,26 @@ describe(
     );
 
 
-    /* Test for delete endpoint */
 
     it(
-      "deleteById should return 204 status on success", async () => {
+      "deleteById should return 204 on success", async () => {
         // Given
-
-        const fakeService = sinon.createStubInstance(UserService);
+        const fakeService = sandbox.createStubInstance(UserService);
         const fakeReq = getRequestMock({ params: { id: "1" } });
         const fakeRes = getResponseMock();
         const controller = new UserController(fakeService);
 
-
         // When
+        fakeService.deleteById.resolves();
 
-        fakeService.deleteById.throws(new NotFoundException());
+        await controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        );
 
         // Then
-
-        await expect(controller.deleteById(
-          fakeReq, fakeRes as any, null,
-        )).rejects.toThrow(NotFoundException);
-        expect(fakeService.deleteById.
-          calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
-
+        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
+          .toBeTruthy();
+        expect(fakeRes.sendStatus.calledOnceWithExactly(204)).toBeTruthy();
       },
     );
 
