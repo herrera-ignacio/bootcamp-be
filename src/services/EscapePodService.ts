@@ -5,22 +5,11 @@ import { IService } from "../types/IService";
 import EscapePod from "../entities/EscapePod";
 import EscapePodCreateBodyValidator from "../validators/EscapePod/EscapePodCreateBodyValidator";
 import IRepository from "../types/IRepository";
-import NotImplementedException from "../exceptions/NotImplementedException";
 import EscapePodUpdateBodyValidator from "../validators/EscapePod/EscapePodUpdateBodyValidator";
 import NotFoundException from "../exceptions/NotFoundException";
 
 
 export default class EscapePodService implements IService<EscapePod> {
-  getAll(): Promise<EscapePod[]> {
-    throw new NotImplementedException();
-  }
-
-
-
-  deleteById(_id: number): Promise<void> {
-
-    throw new NotImplementedException();
-  }
 
   public getRepository(): IRepository<EscapePod> {
     return escapePodRepository();
@@ -36,6 +25,11 @@ export default class EscapePodService implements IService<EscapePod> {
     key: string, value: string | number,
   ) => `EscapePod ${key}:${value} not found`;
 
+  public async getAll(): Promise<EscapePod[]> {
+    const escapePods = await this.getRepository().find();
+
+    return escapePods;
+  }
 
   public async getByKey(
     key: string, val: string | number,
@@ -74,6 +68,21 @@ export default class EscapePodService implements IService<EscapePod> {
       ...escapedPod,
       ...escapedPodData,
     });
+  }
+
+  public async deleteById(id: number): Promise<void> {
+
+    const repo = this.getRepository();
+
+    const affectedData = await repo.delete({ id });
+
+    if (affectedData.affected === 0) {
+      throw new NotFoundException(EscapePodService.notFoundErrorMessage(
+        "id",
+        id,
+      ));
+    }
+
   }
 
 

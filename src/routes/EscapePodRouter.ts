@@ -6,6 +6,9 @@ import EscapePodCreateBodyValidator from "../validators/EscapePod/EscapePodCreat
 import ParamsValidator from "../middlewares/ParamsValidator";
 import EscapePodUpdateParamsValidator from "../validators/EscapePod/EscapePodUpdateParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
+import JWTCheck from "../middlewares/JWTCheck";
+import Authentication from "../middlewares/Authentication";
+import Authorization from "../middlewares/Authorization";
 
 
 class EscapePodRouter implements IRouter {
@@ -23,7 +26,9 @@ class EscapePodRouter implements IRouter {
   }
 
   initializeRoutes() {
-
+    this.router.get(
+      this.path, this.escapePodController.getAll,
+    );
 
     this.router.get(
       `${this.path}/:id(\\d+)`,
@@ -32,17 +37,29 @@ class EscapePodRouter implements IRouter {
     );
 
     this.router.post(
-      this.path, BodyValidator(EscapePodCreateBodyValidator), this.escapePodController.create,
+      this.path,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
+      BodyValidator(EscapePodCreateBodyValidator),
+      this.escapePodController.create,
     );
     this.router.patch(
       `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
       ParamsValidator(EscapePodUpdateParamsValidator),
-
       this.escapePodController.updateById,
     );
 
-    this.router.post(
-      this.path, BodyValidator(EscapePodCreateBodyValidator), this.escapePodController.create,
+    this.router.delete(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
+      ParamsValidator(BaseParamsValidator),
+      this.escapePodController.deleteById,
     );
 
   }
