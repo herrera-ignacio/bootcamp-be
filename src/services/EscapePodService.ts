@@ -17,10 +17,6 @@ export default class EscapePodService implements IService<EscapePod> {
 
 
 
-  deleteById(_id: number): Promise<void> {
-
-    throw new NotImplementedException();
-  }
 
   public getRepository(): IRepository<EscapePod> {
     return escapePodRepository();
@@ -74,6 +70,21 @@ export default class EscapePodService implements IService<EscapePod> {
       ...escapedPod,
       ...escapedPodData,
     });
+  }
+
+  public async deleteById(id: number): Promise<void> {
+
+    const repo = this.getRepository();
+
+    const affectedData = await repo.delete({ id });
+
+    if (affectedData.affected === 0) {
+      throw new NotFoundException(EscapePodService.notFoundErrorMessage(
+        "id",
+        id,
+      ));
+    }
+
   }
 
 

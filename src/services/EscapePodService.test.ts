@@ -64,6 +64,50 @@ describe(
     );
 
     it(
+      "create success", async () => {
+        const escapePodMock = getEscapePodMock();
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+        const userInput = {};
+
+        // When
+        fakeRepo.save.resolves(escapePodMock);
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        // Then
+        const res = await new EscapePodService().create(userInput);
+
+        expect(fakeRepo.save.calledOnceWithExactly(userInput)).toBeTruthy();
+        expect(res).toEqual(escapePodMock);
+
+      },
+
+    );
+
+    it(
+      "create fails due to missing params", async () => {
+
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+
+        fakeRepo.save.throws();
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        await expect(new EscapePodService().create({
+          createdAt: undefined,
+          updatedAt: undefined,
+        }))
+          .rejects.
+          toThrow();
+
+        expect(fakeRepo.save.calledOnce).toBeTruthy();
+
+      },
+    );
+
+    it(
       "updateById success", async () => {
         // Given
         const escapePodMock = getEscapePodMock();
@@ -117,6 +161,57 @@ describe(
         expect(getByKey.calledOnceWithExactly(
           "id", 999,
         )).toBeTruthy();
+      },
+    );
+
+    it(
+      "deleteById success", async () => {
+
+        // Given
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+
+        // when
+        fakeRepo.delete.resolves({
+          affected: 1,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new EscapePodService().deleteById(1);
+
+        // Then
+
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+        expect(res).toBeUndefined();
+      },
+    );
+
+    it(
+      "deleteById should throw when not found", async () => {
+
+        // Given
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+
+        // When
+        fakeRepo.delete.resolves({
+          affected: 0,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const escapePodService = new EscapePodService();
+
+        // Then
+
+        await expect(escapePodService.deleteById(1)).rejects.toThrow(NotFoundException);
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+
       },
     );
 
