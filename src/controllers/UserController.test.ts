@@ -23,7 +23,6 @@ describe(
 
     afterEach(() => sandbox.restore());
 
-    /* Test for getById endpoint */
 
     it(
       "getById should return 200 and user on success and found user", async () => {
@@ -186,7 +185,6 @@ describe(
     );
 
 
-    /* Test for delete endpoint */
 
     it(
       "deleteById should return 204 on success", async () => {
