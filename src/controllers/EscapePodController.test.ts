@@ -205,27 +205,24 @@ describe(
     );
 
     it(
-      "deleteById should return 204 status on success", async () => {
-
+      "deleteById should return 204 on success", async () => {
         // Given
-
-        const fakeService = sinon.createStubInstance(EscapePodService);
+        const fakeService = sandbox.createStubInstance(EscapePodService);
         const fakeReq = getRequestMock({ params: { id: "1" } });
         const fakeRes = getResponseMock();
         const controller = new EscapePodController(fakeService);
 
         // When
+        fakeService.deleteById.resolves();
 
-        fakeService.deleteById.throws(new NotFoundException());
+        await controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        );
 
         // Then
-
-        await expect(controller.deleteById(
-          fakeReq, fakeRes as any, null,
-        )).rejects.toThrow(NotFoundException);
-        expect(fakeService.deleteById.
-          calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
-
+        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
+          .toBeTruthy();
+        expect(fakeRes.sendStatus.calledOnceWithExactly(204)).toBeTruthy();
       },
     );
 
