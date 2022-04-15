@@ -1,7 +1,9 @@
 import { Request } from "express";
 
-export type RoomCreateBody = Record<string, string>;
+export interface RoomCreateBody extends Record<string, string>{
+  name: string,
+}
 
-export interface EscapePodCreateRequest extends Request{
+export interface RoomCreateRequest extends Request{
   body: RoomCreateBody;
 }

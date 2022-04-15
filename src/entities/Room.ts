@@ -14,10 +14,10 @@ export default class Room extends EntityWithFactoryMethod {
     id: number;
 
   @CreateDateColumn()
-    createdAt: string;
+    createdAt?: string;
 
   @UpdateDateColumn()
-    updatedAt: string;
+    updatedAt?: string;
 
   @Column()
     name: string;
