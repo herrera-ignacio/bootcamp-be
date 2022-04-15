@@ -3,6 +3,9 @@ import IRouter from "../types/IRouter";
 import RoomController from "../controllers/RoomController";
 import BodyValidator from "../middlewares/BodyValidator";
 import RoomCreateBodyValidator from "../validators/Room/RoomCreateBodyValidator";
+import JWTCheck from "../middlewares/JWTCheck";
+import Authentication from "../middlewares/Authentication";
+import Authorization from "../middlewares/Authorization";
 
 class RoomRouter implements IRouter {
 
@@ -21,6 +24,9 @@ class RoomRouter implements IRouter {
 
     this.router.post(
       this.path,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
       BodyValidator(RoomCreateBodyValidator),
       this.roomController.create,
     );
