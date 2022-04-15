@@ -36,25 +36,5 @@ describe(
 
     );
 
-    it(
-      "create fails due to missing params", async () => {
-
-        const fakeRepo = stubInterface<IRepository<Room>>();
-
-        fakeRepo.save.throws();
-        sandbox.replace(
-          RoomService.prototype, "getRepository", () => fakeRepo,
-        );
-
-        await expect(new RoomService().create({
-          name: undefined,
-        }))
-          .rejects.
-          toThrow();
-
-        expect(fakeRepo.save.calledOnce).toBeTruthy();
-
-      },
-    );
   },
 );
