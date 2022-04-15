@@ -8,7 +8,7 @@ import NotImplementedException from "../exceptions/NotImplementedException";
 
 class RoomService implements IService<Room> {
 
-  private getRepository(): IRepository<Room> {
+  public getRepository(): IRepository<Room> {
     return roomRepository();
   }
 
