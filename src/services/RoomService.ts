@@ -5,6 +5,7 @@ import IRepository from "../types/IRepository";
 import { IService } from "../types/IService";
 import NotImplementedException from "../exceptions/NotImplementedException";
 import NotFoundException from "../exceptions/NotFoundException";
+import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
 
 
 class RoomService implements IService<Room> {
@@ -45,8 +46,20 @@ class RoomService implements IService<Room> {
 
   }
 
-  updateById(): Promise<Room> {
-    throw new NotImplementedException();
+  public async updateById(
+    id: number,
+    roomData: RoomUpdateBodyValidator,
+  ): Promise<Room> {
+    const room = await this.getByKey(
+      "id", id,
+    );
+    const repo = this.getRepository();
+
+    return repo.save({
+      ...room,
+      ...roomData,
+    });
+
   }
 
   deleteById(): Promise<void> {
