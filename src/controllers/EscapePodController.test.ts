@@ -43,7 +43,7 @@ describe(
         // Then
         expect(fakeService.getAll.called).toBeTruthy();
         expect(fakeRes.json.calledOnceWithExactly({
-          data: escapePodsMock,
+          data: escapePodsMock.map((escapePod) => new EscapePodMapper().toDto(escapePod)),
         })).toBeTruthy();
         expect(fakeRes.status.calledOnceWithExactly(200)).toBeTruthy();
       },

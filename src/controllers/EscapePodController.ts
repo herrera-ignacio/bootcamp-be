@@ -30,7 +30,7 @@ class EscapePodController implements IController {
     const escapePods = await this.escapePodService.getAll();
 
     res.status(200).json({
-      data: escapePods,
+      data: escapePods.map((escapedPod) => this.escapePodMapper.toDto(escapedPod)),
     });
   };
 
