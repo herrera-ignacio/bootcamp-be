@@ -5,18 +5,11 @@ import { IService } from "../types/IService";
 import EscapePod from "../entities/EscapePod";
 import EscapePodCreateBodyValidator from "../validators/EscapePod/EscapePodCreateBodyValidator";
 import IRepository from "../types/IRepository";
-import NotImplementedException from "../exceptions/NotImplementedException";
 import EscapePodUpdateBodyValidator from "../validators/EscapePod/EscapePodUpdateBodyValidator";
 import NotFoundException from "../exceptions/NotFoundException";
 
 
 export default class EscapePodService implements IService<EscapePod> {
-  getAll(): Promise<EscapePod[]> {
-    throw new NotImplementedException();
-  }
-
-
-
 
   public getRepository(): IRepository<EscapePod> {
     return escapePodRepository();
@@ -32,6 +25,11 @@ export default class EscapePodService implements IService<EscapePod> {
     key: string, value: string | number,
   ) => `EscapePod ${key}:${value} not found`;
 
+  public async getAll(): Promise<EscapePod[]> {
+    const escapePods = await this.getRepository().find();
+
+    return escapePods;
+  }
 
   public async getByKey(
     key: string, val: string | number,
