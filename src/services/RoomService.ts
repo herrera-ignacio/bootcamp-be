@@ -16,7 +16,7 @@ class RoomService implements IService<Room> {
 
   private static notFoundErrorMessage = (
     key: string, value: string | number,
-  ) => `User ${key}:${value} not found`;
+  ) => `room ${key}:${value} not found`;
 
   getAll(): Promise<Room[]> {
     throw new NotImplementedException();
@@ -40,9 +40,9 @@ class RoomService implements IService<Room> {
 
   public async create( roomData: RoomCreateBodyValidator ): Promise<Room> {
     const repo = this.getRepository();
-    const user = await repo.save(roomData);
+    const room = await repo.save(roomData);
 
-    return user;
+    return room;
 
   }
 

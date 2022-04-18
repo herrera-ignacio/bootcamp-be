@@ -42,6 +42,7 @@ class RoomController implements IController {
 
     res.status(201).json({
       data: this.roomMapper.toDto(room),
+
     });
 
   };
@@ -58,6 +59,7 @@ class RoomController implements IController {
 
     res.status(200).json({
       data: this.roomMapper.toDto(room),
+
     });
 
   };
