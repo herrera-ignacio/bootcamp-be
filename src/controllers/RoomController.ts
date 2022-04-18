@@ -23,8 +23,9 @@ class RoomController implements IController {
     req,
     res,
   ) => {
+    const id = Number(req.params.id);
     const user = await this.roomService.getByKey(
-      "id", req.params.id,
+      "id", id,
     );
 
     res.status(200).json({
