@@ -17,6 +17,26 @@ describe(
 
 
     it(
+      "getAll should return an array of all escapePods when called", async () => {
+        // Given
+        const escapePodsMock = [ getEscapePodMock(), getEscapePodMock(), getEscapePodMock() ];
+        const fakeRepo = stubInterface<IRepository<EscapePod>>();
+
+        // When
+        fakeRepo.find.resolves(escapePodsMock);
+        sandbox.replace(
+          EscapePodService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new EscapePodService().getAll();
+
+        // Then
+        expect(fakeRepo.find.called).toBeTruthy();
+        expect(res).toEqual(escapePodsMock);
+      },
+    );
+
+    it(
       "getById success", async () => {
         // Given
         const escapePodMock = getEscapePodMock();
