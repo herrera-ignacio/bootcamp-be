@@ -1,6 +1,8 @@
 import { Request } from "express";
 
-export type RoomUpdateBody = Record<string, string>;
+export interface RoomUpdateBody extends Record<string, string>{
+  name: string,
+}
 
 export interface RoomUpdateRequest extends Request{
   body: RoomUpdateBody;

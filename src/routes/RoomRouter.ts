@@ -6,8 +6,9 @@ import RoomCreateBodyValidator from "../validators/Room/RoomCreateBodyValidator"
 import JWTCheck from "../middlewares/JWTCheck";
 import Authentication from "../middlewares/Authentication";
 import Authorization from "../middlewares/Authorization";
-import paramsValidator from "../middlewares/ParamsValidator";
+import ParamsValidator from "../middlewares/ParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
+import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
 
 class RoomRouter implements IRouter {
 
@@ -26,7 +27,7 @@ class RoomRouter implements IRouter {
 
     this.router.get(
       `${this.path}/:id(\\d+)`,
-      paramsValidator(BaseParamsValidator),
+      ParamsValidator(BaseParamsValidator),
       this.roomController.getById,
     );
 
@@ -41,6 +42,11 @@ class RoomRouter implements IRouter {
 
     this.router.patch(
       `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
+      ParamsValidator(BaseParamsValidator),
+      BodyValidator(RoomUpdateBodyValidator),
       this.roomController.updateById,
     );
 

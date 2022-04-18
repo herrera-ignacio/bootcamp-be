@@ -143,7 +143,7 @@ describe(
 
         // Then
         await expect(roomService.updateById(
-          999, {},
+          999, { name: "" },
         )).rejects.toThrow(NotFoundException);
         expect(getByKey.calledOnceWithExactly(
           "id", 999,

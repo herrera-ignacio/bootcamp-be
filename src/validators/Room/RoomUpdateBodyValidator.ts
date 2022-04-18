@@ -1,3 +1,7 @@
+import {
+  IsNotEmpty,
+  IsString,
+} from "class-validator";
 import { RoomUpdateBody } from "../../types/Room/RoomUpdateRequest";
 
 /**
@@ -5,4 +9,8 @@ import { RoomUpdateBody } from "../../types/Room/RoomUpdateRequest";
    */
 export default class RoomUpdateBodyValidator implements RoomUpdateBody {
   [x: string]: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public name: string;
 }
