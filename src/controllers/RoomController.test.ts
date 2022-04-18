@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // noinspection JSVoidFunctionReturnValueUsed
 import sinon from "sinon";
 import getRoomMock from "../mocks/RoomMock";
@@ -11,6 +12,8 @@ import RoomService from "../services/RoomService";
 import RoomController from "./RoomController";
 import { RoomMapper } from "../mappers/RoomMapper";
 import NotFoundException from "../exceptions/NotFoundException";
+import { RoomUpdateBody } from "../types/Room/RoomUpdateRequest";
+import Room from "../entities/Room";
 
 describe(
   "RoomController", () => {
@@ -134,6 +137,83 @@ describe(
         expect(fakeService.create.calledOnce).toBeTruthy();
 
       },
+    );
+
+    it(
+      "UpdateById should return 200 and room on success", async () => {
+
+        // Given
+        const roomUpdateBody: RoomUpdateBody = {
+          name: "Dummy room",
+        };
+
+        const expectedRoom = {
+          ...getRoomMock(),
+          ...roomUpdateBody,
+        } as Room;
+
+        const fakeService = sinon.createStubInstance(RoomService);
+        const fakeReq: RoomCreateRequest = getRequestMock({
+          body  : roomUpdateBody,
+          params: { id: "1" },
+        });
+
+        const fakeRes = getResponseMock();
+        const controller = new RoomController(fakeService);
+
+        // When
+
+        fakeService.updateById.resolves(expectedRoom);
+
+        await controller.updateById(
+          fakeReq, fakeRes as any, null,
+        );
+
+        // Then
+
+        expect(fakeService.updateById.calledOnceWithExactly(
+          Number(fakeReq.params.id), roomUpdateBody,
+        )).toBeTruthy();
+
+        expect(fakeRes.json.calledOnceWithExactly({
+          data: new RoomMapper().toDto(expectedRoom),
+        })).toBeTruthy();
+
+        expect(fakeRes.status.calledOnceWithExactly(200)).toBeTruthy();
+
+
+      },
+    );
+
+    it(
+      "updateById should bubble up exception", async () => {
+
+        // Given
+
+        const roomUpdateBody: RoomUpdateBody = {
+          name: "Dummy room",
+        };
+        const fakeService = sinon.createStubInstance(RoomService);
+        const fakeReq = getRequestMock({
+          body  : roomUpdateBody,
+          params: { id: "1" },
+        });
+
+        // When
+        const fakeRes = getResponseMock();
+        const controller = new RoomController(fakeService);
+
+        fakeService.updateById.throws();
+
+        // Then
+        await expect(controller.updateById(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow();
+        expect(fakeService.updateById.calledOnceWithExactly(
+          Number(fakeReq.params.id), roomUpdateBody,
+        )).toBeTruthy();
+      },
+
     );
   },
 );

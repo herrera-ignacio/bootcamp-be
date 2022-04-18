@@ -90,5 +90,68 @@ describe(
 
     );
 
+    it(
+      "updateById success", async () => {
+        // Given
+        const roomMock = getRoomMock();
+        const fakeRepo = stubInterface<IRepository<Room>>();
+        const expectedRoom = {
+          ...roomMock,
+          name: "Dummy room",
+        };
+        const getByKey = sinon.fake.resolves(roomMock);
+
+        // When
+        fakeRepo.save.resolvesArg(0);
+        sandbox.replace(
+          RoomService.prototype, "getByKey", getByKey,
+        );
+        sandbox.replace(
+          RoomService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new RoomService().updateById(
+          roomMock.id, { name: expectedRoom.name },
+        );
+
+        // Then
+
+        expect(getByKey.calledOnceWithExactly(
+          "id", roomMock.id,
+        )).toBeTruthy();
+        expect(fakeRepo.save.calledOnceWithExactly({
+          ...roomMock,
+          name: expectedRoom.name,
+        })).toBeTruthy();
+        expect(res).toEqual(expectedRoom);
+      },
+    );
+
+    it(
+      "updateById not found", async () => {
+        // Given
+
+        const getByKey = sinon.fake.throws(new NotFoundException(""));
+
+        // When
+
+        sandbox.replace(
+          RoomService.prototype, "getByKey", getByKey,
+        );
+
+        const roomService = new RoomService();
+
+        // Then
+        await expect(roomService.updateById(
+          999, {},
+        )).rejects.toThrow(NotFoundException);
+        expect(getByKey.calledOnceWithExactly(
+          "id", 999,
+        )).toBeTruthy();
+
+      },
+
+    );
+
   },
 );
