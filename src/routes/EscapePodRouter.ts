@@ -27,6 +27,10 @@ class EscapePodRouter implements IRouter {
 
   initializeRoutes() {
 
+    this.router.get(
+      `${this.path}`,
+      this.escapePodController.getAll,
+    );
 
     this.router.get(
       `${this.path}/:id(\\d+)`,
