@@ -39,6 +39,11 @@ class RoomRouter implements IRouter {
       this.roomController.create,
     );
 
+    this.router.patch(
+      `${this.path}/:id(\\d+)`,
+      this.roomController.updateById,
+    );
+
   }
 
 }

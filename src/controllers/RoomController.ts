@@ -24,12 +24,12 @@ class RoomController implements IController {
     res,
   ) => {
     const id = Number(req.params.id);
-    const user = await this.roomService.getByKey(
+    const room = await this.roomService.getByKey(
       "id", id,
     );
 
     res.status(200).json({
-      data: this.roomMapper.toDto(user),
+      data: this.roomMapper.toDto(room),
     });
   };
 
@@ -38,10 +38,26 @@ class RoomController implements IController {
     res,
   ) => {
 
-    const user = await this.roomService.create(req.body);
+    const room = await this.roomService.create(req.body);
 
     res.status(201).json({
-      data: this.roomMapper.toDto(user),
+      data: this.roomMapper.toDto(room),
+    });
+
+  };
+
+  public updateById: IRequestHandler = async (
+    req,
+    res,
+  ) => {
+    const id = Number(req.params.id);
+    const room = await this.roomService.updateById(
+      id,
+      req.body,
+    );
+
+    res.status(200).json({
+      data: this.roomMapper.toDto(room),
     });
 
   };
