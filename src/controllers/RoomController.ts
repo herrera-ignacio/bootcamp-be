@@ -19,6 +19,17 @@ class RoomController implements IController {
 
   }
 
+  public getAll: IRequestHandler = async (
+    req,
+    res,
+  ) => {
+    const rooms = await this.roomService.getAll();
+
+    res.status(200).json({
+      data: rooms.map((room) => this.roomMapper.toDto(room)),
+    });
+  };
+
   public create: IRequestHandler = async (
     req,
     res,

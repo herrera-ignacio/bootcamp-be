@@ -16,8 +16,10 @@ class RoomService implements IService<Room> {
     key: string, value: string | number,
   ) => `User ${key}:${value} not found`;
 
-  getAll(): Promise<Room[]> {
-    throw new NotImplementedException();
+  public async getAll(): Promise<Room[]> {
+    const rooms = await this.getRepository().find();
+
+    return rooms;
   }
 
   getByKey(): Promise<Room> {

@@ -22,6 +22,11 @@ class RoomRouter implements IRouter {
 
   initializeRoutes() {
 
+    this.router.get(
+      this.path,
+      this.roomController.getAll,
+    );
+
     this.router.post(
       this.path,
       JWTCheck.use(),
