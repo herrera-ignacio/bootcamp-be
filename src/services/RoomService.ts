@@ -4,6 +4,7 @@ import Room from "../entities/Room";
 import IRepository from "../types/IRepository";
 import { IService } from "../types/IService";
 import NotImplementedException from "../exceptions/NotImplementedException";
+import NotFoundException from "../exceptions/NotFoundException";
 
 
 class RoomService implements IService<Room> {
@@ -20,8 +21,20 @@ class RoomService implements IService<Room> {
     throw new NotImplementedException();
   }
 
-  getByKey(): Promise<Room> {
-    throw new NotImplementedException();
+  public async getByKey(
+    key: string, val: string | number,
+  ): Promise<Room> {
+    const repo = this.getRepository();
+    const user = await repo.findOneBy({ [key]: val });
+
+    if (!user) {
+      throw new NotFoundException(RoomService.notFoundErrorMessage(
+        key,
+        val,
+      ));
+    }
+
+    return user;
   }
 
   public async create( roomData: RoomCreateBodyValidator ): Promise<Room> {
