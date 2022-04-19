@@ -30,7 +30,7 @@ class UserController implements IController {
     const users = await this.userService.getAll();
 
     res.status(200).json({
-      data: users,
+      data: users.map((user) => new UserMapper().toDto(user)),
     });
   };
 
