@@ -75,6 +75,17 @@ class RoomController implements IController {
 
   };
 
+  public deleteById: IRequestHandler = async (
+    req,
+    res,
+  ) => {
+    const id = Number(req.params.id);
+
+    await this.roomService.deleteById(id);
+
+    res.sendStatus(204);
+  };
+
 }
 
 export default RoomController;

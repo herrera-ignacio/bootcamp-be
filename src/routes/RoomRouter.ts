@@ -55,6 +55,15 @@ class RoomRouter implements IRouter {
       this.roomController.updateById,
     );
 
+    this.router.delete(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
+      ParamsValidator(BaseParamsValidator),
+      this.roomController.deleteById,
+    );
+
   }
 
 }

@@ -257,5 +257,51 @@ describe(
       },
 
     );
+
+    it(
+      "deleteById should return 204 on success", async () => {
+        // Given
+        const fakeService = sandbox.createStubInstance(RoomService);
+        const fakeReq = getRequestMock({ params: { id: "1" } });
+        const fakeRes = getResponseMock();
+        const controller = new RoomController(fakeService);
+
+        // When
+        fakeService.deleteById.resolves();
+
+        await controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        );
+
+        // Then
+        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
+          .toBeTruthy();
+        expect(fakeRes.sendStatus.calledOnceWithExactly(204)).toBeTruthy();
+      },
+    );
+
+    it(
+      "deleteById should bubble up exception", async () => {
+
+        // Given
+
+        const fakeService = sinon.createStubInstance(RoomService);
+        const fakeReq = getRequestMock({ params: { id: "1" } });
+        const fakeRes = getResponseMock();
+        const controller = new  RoomController(fakeService);
+
+        // When
+        fakeService.deleteById.throws(new NotFoundException());
+
+        // Then
+        await expect(controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow(NotFoundException);
+
+        expect(fakeService.deleteById.
+          calledOnceWithExactly(Number(fakeReq.params.id))).toBeTruthy();
+      },
+
+    );
   },
 );
