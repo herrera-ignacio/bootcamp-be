@@ -18,8 +18,8 @@ class RoomService implements IService<Room> {
     key: string, value: string | number,
   ) => `room ${key}:${value} not found`;
 
-  getAll(): Promise<Room[]> {
-    throw new NotImplementedException();
+  public async getAll(): Promise<Room[]> {
+    return await this.getRepository().find();
   }
 
   public async getByKey(
@@ -62,8 +62,22 @@ class RoomService implements IService<Room> {
 
   }
 
-  deleteById(): Promise<void> {
-    throw new NotImplementedException();
+  public async deleteById(id: number): Promise<void> {
+
+
+    const repo = this.getRepository();
+
+    const affectedData = await repo.delete({ id });
+
+    if (affectedData.affected === 0) {
+
+      throw new NotFoundException(RoomService.notFoundErrorMessage(
+        "id", id,
+      ));
+
+    }
+
+
   }
 
 }

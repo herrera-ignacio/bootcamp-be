@@ -26,6 +26,11 @@ class RoomRouter implements IRouter {
   initializeRoutes() {
 
     this.router.get(
+      this.path,
+      this.roomController.getAll,
+    );
+    
+    this.router.get(
       `${this.path}/:id(\\d+)`,
       ParamsValidator(BaseParamsValidator),
       this.roomController.getById,
@@ -48,6 +53,15 @@ class RoomRouter implements IRouter {
       ParamsValidator(BaseParamsValidator),
       BodyValidator(RoomUpdateBodyValidator),
       this.roomController.updateById,
+    );
+
+    this.router.delete(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
+      ParamsValidator(BaseParamsValidator),
+      this.roomController.deleteById,
     );
 
   }

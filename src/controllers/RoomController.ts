@@ -19,6 +19,17 @@ class RoomController implements IController {
 
   }
 
+  public getAll: IRequestHandler = async (
+    req,
+    res,
+  ) => {
+    const rooms = await this.roomService.getAll();
+
+    res.status(200).json({
+      data: rooms.map((room) => this.roomMapper.toDto(room)),
+    });
+  };
+
   public getById: IRequestHandler = async (
     req,
     res,
@@ -62,6 +73,17 @@ class RoomController implements IController {
 
     });
 
+  };
+
+  public deleteById: IRequestHandler = async (
+    req,
+    res,
+  ) => {
+    const id = Number(req.params.id);
+
+    await this.roomService.deleteById(id);
+
+    res.sendStatus(204);
   };
 
 }
