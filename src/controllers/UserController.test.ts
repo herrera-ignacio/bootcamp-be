@@ -23,6 +23,48 @@ describe(
 
     afterEach(() => sandbox.restore());
 
+    it(
+      "getAll should return 200 and get a list of users", async () => {
+        // Given
+        const usersMock = [ getUserMock(), getUserMock(), getUserMock() ];
+        const fakeService = sinon.createStubInstance(UserService);
+        const fakeReq = getRequestMock();
+        const fakeRes = getResponseMock();
+        const controller = new UserController(fakeService);
+
+        // When
+        fakeService.getAll.resolves(usersMock);
+        await controller.getAll(
+          fakeReq, fakeRes as any, null,
+        );
+
+        // Then
+        expect(fakeService.getAll.called).toBeTruthy();
+        expect(fakeRes.status.calledWith(200)).toBeTruthy();
+        expect(fakeRes.json.calledWith(sinon.match({
+          data: usersMock.map((user) => new UserMapper().toDto(user)),
+        }))).toBeTruthy();
+      },
+    );
+
+    it(
+      "getAll should bubble up exception", async () => {
+        // Given
+        const fakeService = sinon.createStubInstance(UserService);
+        const fakeRes = getResponseMock();
+        const fakeReq = getRequestMock();
+        const controller = new UserController(fakeService);
+
+        // When
+        fakeService.getAll.throws();
+
+        // Then
+        await expect(controller.getAll(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow();
+        expect(fakeService.getAll.calledOnce).toBeTruthy();
+      },
+    );
 
     it(
       "getById should return 200 and user on success and found user", async () => {

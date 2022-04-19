@@ -3,7 +3,6 @@ import roomRepository from "../repositories/RoomRepository";
 import Room from "../entities/Room";
 import IRepository from "../types/IRepository";
 import { IService } from "../types/IService";
-import NotImplementedException from "../exceptions/NotImplementedException";
 import NotFoundException from "../exceptions/NotFoundException";
 import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
 
@@ -19,7 +18,7 @@ class RoomService implements IService<Room> {
   ) => `room ${key}:${value} not found`;
 
   public async getAll(): Promise<Room[]> {
-    return await this.getRepository().find();
+    return this.getRepository().find();
   }
 
   public async getByKey(

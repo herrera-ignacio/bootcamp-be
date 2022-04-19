@@ -29,7 +29,7 @@ class RoomRouter implements IRouter {
       this.path,
       this.roomController.getAll,
     );
-    
+
     this.router.get(
       `${this.path}/:id(\\d+)`,
       ParamsValidator(BaseParamsValidator),
