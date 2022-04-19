@@ -52,10 +52,10 @@ class RoomRouter implements IRouter {
 
     this.router.delete(
       `${this.path}/:id(\\d+)`,
-      /* JWTCheck.use(),
+      JWTCheck.use(),
       Authentication.use(),
       Authorization.use(),
-      ParamsValidator(BaseParamsValidator), */
+      ParamsValidator(BaseParamsValidator),
       this.roomController.deleteById,
     );
 
