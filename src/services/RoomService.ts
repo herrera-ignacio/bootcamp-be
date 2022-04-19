@@ -18,8 +18,8 @@ class RoomService implements IService<Room> {
     key: string, value: string | number,
   ) => `room ${key}:${value} not found`;
 
-  getAll(): Promise<Room[]> {
-    throw new NotImplementedException();
+  public async getAll(): Promise<Room[]> {
+    return await this.getRepository().find();
   }
 
   public async getByKey(

@@ -14,6 +14,26 @@ describe(
     afterEach(() => sandbox.restore());
 
     it(
+      "getAll should return an array of all rooms when called", async () => {
+        // Given
+        const roomMocks = [ getRoomMock(), getRoomMock(), getRoomMock() ];
+        const fakeRepo = stubInterface<IRepository<Room>>();
+
+        // When
+        fakeRepo.find.resolves(roomMocks);
+        sandbox.replace(
+          RoomService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        // Then
+        const res = await new RoomService().getAll();
+
+        expect(fakeRepo.find.called).toBeTruthy();
+        expect(res).toEqual(roomMocks);
+      },
+    );
+
+    it(
       "getById success", async () => {
       // Given
         const roomMock = getRoomMock();
