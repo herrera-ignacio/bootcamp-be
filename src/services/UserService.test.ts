@@ -15,6 +15,27 @@ describe(
 
     /* GET REQUESTS */
 
+    it(
+      "getAll should return an array of all users when called", async () => {
+        // Given
+        const usersMock = [ getUserMock(), getUserMock(), getUserMock() ];
+        const fakeRepo = stubInterface<IRepository<User>>();
+
+        // When
+        fakeRepo.find.resolves(usersMock);
+        sandbox.replace(
+          UserService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new UserService().getAll();
+
+        // Then
+        expect(res).toEqual(usersMock);
+        expect(fakeRepo.find.called).toBeTruthy();
+
+      },
+    );
+
     /* Get By Id Success */
 
     it(
