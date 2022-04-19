@@ -27,6 +27,8 @@ class RoomController implements IController {
 
     res.status(200).json({
       data: rooms.map((room) => this.roomMapper.toDto(room)),
+    });
+  };
 
   public getById: IRequestHandler = async (
     req,
