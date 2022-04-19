@@ -153,5 +153,55 @@ describe(
 
     );
 
+    it(
+      "deleteById success", async () => {
+
+        // Given
+        const fakeRepo = stubInterface<IRepository<Room>>();
+
+        // When
+        fakeRepo.delete.resolves({
+          affected: 1,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          RoomService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new RoomService().deleteById(1);
+
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+        expect(res).toBeUndefined();
+
+      },
+
+    );
+
+    it(
+      "deleteById should throw when not found", async () => {
+
+        // Given
+        const fakeRepo = stubInterface<IRepository<Room>>();
+
+        // When
+        fakeRepo.delete.resolves({
+          affected: 0,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          RoomService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const roomService = new RoomService();
+
+        await expect(roomService.deleteById(1)).rejects.toThrow(NotFoundException);
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+
+      },
+
+    );
+
   },
 );
