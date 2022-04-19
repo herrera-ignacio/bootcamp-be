@@ -5,6 +5,7 @@ import IRepository from "../types/IRepository";
 import { IService } from "../types/IService";
 import NotImplementedException from "../exceptions/NotImplementedException";
 import NotFoundException from "../exceptions/NotFoundException";
+import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
 
 
 class RoomService implements IService<Room> {
@@ -15,7 +16,7 @@ class RoomService implements IService<Room> {
 
   private static notFoundErrorMessage = (
     key: string, value: string | number,
-  ) => `User ${key}:${value} not found`;
+  ) => `room ${key}:${value} not found`;
 
   getAll(): Promise<Room[]> {
     throw new NotImplementedException();
@@ -25,28 +26,40 @@ class RoomService implements IService<Room> {
     key: string, val: string | number,
   ): Promise<Room> {
     const repo = this.getRepository();
-    const user = await repo.findOneBy({ [key]: val });
+    const room = await repo.findOneBy({ [key]: val });
 
-    if (!user) {
+    if (!room) {
       throw new NotFoundException(RoomService.notFoundErrorMessage(
         key,
         val,
       ));
     }
 
-    return user;
+    return room;
   }
 
   public async create( roomData: RoomCreateBodyValidator ): Promise<Room> {
     const repo = this.getRepository();
-    const user = await repo.save(roomData);
+    const room = await repo.save(roomData);
 
-    return user;
+    return room;
 
   }
 
-  updateById(): Promise<Room> {
-    throw new NotImplementedException();
+  public async updateById(
+    id: number,
+    roomData: RoomUpdateBodyValidator,
+  ): Promise<Room> {
+    const room = await this.getByKey(
+      "id", id,
+    );
+    const repo = this.getRepository();
+
+    return repo.save({
+      ...room,
+      ...roomData,
+    });
+
   }
 
   deleteById(): Promise<void> {
