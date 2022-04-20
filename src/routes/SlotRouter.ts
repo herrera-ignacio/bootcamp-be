@@ -4,6 +4,7 @@ import SlotController from "../controllers/SlotController";
 import JWTCheck from "../middlewares/JWTCheck";
 import Authentication from "../middlewares/Authentication";
 import Authorization from "../middlewares/Authorization";
+import { UserRole } from "../entities/User";
 
 
 
@@ -27,7 +28,7 @@ class SlotRouter implements IRouter {
       this.path,
       JWTCheck.use(),
       Authentication.use(),
-      Authorization.use(),
+      Authorization.use([ UserRole.CONTRACTOR ]),
       this.slotController.create,
     );
   }
