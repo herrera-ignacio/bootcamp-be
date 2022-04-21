@@ -27,7 +27,7 @@ class SlotRouter implements IRouter {
   initializeRoutes(): void {
 
     this.router.post(
-      this.path,
+      `${this.path}/:id(\\d+)`,
       JWTCheck.use(),
       Authentication.use(),
       Authorization.use([ UserRole.CONTRACTOR ]),

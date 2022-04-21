@@ -20,7 +20,12 @@ class BookingController implements IController {
   public create: IRequestHandler = async (
     req, res,
   ) => {
-    const booking = await this.bookingService.create(req.body);
+    const slotId = Number(req.params.id);
+
+    const booking = await this.bookingService.create(
+      slotId,
+      req.body,
+    );
 
     res.status(201).json({
       data: this.bookingMapper.toDto(booking),
