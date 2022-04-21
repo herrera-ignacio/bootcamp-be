@@ -1,10 +1,12 @@
 import { Router } from "express";
 import IRouter from "../types/IRouter";
-import SlotController from "../controllers/SlotController";
+import BookingController from "../controllers/BookingController";
 import JWTCheck from "../middlewares/JWTCheck";
 import Authentication from "../middlewares/Authentication";
 import Authorization from "../middlewares/Authorization";
 import { UserRole } from "../entities/User";
+import BodyValidator from "../middlewares/BodyValidator";
+import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyValidator";
 
 
 
@@ -12,9 +14,9 @@ class SlotRouter implements IRouter {
 
   public router: Router;
 
-  public path = "/slot";
+  public path = "/booking";
 
-  private slotController = new SlotController();
+  private bookingController = new BookingController();
 
   constructor() {
 
@@ -29,7 +31,8 @@ class SlotRouter implements IRouter {
       JWTCheck.use(),
       Authentication.use(),
       Authorization.use([ UserRole.CONTRACTOR ]),
-      this.slotController.create,
+      BodyValidator(BookingCreateBodyValidator),
+      this.bookingController.create,
     );
   }
 }

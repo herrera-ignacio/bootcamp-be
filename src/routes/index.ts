@@ -4,7 +4,7 @@ import UserRouter from "./UserRouter";
 import AuthRouter from "./AuthRouter";
 import EscapePodRouter from "./EscapePodRouter";
 import RoomRouter from "./RoomRouter";
-import SlotRouter from "./SlotRouter";
+import BookingRouter from "./BookingRouter";
 
 
 /**
@@ -17,6 +17,6 @@ router.use((new UserRouter()).router);
 router.use((new AuthRouter()).router);
 router.use((new EscapePodRouter()).router);
 router.use((new RoomRouter()).router);
-router.use((new SlotRouter()).router);
+router.use((new BookingRouter()).router);
 
 export default router;
