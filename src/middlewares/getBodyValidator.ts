@@ -5,14 +5,13 @@ import {
 import { plainToInstance } from "class-transformer";
 import HttpException from "../exceptions/HttpException";
 import { IRequestHandler } from "../types/IRequestHandler";
-import Log from "../utils/Log";
 
 /**
- * Validate interface of req.params
+ * Validate interface of req.body
  * @param type - expected interface
  * @param skipMissingProperties - should ignore missing properties from interface
  */
-const paramsValidator = (
+const getBodyValidator = (
   type: any, // eslint-disable-line @typescript-eslint/no-explicit-any
   skipMissingProperties = false,
 ): IRequestHandler => (
@@ -21,23 +20,22 @@ const paramsValidator = (
   next,
 ) => validate(
   plainToInstance(
-    type,
-    req.params,
+    type, req.body,
   ), { skipMissingProperties },
 )
   .then((errors: ValidationError[]) => {
     if (errors.length > 0) {
+
       const message = errors.map((error: ValidationError) =>
         Object.values(error.constraints)).join(", ");
 
-      Log.error(message);
+
       next(new HttpException(
-        400,
-        message,
+        400, message,
       ));
     } else {
       next();
     }
   });
 
-export default paramsValidator;
+export default getBodyValidator;

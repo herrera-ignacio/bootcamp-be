@@ -1,9 +1,9 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
 import IRouter from "../types/IRouter";
-import ParamsValidator from "../middlewares/ParamsValidator";
+import getParamsValidator from "../middlewares/getParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
-import BodyValidator from "../middlewares/BodyValidator";
+import getBodyValidator from "../middlewares/getBodyValidator";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
 import UserUpdateParamsValidator from "../validators/User/UserUpdateParamsValidator";
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
@@ -19,12 +19,26 @@ class UserRouter implements IRouter {
 
   public router: Router;
 
+  static paramsValidator = getParamsValidator;
+
+  static bodyValidator = getBodyValidator;
+
   private userController = new UserController();
 
-  constructor() {
+  constructor(userController: UserController = new UserController()) {
     this.router = Router();
-    this.initializeRoutes();
+    this.userController = userController;
+    this.initializeMiddlewares();
+  }
 
+  getRoutes() {
+    this.initializeRoutes();
+    return this.router;
+  }
+
+  initializeMiddlewares() {
+    this.router.use(JWTCheck.use());
+    this.router.use(authentication.use());
   }
 
   initializeRoutes() {
@@ -32,28 +46,20 @@ class UserRouter implements IRouter {
       this.path, this.userController.getAll,
     );
 
-    this.router.get(
-      `${this.path}/:id(\\d+)`,
-      ParamsValidator(BaseParamsValidator),
-      this.userController.getById,
-    );
+    this.setGetByIdRoute();
 
     this.router.post(
       this.path,
-      JWTCheck.use(),
-      authentication.use(),
       authorization.use(),
-      BodyValidator(UserCreateBodyValidator),
+      UserRouter.bodyValidator(UserCreateBodyValidator),
       this.userController.create,
     );
 
     this.router.patch(
       `${this.path}/:id(\\d+)`,
-      JWTCheck.use(),
-      authentication.use(),
       authorization.use(),
-      ParamsValidator(UserUpdateParamsValidator),
-      BodyValidator(
+      UserRouter.paramsValidator(UserUpdateParamsValidator),
+      UserRouter.bodyValidator(
         UserUpdateBodyValidator, true,
       ),
       this.userController.updateById,
@@ -62,10 +68,16 @@ class UserRouter implements IRouter {
 
     this.router.delete(
       `${this.path}/:id(\\d+)`,
-      JWTCheck.use(),
-      authentication.use(),
       authorization.use(),
       this.userController.deleteById,
+    );
+  }
+
+  setGetByIdRoute() {
+    this.router.get(
+      `${this.path}/:id(\\d+)`,
+      UserRouter.paramsValidator(BaseParamsValidator),
+      this.userController.getById,
     );
   }
 }

@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+import { RequestHandler } from "express";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
 import Log from "../utils/Log";
@@ -15,7 +16,7 @@ import Config from "../providers/Config";
 export class JWTCheckMiddleware implements IMiddleware {
   protected static initMessage = "JWTCheck :: Mounting OAuth2 Bearer Token validator...";
 
-  private handler: jwt.RequestHandler;
+  private handler: RequestHandler;
 
   constructor(msg?: string) {
     Log.info(msg ?? JWTCheckMiddleware.initMessage);
@@ -44,7 +45,7 @@ export class JWTCheckMiddleware implements IMiddleware {
 
   public use() {
     if (this.handler) return this.handler;
-    this.handler = jwt(this.getOptions());
+    this.handler = jwt(this.getOptions()) as jwt.RequestHandler;
     return this.handler;
   }
 }
