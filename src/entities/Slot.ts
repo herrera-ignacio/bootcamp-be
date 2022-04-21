@@ -4,8 +4,10 @@ import {
   UpdateDateColumn,
   Entity,
   Column,
+  OneToMany,
 } from "typeorm";
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
+import Booking from "./Booking";
 
 @Entity()
 export default class Slot extends EntityWithFactoryMethod {
@@ -20,4 +22,9 @@ export default class Slot extends EntityWithFactoryMethod {
 
   @Column()
     isDisabled: boolean;
+
+  @OneToMany(
+    () => Booking, (booking: Booking) => booking.slot,
+  )
+    booking: Booking[];
 }

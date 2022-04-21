@@ -4,9 +4,11 @@ import {
   UpdateDateColumn,
   Entity,
   Column,
+  ManyToOne,
 } from "typeorm";
 
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
+import Slot from "./Slot";
 
 @Entity()
 export default class Booking extends EntityWithFactoryMethod {
@@ -24,4 +26,9 @@ export default class Booking extends EntityWithFactoryMethod {
 
   @Column({ nullable: false })
     endDate: string;
+
+  @ManyToOne(
+    () => Slot, (slot: Slot) => slot.booking,
+  )
+    slot: Slot;
 }
