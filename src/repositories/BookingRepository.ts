@@ -1,7 +1,9 @@
-import { Brackets } from "typeorm";
+// import { Brackets } from "typeorm";
+import { Between } from "typeorm";
 import Database from "../providers/Database";
 import Booking from "../entities/Booking";
 import IRepository from "../types/IRepository";
+
 
 
 
@@ -11,25 +13,23 @@ const bookingRepository = (): IRepository<Booking> => Database.getConnection()
       return this.findOne({ where: { id } });
     },
     findByIdAndDates(
-      slotId: number, startDate: string, endDate: string,
+      slot: number, startDate: string, endDate: string,
     ): Promise<Booking> {
-      return this.createQueryBuilder().select("booking")
-        .from(
-          Booking,
-          "booking",
-        )
-        .where(
-          "booking.slotId = :slotId", { slotId },
-        )
-        .andWhere(new Brackets((qb) => {
-          qb.where(
-            "booking.startDate >= :startDate", { startDate },
-          )
-            .orWhere(
-              "booking.endDate >= :endDate", { endDate },
-            );
-        }))
-        .getOne();
+      return this.find({
+        slot,
+        where: [
+          {
+            endDate: Between(
+              startDate, endDate,
+            ),
+          },
+          {
+            startDate: Between(
+              startDate, endDate,
+            ),
+          },
+        ],
+      });
     },
   });
 

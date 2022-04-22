@@ -13,7 +13,7 @@ class BookingService {
     return bookingRepository();
   }
 
-  public async isBookingAvalible(
+  public async isThereABookingInThisTimeFrame(
     slotId: number,
     startDate: string,
     endDate: string,
@@ -31,13 +31,21 @@ class BookingService {
       throw new HttpException();
     }
 
-    const bookingVerificationQuery = await repo.findByIdAndDates(
+    const isThereABookingInTheTimeFrame = await repo.findByIdAndDates(
       slotId,
       startDate,
       endDate,
     );
 
-    console.log(bookingVerificationQuery);
+
+    const bookingsAmount = Object.keys({ ...isThereABookingInTheTimeFrame }).length;
+
+
+    if (bookingsAmount !== 0) {
+      console.log(`Yes, there's already a booking in that timeframe ${true}`);
+      throw new HttpException();
+    }
+
 
     return false;
   }
@@ -54,16 +62,11 @@ class BookingService {
       endDate,
     } = bookingData;
 
-    const isBookingAvailable = await this.isBookingAvalible(
+    await this.isThereABookingInThisTimeFrame(
       slotId,
       startDate,
       endDate,
     );
-
-
-    if (!isBookingAvailable) {
-      throw new HttpException();
-    }
 
     const booking = await repo.save({
       ...bookingData,
