@@ -28,6 +28,16 @@ class SlotController implements IController {
 
     res.status(201).json({ data: this.slotMapper.toDto(slot) });
   };
+
+  public deleteById: IRequestHandler = async (
+    req, res,
+  ) => {
+    const id = Number(req.params.id);
+
+    await this.slotService.deleteById(id);
+
+    res.sendStatus(204);
+  };
 }
 
 export default SlotController;
