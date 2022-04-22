@@ -1,4 +1,3 @@
-import { Brackets } from "typeorm";
 import bookingRepository from "../repositories/BookingRepository";
 import IRepository from "../types/IRepository";
 import Booking from "../entities/Booking";
@@ -7,55 +6,47 @@ import SlotService from "./SlotService";
 import HttpException from "../exceptions/HttpException";
 
 
+
 class BookingService {
 
   public getRepository(): IRepository<Booking> {
     return bookingRepository();
   }
 
-  public async isSlotAvalible(
+  public async isBookingAvalible(
     slotId: number,
     startDate: string,
     endDate: string,
-  ): Promise<Booking> {
+  ): Promise<boolean> {
 
     const repo = this.getRepository();
+
     const slotService = new SlotService();
 
     const slotRequested = await slotService.getByKey(
       "id", slotId,
     );
 
-    let bookingVerificationQuery;
-
-    if (slotRequested.isDisabled === false) {
-
-      bookingVerificationQuery = await repo.createQueryBuilder().select("booking")
-        .from(
-          Booking,
-          "booking",
-        )
-        .where(
-          "booking.slotId = :slotId", { slotId },
-        )
-        .andWhere(new Brackets((qb) => {
-          qb.where(
-            "booking.startDate >= :startDate", { startDate },
-          )
-            .orWhere(
-              "booking.endDate >= :endDate", { endDate },
-            );
-        }))
-        .getOne();
-
-      console.log(bookingVerificationQuery);
+    if (slotRequested.isDisabled === true) {
+      throw new HttpException();
     }
-    return bookingVerificationQuery;
+
+    const bookingVerificationQuery = await repo.findByIdAndDates(
+      slotId,
+      startDate,
+      endDate,
+    );
+
+    console.log(bookingVerificationQuery);
+
+    return false;
   }
+
+
+
 
   public async create(bookingData: BookingCreateBodyValidator): Promise<Booking> {
 
-    console.log(bookingData);
     const repo = this.getRepository();
     const {
       slotId,
@@ -63,28 +54,23 @@ class BookingService {
       endDate,
     } = bookingData;
 
-    const isThereABookingInSlot = await this.isSlotAvalible(
+    const isBookingAvailable = await this.isBookingAvalible(
       slotId,
       startDate,
       endDate,
     );
 
 
-    let booking;
-
-    if (isThereABookingInSlot === null) {
-
-      booking = await repo.save({
-        ...bookingData,
-        slot: {
-          id: slotId,
-        },
-      });
-
-    } else {
-
+    if (!isBookingAvailable) {
       throw new HttpException();
     }
+
+    const booking = await repo.save({
+      ...bookingData,
+      slot: {
+        id: slotId,
+      },
+    });
 
     return booking;
   }
