@@ -15,7 +15,8 @@ class BookingService {
 
   public async isSlotAvalible(
     slotId: number,
-    bookingData: BookingCreateBodyValidator,
+    startDate: string,
+    endDate: string,
   ): Promise<Booking> {
 
     const repo = this.getRepository();
@@ -28,9 +29,6 @@ class BookingService {
     let bookingVerificationQuery;
 
     if (slotRequested.isDisabled === false) {
-      const {
-        startDate, endDate,
-      } = bookingData;
 
       bookingVerificationQuery = await repo.createQueryBuilder().select("booking")
         .from(
@@ -55,16 +53,20 @@ class BookingService {
     return bookingVerificationQuery;
   }
 
-  public async create(
-    slotId: number, bookingData: BookingCreateBodyValidator,
-  ): Promise<Booking> {
+  public async create(bookingData: BookingCreateBodyValidator): Promise<Booking> {
 
-
+    console.log(bookingData);
     const repo = this.getRepository();
-    const slotService = new SlotService();
+    const {
+      slotId,
+      startDate,
+      endDate,
+    } = bookingData;
 
     const isThereABookingInSlot = await this.isSlotAvalible(
-      slotId, bookingData,
+      slotId,
+      startDate,
+      endDate,
     );
 
 
@@ -72,14 +74,9 @@ class BookingService {
 
     if (isThereABookingInSlot === null) {
 
-      const slotRequested = await slotService.getByKey(
-        "id", slotId,
-      );
-
       booking = await repo.save({
         ...bookingData,
         slot: {
-          ...slotRequested,
           id: slotId,
         },
       });

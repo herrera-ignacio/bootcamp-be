@@ -14,7 +14,7 @@ class SlotRouter implements IRouter {
 
   public router: Router;
 
-  public path = "/booking";
+  public path = "/bookings";
 
   private bookingController = new BookingController();
 
@@ -27,7 +27,7 @@ class SlotRouter implements IRouter {
   initializeRoutes(): void {
 
     this.router.post(
-      `${this.path}/:id(\\d+)`,
+      this.path,
       JWTCheck.use(),
       Authentication.use(),
       Authorization.use([ UserRole.CONTRACTOR ]),

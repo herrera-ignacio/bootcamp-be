@@ -24,7 +24,7 @@ export default class Slot extends EntityWithFactoryMethod {
     isDisabled: boolean;
 
   @OneToMany(
-    () => Booking, (booking: Booking) => booking.slot, { eager: true },
+    () => Booking, (bookings: Booking) => bookings.slot,
   )
-    booking?: Booking[] | number;
+    bookings?: Booking[];
 }

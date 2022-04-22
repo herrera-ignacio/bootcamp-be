@@ -1,5 +1,6 @@
 import {
   IsNotEmpty,
+  IsInt,
 } from "class-validator";
 import { BookingCreateBody } from "../../types/Booking/BookingCreateRequest";
 
@@ -8,7 +9,11 @@ import { BookingCreateBody } from "../../types/Booking/BookingCreateRequest";
  */
 
 export default class BookingCreateBodyValidator implements BookingCreateBody {
-  [x: string]: string,
+  [x: string]: string | number,
+
+  @IsNotEmpty()
+  @IsInt()
+  public slotId: number;
 
   @IsNotEmpty()
   public startDate: string;

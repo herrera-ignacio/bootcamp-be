@@ -28,7 +28,7 @@ export default class Booking extends EntityWithFactoryMethod {
     endDate: string;
 
   @ManyToOne(
-    () => Slot, (slot: Slot) => slot.booking,
+    () => Slot, (slot: Slot) => slot.bookings,
   )
     slot: Slot;
 }
