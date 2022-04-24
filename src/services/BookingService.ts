@@ -1,9 +1,11 @@
+import { instanceToPlain } from "class-transformer";
 import bookingRepository from "../repositories/BookingRepository";
 import IRepository from "../types/IRepository";
 import Booking from "../entities/Booking";
 import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyValidator";
 import SlotService from "./SlotService";
 import HttpException from "../exceptions/HttpException";
+
 
 
 
@@ -37,8 +39,7 @@ class BookingService {
       endDate,
     );
 
-
-    const bookingsAmount = Object.keys({ ...isThereABookingInTheTimeFrame }).length;
+    const bookingsAmount = instanceToPlain(isThereABookingInTheTimeFrame).length;
 
 
     if (bookingsAmount !== 0) {

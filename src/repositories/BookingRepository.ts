@@ -1,5 +1,8 @@
-// import { Brackets } from "typeorm";
-import { Between } from "typeorm";
+import {
+  Between,
+  LessThanOrEqual,
+  MoreThanOrEqual,
+} from "typeorm";
 import Database from "../providers/Database";
 import Booking from "../entities/Booking";
 import IRepository from "../types/IRepository";
@@ -27,6 +30,10 @@ const bookingRepository = (): IRepository<Booking> => Database.getConnection()
             startDate: Between(
               startDate, endDate,
             ),
+          },
+          {
+            endDate  : MoreThanOrEqual(endDate),
+            startDate: LessThanOrEqual(startDate),
           },
         ],
       });
