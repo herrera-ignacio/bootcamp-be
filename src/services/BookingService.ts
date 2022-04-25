@@ -10,7 +10,7 @@ import HttpException from "../exceptions/HttpException";
 
 class BookingService {
 
-  public getRepository(): IBookingRepository<Booking> {
+  public getRepository(): IBookingRepository {
     return bookingRepository();
   }
 
@@ -20,7 +20,6 @@ class BookingService {
     endDate: string,
   ): Promise<boolean> {
 
-    const repo = this.getRepository();
 
     const slotService = new SlotService();
 
@@ -31,7 +30,7 @@ class BookingService {
     if (slotRequested.isDisabled === true) {
       throw new HttpException();
     }
-
+    const repo = this.getRepository();
     const isThereABookingInTheTimeFrame = await repo.findByIdAndDates(
       slotId,
       startDate,
@@ -60,6 +59,13 @@ class BookingService {
       startDate,
       endDate,
     } = bookingData;
+
+    if (endDate < startDate || new Date(startDate) < new Date()) {
+      throw new HttpException(
+        400,
+        "Bad Request: endDate should be after startDate and startDate should be after current date",
+      );
+    }
 
     await this.isThereABookingInThisTimeFrame(
       slotId,

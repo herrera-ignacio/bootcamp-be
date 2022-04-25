@@ -10,7 +10,7 @@ import IBookingRepository from "../types/Booking/IBookingRepository";
 
 
 
-const bookingRepository = (): IBookingRepository<Booking> => Database.getConnection()
+const bookingRepository = (): IBookingRepository => Database.getConnection()
   .getRepository(Booking).extend({
     findById(id: number): Promise<Booking> {
       return this.findOne({ where: { id } });
