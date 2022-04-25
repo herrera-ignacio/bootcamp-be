@@ -1,6 +1,5 @@
-import { instanceToPlain } from "class-transformer";
 import bookingRepository from "../repositories/BookingRepository";
-import IRepository from "../types/IRepository";
+import IBookingRepository from "../types/Booking/IBookingRepository";
 import Booking from "../entities/Booking";
 import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyValidator";
 import SlotService from "./SlotService";
@@ -11,7 +10,7 @@ import HttpException from "../exceptions/HttpException";
 
 class BookingService {
 
-  public getRepository(): IRepository<Booking> {
+  public getRepository(): IBookingRepository<Booking> {
     return bookingRepository();
   }
 
@@ -39,11 +38,10 @@ class BookingService {
       endDate,
     );
 
-    const bookingsAmount = instanceToPlain(isThereABookingInTheTimeFrame).length;
+    const bookingsAmount = isThereABookingInTheTimeFrame.length;
 
 
     if (bookingsAmount !== 0) {
-      console.log(`Yes, there's already a booking in that timeframe ${true}`);
       throw new HttpException();
     }
 

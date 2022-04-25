@@ -5,19 +5,19 @@ import {
 } from "typeorm";
 import Database from "../providers/Database";
 import Booking from "../entities/Booking";
-import IRepository from "../types/IRepository";
+import IBookingRepository from "../types/Booking/IBookingRepository";
 
 
 
 
-const bookingRepository = (): IRepository<Booking> => Database.getConnection()
+const bookingRepository = (): IBookingRepository<Booking> => Database.getConnection()
   .getRepository(Booking).extend({
     findById(id: number): Promise<Booking> {
       return this.findOne({ where: { id } });
     },
     findByIdAndDates(
       slot: number, startDate: string, endDate: string,
-    ): Promise<Booking> {
+    ): Promise<Booking[]> {
       return this.find({
         slot,
         where: [

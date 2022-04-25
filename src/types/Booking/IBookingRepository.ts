@@ -1,7 +1,8 @@
 import { Repository } from "typeorm";
 
-type IBookingRepository<T> = Repository<T> & {
-  findByIdAndDates?(id: number, startDate: string, endDate: string): Promise<T>;
+
+type IBookingRepository<Booking> = Repository<Booking> & {
+  findByIdAndDates?(id: number, startDate: string, endDate: string): Promise<Booking[]>;
 };
 
 export default IBookingRepository;
