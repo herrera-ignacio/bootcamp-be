@@ -11,6 +11,7 @@ import {
   BookingCreateBody,
   BookingCreateRequest,
 } from "../types/Booking/BookingCreateRequest";
+import NotFoundException from "../exceptions/NotFoundException";
 
 describe(
 
@@ -77,6 +78,48 @@ describe(
       },
 
     );
-  },
 
+    it(
+      "delete should return 204 and delete a specific booking", async () => {
+        // Given
+        const fakeService = sinon.createStubInstance(BookingService);
+        const controller = new BookingController(fakeService);
+        const fakeReq = getRequestMock({ params: { id: "1" } });
+        const fakeRes = getResponseMock();
+
+        // When
+        fakeService.deleteById.resolves();
+        await controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        );
+
+        // Then
+        expect(fakeService.deleteById.calledWith(sinon.match(Number(fakeReq.params.id))))
+          .toBeTruthy();
+
+        expect(fakeRes.sendStatus.calledOnceWithExactly(204)).toBeTruthy();
+      },
+    );
+
+    it(
+      "deleteById should bubble up exception", async () => {
+        // Given
+        const fakeService = sinon.createStubInstance(BookingService);
+        const controller = new BookingController(fakeService);
+        const fakeReq = getRequestMock({ params: { id: "1" } });
+        const fakeRes = getResponseMock();
+
+        // When
+        fakeService.deleteById.throws(new NotFoundException());
+
+        // Then
+        await expect(controller.deleteById(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow(NotFoundException);
+
+        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
+          .toBeTruthy();
+      },
+    );
+  },
 );
