@@ -54,5 +54,55 @@ describe(
         expect(fakeRepo.save.calledOnce).toBeTruthy();
       },
     );
+
+    it(
+      "deleteById success", async () => {
+        // Given
+        const fakeRepo = stubInterface<IRepository<Slot>>();
+
+        // When
+        fakeRepo.delete.resolves({
+          affected: 1,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          SlotService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        // Then
+        const res = await new SlotService().deleteById(1);
+
+        expect(fakeRepo.delete.calledOnceWithExactly({
+          id: 1,
+        })).toBeTruthy();
+
+        expect(res).toBeUndefined();
+      },
+    );
+
+    it(
+      "deleteById should throw when not found", async () => {
+        // Given
+        const fakeRepo = stubInterface<IRepository<Slot>>();
+
+        // When
+        fakeRepo.delete.resolves({
+          affected: 0,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          SlotService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const slotService = new SlotService();
+
+        // Then
+        await expect(slotService.deleteById(1)).rejects.toThrow();
+
+        expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+      },
+    );
   },
 );
