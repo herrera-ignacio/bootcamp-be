@@ -33,26 +33,5 @@ describe(
         expect(fakeRepo.save.calledWithExactly(userInput)).toBeTruthy();
       },
     );
-
-    it(
-      "create fails due to missing parameters", async () => {
-        // Given
-        const fakeRepo = stubInterface<IRepository<Slot>>();
-
-        // When
-        fakeRepo.save.throws();
-        sandbox.replace(
-          SlotService.prototype, "getRepository", () => fakeRepo,
-        );
-
-        // Then
-        await expect(new SlotService().create({
-          isDisabled: undefined,
-        }))
-          .rejects.toThrow();
-
-        expect(fakeRepo.save.calledOnce).toBeTruthy();
-      },
-    );
   },
 );
