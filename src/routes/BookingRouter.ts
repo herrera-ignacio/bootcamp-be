@@ -7,6 +7,8 @@ import Authorization from "../middlewares/Authorization";
 import { UserRole } from "../entities/User";
 import BodyValidator from "../middlewares/BodyValidator";
 import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyValidator";
+import BaseParamsValidator from "../validators/BaseParamsValidator";
+import ParamsValidator from "../middlewares/ParamsValidator";
 
 
 
@@ -33,6 +35,15 @@ class SlotRouter implements IRouter {
       Authorization.use([ UserRole.CONTRACTOR ]),
       BodyValidator(BookingCreateBodyValidator),
       this.bookingController.create,
+    );
+
+    this.router.delete(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
+      ParamsValidator(BaseParamsValidator),
+      this.bookingController.deleteById,
     );
   }
 }

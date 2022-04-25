@@ -28,6 +28,16 @@ class BookingController implements IController {
     });
   };
 
+  public deleteById: IRequestHandler = async (
+    req, res,
+  ) => {
+    const id = Number(req.params.id);
+
+    await this.bookingService.deleteById(id);
+
+    res.sendStatus(204);
+  };
+
 }
 
 export default BookingController;
