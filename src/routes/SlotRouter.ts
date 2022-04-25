@@ -6,6 +6,8 @@ import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator"
 import SlotController from "../controllers/SlotController";
 import IRouter from "../types/IRouter";
 import BodyValidator from "../middlewares/BodyValidator";
+import BaseParamsValidator from "../validators/BaseParamsValidator";
+import ParamsValidator from "../middlewares/ParamsValidator";
 
 class SlotRouter implements IRouter {
 
@@ -29,6 +31,15 @@ class SlotRouter implements IRouter {
       Authorization.use(),
       BodyValidator(SlotCreateBodyValidator),
       this.slotController.create,
+    );
+
+    this.router.delete(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
+      ParamsValidator(BaseParamsValidator),
+      this.slotController.deleteById,
     );
   }
 }
