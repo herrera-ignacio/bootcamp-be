@@ -4,7 +4,7 @@ import Slot from "../entities/Slot";
 import NotFoundException from "../exceptions/NotFoundException";
 import { IService } from "../types/IService";
 import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator";
-import NotFoundException from "../exceptions/NotFoundException";
+
 
 export default class SlotService implements IService<Slot> {
 
@@ -33,9 +33,6 @@ export default class SlotService implements IService<Slot> {
 
     return slot;
   }
-
-}
-
 
   getAll(): Promise<Slot[]> {
     throw new Error("Method not implemented.");
