@@ -76,5 +76,61 @@ describe(
       },
     );
 
+    it(
+      "create fails due to startDate is after endDate", async () => {
+
+        const bookingMock = getBookingMock();
+        const fakeRepo = stubInterface<IBookingRepository>();
+        const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
+
+        fakeRepo.save.throws(new HttpException());
+
+        sandbox.replace(
+          BookingService.prototype, "isThereABookingInThisTimeFrame", isThereABookingInTheTimeFrame,
+        );
+
+        sandbox.replace(
+          BookingService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        await expect(new BookingService().create({
+          endDate  : bookingMock.startDate,
+          slotId   : 5,
+          startDate: bookingMock.endDate,
+        })).rejects.toThrow(HttpException);
+        expect(fakeRepo.save.throwsException).toBeTruthy();
+
+      },
+    );
+
+    it(
+      "create fails due to startDate is a past date", async () => {
+
+        const bookingMock = getBookingMock();
+        const fakeRepo = stubInterface<IBookingRepository>();
+        const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
+
+        fakeRepo.save.throws(new HttpException());
+
+        sandbox.replace(
+          BookingService.prototype, "isThereABookingInThisTimeFrame", isThereABookingInTheTimeFrame,
+        );
+
+        sandbox.replace(
+          BookingService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        await expect(new BookingService().create({
+          endDate  : bookingMock.endDate,
+          slotId   : 5,
+          startDate: new Date("2021-04-25").toDateString(),
+        })).rejects.toThrow(HttpException);
+        expect(fakeRepo.save.throwsException).toBeTruthy();
+
+      },
+    );
+
+
+
   },
 );
