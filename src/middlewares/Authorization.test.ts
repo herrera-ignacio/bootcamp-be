@@ -34,5 +34,33 @@ describe(
         expect(next.calledOnce).toBeTruthy();
       },
     );
+
+    it(
+      "Should succeed for contractor role", async  () => {
+
+        // Given
+        const middleware = new AuthorizationMiddleware().use([ UserRole.CONTRACTOR ]);
+        const req = getRequestMock<RequestWithAuth>({
+          auth: {
+            user: {
+              role: UserRole.CONTRACTOR,
+            } as User,
+          } as AuthData,
+        });
+        const next = sandbox.stub();
+
+        // Then
+
+        await middleware(
+          req,
+          null,
+          next,
+        );
+
+        expect(next.calledOnce).toBeTruthy();
+      },
+
+
+    );
   },
 );

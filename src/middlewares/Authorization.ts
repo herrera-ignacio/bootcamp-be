@@ -15,6 +15,7 @@ export class AuthorizationMiddleware implements IMiddleware {
 
   private readonly userService: UserService;
 
+
   constructor(
     msg?: string, userService =  new UserService(),
   ) {
@@ -25,13 +26,15 @@ export class AuthorizationMiddleware implements IMiddleware {
   }
 
 
-  public use() {
+  public use(allowedRoles?: UserRole[]) {
     return async (
       req: RequestWithAuth, _res: Response, next: NextFunction,
     ) => {
-      const userRole = req.auth.user?.role;
 
-      if (userRole === UserRole.ADMIN) {
+      const userRole =  req.auth.user?.role;
+
+
+      if (userRole === UserRole.ADMIN || allowedRoles?.includes(userRole)) {
         next();
       } else {
         throw new NotAuthorizedException();
