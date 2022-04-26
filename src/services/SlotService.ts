@@ -1,11 +1,13 @@
 import slotRepository from "../repositories/SlotRepository";
 import IRepository from "../types/IRepository";
 import Slot from "../entities/Slot";
+import NotFoundException from "../exceptions/NotFoundException";
 import { IService } from "../types/IService";
 import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator";
-import NotFoundException from "../exceptions/NotFoundException";
+
 
 export default class SlotService implements IService<Slot> {
+
 
   public getRepository(): IRepository<Slot> {
     return slotRepository();
@@ -13,15 +15,29 @@ export default class SlotService implements IService<Slot> {
 
   private static notFoundErrorMessage = (
     key: string, value: string | number,
-  ) => `Slot ${key}:${value} not found`;
+
+  ) => `room ${key}:${value} not found`;
+
+  public async getByKey(
+    key: string, val: string | number,
+  ): Promise<Slot> {
+    const repo = this.getRepository();
+    const slot = await repo.findOneBy({ [key]: val });
+
+    if (!slot) {
+      throw new NotFoundException(SlotService.notFoundErrorMessage(
+        key,
+        val,
+      ));
+    }
+
+    return slot;
+  }
 
   getAll(): Promise<Slot[]> {
     throw new Error("Method not implemented.");
   }
 
-  getByKey(): Promise<Slot> {
-    throw new Error("Method not implemented.");
-  }
 
   /**
    * Creates a new slot
@@ -51,3 +67,4 @@ export default class SlotService implements IService<Slot> {
     }
   }
 }
+

@@ -4,13 +4,14 @@ import {
   UpdateDateColumn,
   Entity,
   Column,
-  OneToMany,
+  ManyToOne,
 } from "typeorm";
+
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
-import Booking from "./Booking";
+import Slot from "./Slot";
 
 @Entity()
-export default class Slot extends EntityWithFactoryMethod {
+export default class Booking extends EntityWithFactoryMethod {
   @PrimaryGeneratedColumn()
     id: number;
 
@@ -20,13 +21,14 @@ export default class Slot extends EntityWithFactoryMethod {
   @UpdateDateColumn()
     updatedAt?: string;
 
-  @Column({
-    default: true,
-  })
-    isDisabled: boolean;
+  @Column({ nullable: false })
+    startDate: string;
 
-  @OneToMany(
-    () => Booking, (bookings: Booking) => bookings.slot,
+  @Column({ nullable: false })
+    endDate: string;
+
+  @ManyToOne(
+    () => Slot, (slot: Slot) => slot.bookings,
   )
-    bookings?: Booking[];
+    slot: Slot;
 }
