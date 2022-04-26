@@ -20,7 +20,9 @@ export default class Slot extends EntityWithFactoryMethod {
   @UpdateDateColumn()
     updatedAt?: string;
 
-  @Column()
+  @Column({
+    default: true,
+  })
     isDisabled: boolean;
 
   @OneToMany(
