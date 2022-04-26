@@ -4,6 +4,7 @@ import Booking from "../entities/Booking";
 import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyValidator";
 import SlotService from "./SlotService";
 import HttpException from "../exceptions/HttpException";
+import NotFoundException from "../exceptions/NotFoundException";
 
 
 
@@ -13,6 +14,10 @@ class BookingService {
   public getRepository(): IBookingRepository {
     return bookingRepository();
   }
+
+  private static notFoundErrorMessage = (
+    key: string, value: string | number,
+  ) => `Booking ${key}:${value} not found`;
 
   public async isThereABookingInThisTimeFrame(
     slotId: number,
@@ -83,6 +88,16 @@ class BookingService {
     return booking;
   }
 
+  public async deleteById(id: number): Promise<void> {
+    const repo = this.getRepository();
+    const affectedData = await repo.delete({ id });
+
+    if (affectedData.affected === 0) {
+      throw new NotFoundException(BookingService.notFoundErrorMessage(
+        "id", id,
+      ));
+    }
+  }
 }
 
 export default BookingService;
