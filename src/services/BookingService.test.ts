@@ -81,13 +81,6 @@ describe(
 
         const bookingMock = getBookingMock();
         const fakeRepo = stubInterface<IBookingRepository>();
-        const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
-
-        fakeRepo.save.throws(new HttpException());
-
-        sandbox.replace(
-          BookingService.prototype, "isThereABookingInThisTimeFrame", isThereABookingInTheTimeFrame,
-        );
 
         sandbox.replace(
           BookingService.prototype, "getRepository", () => fakeRepo,
@@ -98,7 +91,7 @@ describe(
           slotId   : 5,
           startDate: bookingMock.endDate,
         })).rejects.toThrow(HttpException);
-        expect(fakeRepo.save.throwsException).toBeTruthy();
+
 
       },
     );
@@ -108,13 +101,6 @@ describe(
 
         const bookingMock = getBookingMock();
         const fakeRepo = stubInterface<IBookingRepository>();
-        const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
-
-        fakeRepo.save.throws(new HttpException());
-
-        sandbox.replace(
-          BookingService.prototype, "isThereABookingInThisTimeFrame", isThereABookingInTheTimeFrame,
-        );
 
         sandbox.replace(
           BookingService.prototype, "getRepository", () => fakeRepo,
@@ -125,7 +111,7 @@ describe(
           slotId   : 5,
           startDate: new Date("2021-04-25").toDateString(),
         })).rejects.toThrow(HttpException);
-        expect(fakeRepo.save.throwsException).toBeTruthy();
+
 
       },
     );
