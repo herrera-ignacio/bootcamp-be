@@ -4,6 +4,8 @@ import Slot from "../entities/Slot";
 import NotFoundException from "../exceptions/NotFoundException";
 import { IService } from "../types/IService";
 import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator";
+import SlotUpdateBodyValidator from "../validators/Slot/SlotUpdateBodyValidator";
+import BookingService from "./BookingService";
 
 
 export default class SlotService implements IService<Slot> {
@@ -16,7 +18,7 @@ export default class SlotService implements IService<Slot> {
   private static notFoundErrorMessage = (
     key: string, value: string | number,
 
-  ) => `room ${key}:${value} not found`;
+  ) => `Slot ${key}:${value} not found`;
 
   public async getByKey(
     key: string, val: string | number,
@@ -52,8 +54,32 @@ export default class SlotService implements IService<Slot> {
     return slot;
   }
 
-  updateById(): Promise<Slot> {
-    throw new Error("Method not implemented.");
+  /**
+   * Updates slot (Disable slots and deletes bookings linked to it)
+   * @param slotData
+   * @returns slot
+   */
+
+
+  public async updateById(
+    id: number,
+    slotData: SlotUpdateBodyValidator,
+  ): Promise<Slot> {
+    const repo = this.getRepository();
+    const slot = await this.getByKey(
+      "id", id,
+    );
+
+    const bookingService = new BookingService();
+
+    if (slot.isDisabled === false) {
+      await bookingService.deleteBookingsBySlotId(id);
+    }
+
+    return repo.save({
+      ...slot,
+      ...slotData,
+    });
   }
 
   public async deleteById(id: number): Promise<void> {
