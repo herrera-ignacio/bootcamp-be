@@ -6,6 +6,7 @@ import { IService } from "../types/IService";
 import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator";
 import SlotUpdateBodyValidator from "../validators/Slot/SlotUpdateBodyValidator";
 import BookingService from "./BookingService";
+// import HttpException from "../exceptions/HttpException";
 
 
 export default class SlotService implements IService<Slot> {
@@ -66,20 +67,23 @@ export default class SlotService implements IService<Slot> {
     slotData: SlotUpdateBodyValidator,
   ): Promise<Slot> {
     const repo = this.getRepository();
+
     const slot = await this.getByKey(
       "id", id,
     );
 
     const bookingService = new BookingService();
 
-    if (slot.isDisabled === false) {
-      await bookingService.deleteBookingsBySlotId(id);
-    }
+    const [ slotUpdated ] = await Promise.all([
+      repo.save({
+        ...slot,
+        ...slotData,
+      }), slotData.isDisabled === true
+        ? bookingService.deleteBookingsBySlotId(id)
+        : Promise.resolve(),
+    ]);
 
-    return repo.save({
-      ...slot,
-      ...slotData,
-    });
+    return slotUpdated;
   }
 
   public async deleteById(id: number): Promise<void> {

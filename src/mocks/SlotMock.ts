@@ -3,7 +3,7 @@ import Slot from "../entities/Slot";
 const getSlotMock = () => Slot.build({
   createdAt : new Date().toDateString(),
   id        : 1,
-  isDisabled: true,
+  isDisabled: false,
   updatedAt : new Date().toDateString(),
 });
 
