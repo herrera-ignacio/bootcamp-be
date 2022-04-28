@@ -4,10 +4,12 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
+import Booking from "./Booking";
 
 export enum UserRole {
   ADMIN = "ADMIN",
@@ -53,4 +55,9 @@ export default class User extends EntityWithFactoryMethod {
     enum   : UserRole,
   })
     role: UserRole;
+
+  @OneToMany(
+    () => Booking, (bookings: Booking) => bookings.user,
+  )
+    bookings?: Booking[];
 }

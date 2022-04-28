@@ -33,11 +33,16 @@ class BookingService {
     );
 
     if (slotRequested.isDisabled === true) {
-      throw new HttpException();
+      throw new HttpException(
+        500, "Slot is disabled.",
+      );
     }
     const repo = this.getRepository();
     const isThereABookingInTheTimeFrame = await repo.findByIdAndDates(
-      slotId,
+      {
+        entity  : "slot",
+        entityId: slotId,
+      },
       startDate,
       endDate,
     );
@@ -46,14 +51,39 @@ class BookingService {
 
 
     if (bookingsAmount !== 0) {
-      throw new HttpException();
+      throw new HttpException(
+        500, "Slot is already occupied.",
+      );
     }
 
 
     return false;
   }
 
+  public async doesTheBookingOfTheUserOverlap(
+    userId: number,
+    startDate: string,
+    endDate: string,
+  ): Promise<boolean> {
+    const repo = this.getRepository();
 
+    const userBookings = await repo.findByIdAndDates(
+      {
+        entity  : "user",
+        entityId: userId,
+      },
+      startDate,
+      endDate,
+    );
+
+    if (userBookings.length !== 0) {
+      throw new HttpException(
+        500, "You already booked a slot in this time frame. Cancel it before booking a new slot.",
+      );
+    }
+
+    return false;
+  }
 
 
   public async create(bookingData: BookingCreateBodyValidator): Promise<Booking> {
@@ -63,6 +93,7 @@ class BookingService {
       slotId,
       startDate,
       endDate,
+      userId,
     } = bookingData;
 
     if (endDate < startDate || new Date(startDate) < new Date()) {
@@ -78,10 +109,19 @@ class BookingService {
       endDate,
     );
 
+    await this.doesTheBookingOfTheUserOverlap(
+      userId,
+      startDate,
+      endDate,
+    );
+
     const booking = await repo.save({
       ...bookingData,
       slot: {
         id: slotId,
+      },
+      user: {
+        id: userId,
       },
     });
 
