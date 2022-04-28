@@ -36,6 +36,9 @@ class SlotRouter implements IRouter {
 
     this.router.patch(
       `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      Authorization.use(),
       ParamsValidator(BaseParamsValidator),
       BodyValidator(SlotUpdateBodyValidator),
       this.slotController.updateById,
