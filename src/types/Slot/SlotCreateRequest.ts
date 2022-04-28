@@ -1,6 +1,7 @@
 import { Request } from "express";
 
-export interface SlotCreateBody extends Record<string, boolean>{
+export interface SlotCreateBody extends Record<string, boolean  | number>{
+  roomId: number,
   isDisabled: boolean,
 }
 

@@ -5,9 +5,11 @@ import {
   Entity,
   Column,
   OneToMany,
+  ManyToOne,
 } from "typeorm";
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
 import Booking from "./Booking";
+import Room from "./Room";
 
 @Entity()
 export default class Slot extends EntityWithFactoryMethod {
@@ -21,7 +23,7 @@ export default class Slot extends EntityWithFactoryMethod {
     updatedAt?: string;
 
   @Column({
-    default: true,
+    default: false,
   })
     isDisabled: boolean;
 
@@ -29,4 +31,10 @@ export default class Slot extends EntityWithFactoryMethod {
     () => Booking, (bookings: Booking) => bookings.slot,
   )
     bookings?: Booking[];
+
+  @ManyToOne(
+    () => Room, (room: Room) => room.slots,
+  )
+    room: Room;
+
 }

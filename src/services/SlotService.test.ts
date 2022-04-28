@@ -20,7 +20,8 @@ describe(
         const slotMock = getSlotMock();
         const fakeRepo = stubInterface<IRepository<Slot>>();
         const userInput = {
-          isDisabled: true,
+          isDisabled: false,
+          roomId    : 17,
         };
 
         // When
@@ -51,6 +52,7 @@ describe(
         // Then
         await expect(new SlotService().create({
           isDisabled: undefined,
+          roomId    : undefined,
         }))
           .rejects.toThrow();
 

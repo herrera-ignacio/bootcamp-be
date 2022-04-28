@@ -50,7 +50,12 @@ export default class SlotService implements IService<Slot> {
 
   public async create(slotData: SlotCreateBodyValidator): Promise<Slot> {
     const repo = this.getRepository();
-    const slot = await repo.save(slotData);
+    const slot = await repo.save({
+      ...slotData,
+      room: {
+        id: slotData.roomId,
+      },
+    });
 
     return slot;
   }
