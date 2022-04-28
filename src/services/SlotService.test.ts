@@ -4,6 +4,9 @@ import Slot from "../entities/Slot";
 import IRepository from "../types/IRepository";
 import getSlotMock from "../mocks/SlotMock";
 import SlotService from "./SlotService";
+import NotFoundException from "../exceptions/NotFoundException";
+import BookingService from "./BookingService";
+import IBookingRepository from "../types/Booking/IBookingRepository";
 
 describe(
   "SlotService", () => {
@@ -52,6 +55,84 @@ describe(
           .rejects.toThrow();
 
         expect(fakeRepo.save.calledOnce).toBeTruthy();
+      },
+    );
+
+    it(
+      "updateById success", async () => {
+        // Given
+        const slotMock = getSlotMock();
+        // const bookingMock = getBookingMock();
+        const expectedSlot = {
+          ...slotMock,
+          isDisabled: true,
+        };
+
+        const fakeBookingRepo = stubInterface<IBookingRepository>();
+
+        const fakeRepo = stubInterface<IRepository<Slot>>();
+        const getByKey = sinon.fake.resolves(slotMock);
+
+        // When
+        fakeRepo.save.resolvesArg(0);
+        fakeBookingRepo.delete.resolves({
+          affected: 1,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          SlotService.prototype, "getByKey", getByKey,
+        );
+
+        sandbox.replace(
+          BookingService.prototype, "getRepository", () => fakeBookingRepo,
+        );
+
+        sandbox.replace(
+          SlotService.prototype, "getRepository", () => fakeRepo,
+        );
+
+
+        const res = await new SlotService().updateById(
+          slotMock.id, { isDisabled: expectedSlot.isDisabled },
+        );
+
+        // Then
+        expect(getByKey.calledOnceWithExactly(
+          "id", slotMock.id,
+        )).toBeTruthy();
+        expect(fakeRepo.save.calledOnceWithExactly({
+          ...slotMock,
+          isDisabled: expectedSlot.isDisabled,
+        })).toBeTruthy();
+        expect(res).toEqual(expectedSlot);
+      },
+
+    );
+
+    it(
+      "updateById not found slot", async () => {
+        // Given
+        const getByKey = sinon.fake.throws(new NotFoundException());
+        const fakeRepo = stubInterface<IRepository<Slot>>();
+
+
+        // When
+        sandbox.replace(
+          SlotService.prototype, "getRepository", () => fakeRepo,
+        );
+        sandbox.replace(
+          SlotService.prototype, "getByKey", getByKey,
+        );
+        const slotService = new SlotService();
+
+        // Then
+        await expect(slotService.updateById(
+          999, { isDisabled: true },
+        )).rejects.toThrow(NotFoundException);
+        expect(getByKey.calledOnceWithExactly(
+          "id", 999,
+        )).toBeTruthy();
       },
     );
 

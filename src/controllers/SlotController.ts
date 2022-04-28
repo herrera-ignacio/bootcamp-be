@@ -8,6 +8,7 @@ import {
 import SlotService from "../services/SlotService";
 import { IController } from "../types/IController";
 
+
 class SlotController implements IController {
   protected readonly slotService;
 
@@ -27,6 +28,19 @@ class SlotController implements IController {
     const slot = await this.slotService.create(req.body);
 
     res.status(201).json({ data: this.slotMapper.toDto(slot) });
+  };
+
+  public updateById: IRequestHandler = async (
+    req, res,
+  ) => {
+    const id = Number(req.params.id);
+    const slot = await this.slotService.updateById(
+      id, req.body,
+    );
+
+    res.status(200).json({
+      data: this.slotMapper.toDto(slot),
+    });
   };
 
   public deleteById: IRequestHandler = async (
