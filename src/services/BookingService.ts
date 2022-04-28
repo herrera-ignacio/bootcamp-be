@@ -34,51 +34,42 @@ class BookingService {
 
     if (slotRequested.isDisabled === true) {
       throw new HttpException(
-        500, "Slot is disabled.",
+        400, "Slot is disabled.",
       );
     }
+
     const repo = this.getRepository();
-    const isThereABookingInTheTimeFrame = await repo.findByIdAndDates(
-      {
-        entity  : "slot",
-        entityId: slotId,
-      },
-      startDate,
-      endDate,
+    const foundBookings = await repo.findBySlotIdAndDates(
+      slotId, startDate, endDate,
     );
 
-    const bookingsAmount = isThereABookingInTheTimeFrame.length;
+    const isAlreadyBooked = foundBookings.length !== 0;
 
-
-    if (bookingsAmount !== 0) {
+    if (isAlreadyBooked) {
       throw new HttpException(
-        500, "Slot is already occupied.",
+        400, "Slot is already occupied.",
       );
     }
-
 
     return false;
   }
 
-  public async doesTheBookingOfTheUserOverlap(
+  public async hasTheUserAlreadyBooked(
     userId: number,
     startDate: string,
     endDate: string,
   ): Promise<boolean> {
     const repo = this.getRepository();
 
-    const userBookings = await repo.findByIdAndDates(
-      {
-        entity  : "user",
-        entityId: userId,
-      },
-      startDate,
-      endDate,
+    const userBookings = await repo.findByUserIdAndDates(
+      userId, startDate, endDate,
     );
 
-    if (userBookings.length !== 0) {
+    const hasTheUserAlreadyBooked = userBookings.length !== 0;
+
+    if (hasTheUserAlreadyBooked) {
       throw new HttpException(
-        500, "You already booked a slot in this time frame. Cancel it before booking a new slot.",
+        400, "User already has a booking slot in this time frame",
       );
     }
 
@@ -109,7 +100,7 @@ class BookingService {
       endDate,
     );
 
-    await this.doesTheBookingOfTheUserOverlap(
+    await this.hasTheUserAlreadyBooked(
       userId,
       startDate,
       endDate,

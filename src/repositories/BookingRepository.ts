@@ -15,39 +15,70 @@ const bookingRepository = (): IBookingRepository => Database.getConnection()
     findById(id: number): Promise<Booking> {
       return this.findOne({ where: { id } });
     },
-    findByIdAndDates(
-      {
-        entity,
-        entityId,
-      },
+    findBySlotIdAndDates(
+      slotId: number,
       startDate: string,
       endDate: string,
     ): Promise<Booking[]> {
       return this.find({
-        relations: { [entity]: true },
+        relations: { slot: true },
         where    : [
           {
             endDate: Between(
               startDate, endDate,
             ),
-            [entity]: {
-              id: entityId,
+            slot: {
+              id: slotId,
             },
           },
           {
-            [entity]: {
-              id: entityId,
+            slot: {
+              id: slotId,
             },
             startDate: Between(
               startDate, endDate,
             ),
           },
           {
-            endDate : MoreThanOrEqual(endDate),
-            [entity]: {
-              id: entityId,
+            endDate: MoreThanOrEqual(endDate),
+            slot   : {
+              id: slotId,
             },
             startDate: LessThanOrEqual(startDate),
+          },
+        ],
+      });
+    },
+    findByUserIdAndDates(
+      userId: number,
+      startDate: string,
+      endDate: string,
+    ): Promise<Booking[]> {
+      return this.find({
+        relations: { user: true },
+        where    : [
+          {
+            endDate: Between(
+              startDate, endDate,
+            ),
+            user: {
+              id: userId,
+            },
+          },
+          {
+            startDate: Between(
+              startDate, endDate,
+            ),
+            user: {
+              id: userId,
+            },
+          },
+          {
+            endDate  : MoreThanOrEqual(endDate),
+            startDate: LessThanOrEqual(startDate),
+            user     : {
+              id: userId,
+            },
           },
         ],
       });

@@ -27,7 +27,7 @@ describe(
         };
 
         const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
-        const doesTheBookingOfTheUserOverlap = sinon.fake.resolves(false);
+        const hasTheUserAlreadyBooked = sinon.fake.resolves(false);
 
         // When
         fakeRepo.save.resolves(bookingMock);
@@ -37,8 +37,8 @@ describe(
 
         sandbox.replace(
           BookingService.prototype,
-          "doesTheBookingOfTheUserOverlap",
-          doesTheBookingOfTheUserOverlap,
+          "hasTheUserAlreadyBooked",
+          hasTheUserAlreadyBooked,
         );
 
         sandbox.replace(
@@ -62,7 +62,7 @@ describe(
 
         const fakeRepo = stubInterface<IBookingRepository>();
         const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
-        const doesTheBookingOfTheUserOverlap = sinon.fake.resolves(false);
+        const hasTheUserAlreadyBooked = sinon.fake.resolves(false);
 
         fakeRepo.save.throws(new HttpException());
 
@@ -72,8 +72,8 @@ describe(
 
         sandbox.replace(
           BookingService.prototype,
-          "doesTheBookingOfTheUserOverlap",
-          doesTheBookingOfTheUserOverlap,
+          "hasTheUserAlreadyBooked",
+          hasTheUserAlreadyBooked,
         );
 
         sandbox.replace(
@@ -140,7 +140,6 @@ describe(
       "create fails due to the user having another booking in the same time frame", async () => {
         // Given
         const bookingMock = getBookingMock();
-        const bookingsMock = [ bookingMock ];
         const fakeRepo = stubInterface<IBookingRepository>();
         const userInput = {
           endDate  : bookingMock.endDate,
@@ -152,7 +151,7 @@ describe(
         const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
 
         // When
-        fakeRepo.findByIdAndDates.resolves(bookingsMock);
+        fakeRepo.findByUserIdAndDates.resolves([ bookingMock ]);
         sandbox.replace(
           BookingService.prototype, "getRepository", () => fakeRepo,
         );
