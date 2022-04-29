@@ -6,6 +6,7 @@ import { IService } from "../types/IService";
 import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator";
 import SlotUpdateBodyValidator from "../validators/Slot/SlotUpdateBodyValidator";
 import BookingService from "./BookingService";
+import RoomDisableBodyValidator from "../validators/Room/RoomDisableBodyValidator";
 // import HttpException from "../exceptions/HttpException";
 
 
@@ -39,6 +40,26 @@ export default class SlotService implements IService<Slot> {
 
   getAll(): Promise<Slot[]> {
     throw new Error("Method not implemented.");
+  }
+
+  public async getAllSlotsByRoomId(roomId: number): Promise<Slot[]> {
+
+    const repo = this.getRepository();
+
+    const slots = await repo.find({
+      relations: {
+        room: true,
+      },
+      where: {
+        room:
+        {
+          id: roomId,
+        },
+      },
+    });
+
+    return slots;
+
   }
 
 
@@ -100,6 +121,29 @@ export default class SlotService implements IService<Slot> {
         "id", id,
       ));
     }
+  }
+
+
+
+  public async disableSlotsByRoomId(
+    roomId: number,
+    roomData: RoomDisableBodyValidator,
+  ): Promise<void> {
+
+    // const repo = this.getRepository();
+
+    const slots = await this.getAllSlotsByRoomId(roomId);
+
+    const slotData = {
+      isDisabled: true,
+    };
+
+
+    console.log(slots);
+    console.log(slotData);
+    console.log(roomData);
+
+
   }
 }
 

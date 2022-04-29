@@ -24,6 +24,9 @@ export default class Room extends EntityWithFactoryMethod {
   @Column()
     name: string;
 
+  @Column({ default: false })
+    isDisabled: boolean;
+
   @OneToMany(
     () => Slot, (slot: Slot) => slot.room,
   )

@@ -5,6 +5,8 @@ import IRepository from "../types/IRepository";
 import { IService } from "../types/IService";
 import NotFoundException from "../exceptions/NotFoundException";
 import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
+import RoomDisableBodyValidator from "../validators/Room/RoomDisableBodyValidator";
+import SlotService from "./SlotService";
 
 
 class RoomService implements IService<Room> {
@@ -58,6 +60,35 @@ class RoomService implements IService<Room> {
       ...room,
       ...roomData,
     });
+
+  }
+
+  public async disableById(
+    id: number,
+    roomData: RoomDisableBodyValidator,
+  ): Promise<Room> {
+
+    const roomToDisable = await this.getByKey(
+      "id", id,
+    );
+
+    const repo = this.getRepository();
+
+    const slotService = new SlotService();
+
+    const [ room ] = await Promise.all([
+      repo.save({
+        ...roomToDisable,
+        ...roomData,
+      }),
+      roomData.isDisabled === true
+        ? slotService.disableSlotsByRoomId(
+          id, roomData,
+        )
+        : Promise.resolve(),
+    ]);
+
+    return room;
 
   }
 

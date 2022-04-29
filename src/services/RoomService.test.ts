@@ -91,7 +91,8 @@ describe(
         const roomMock = getRoomMock();
         const fakeRepo = stubInterface<IRepository<Room>>();
         const userInput = {
-          name: roomMock.name,
+          isDisabled: roomMock.isDisabled,
+          name      : roomMock.name,
         };
 
         // When

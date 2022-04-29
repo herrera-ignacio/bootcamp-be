@@ -129,9 +129,10 @@ describe(
         const roomMock = getRoomMock();
         const fakeService = sinon.createStubInstance(RoomService);
         const roomCreateBody: RoomCreateBody = {
-          createdAt: roomMock.createdAt,
-          name     : roomMock.name,
-          updatedAt: roomMock.updatedAt,
+          createdAt : roomMock.createdAt,
+          isDisabled: roomMock.isDisabled,
+          name      : roomMock.name,
+          updatedAt : roomMock.updatedAt,
         };
         const fakeReq: RoomCreateRequest = getRequestMock({
           body: roomCreateBody,

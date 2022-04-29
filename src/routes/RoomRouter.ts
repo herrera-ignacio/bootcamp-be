@@ -9,6 +9,7 @@ import Authorization from "../middlewares/Authorization";
 import ParamsValidator from "../middlewares/ParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
 import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
+import RoomDisableBodyValidator from "../validators/Room/RoomDisableBodyValidator";
 
 class RoomRouter implements IRouter {
 
@@ -53,6 +54,13 @@ class RoomRouter implements IRouter {
       ParamsValidator(BaseParamsValidator),
       BodyValidator(RoomUpdateBodyValidator),
       this.roomController.updateById,
+    );
+
+    this.router.patch(
+      `${this.path}/disableRoom/:id(\\d+)`,
+      ParamsValidator(BaseParamsValidator),
+      BodyValidator(RoomDisableBodyValidator),
+      this.roomController.disableById,
     );
 
     this.router.delete(
