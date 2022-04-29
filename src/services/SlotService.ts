@@ -130,18 +130,30 @@ export default class SlotService implements IService<Slot> {
     roomData: RoomDisableBodyValidator,
   ): Promise<void> {
 
-    // const repo = this.getRepository();
+    const repo = this.getRepository();
 
     const slots = await this.getAllSlotsByRoomId(roomId);
 
-    const slotData = {
-      isDisabled: true,
-    };
+    const slotsIds = [];
 
+    for (let i = 0; i < slots.length; i += 1) {
+      slotsIds.push(slots[i].id);
+    }
 
-    console.log(slots);
-    console.log(slotData);
-    console.log(roomData);
+    const bookingService = new BookingService();
+
+    await Promise.all([
+      repo.createQueryBuilder()
+        .update(Slot)
+        .set({ isDisabled: true })
+        .where(
+          "roomId = :roomId", { roomId },
+        )
+        .execute(),
+      roomData.isDisabled === true
+        ? bookingService.deleteBookingsBySeveralSlotIds(slotsIds)
+        : Promise.resolve(),
+    ]);
 
 
   }
