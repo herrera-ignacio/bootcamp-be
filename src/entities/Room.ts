@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   Column,
+  OneToMany,
 } from "typeorm";
 import {  } from "class-validator";
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
+import Slot from "./Slot";
 
 @Entity()
 export default class Room extends EntityWithFactoryMethod {
@@ -22,4 +24,14 @@ export default class Room extends EntityWithFactoryMethod {
   @Column()
     name: string;
 
+  @Column({ default: false })
+    isDisabled: boolean;
+
+  @OneToMany(
+    () => Slot, (slot: Slot) => slot.room,
+  )
+    slots: Slot[];
+
+
 }
+
