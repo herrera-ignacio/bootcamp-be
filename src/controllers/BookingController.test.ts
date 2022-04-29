@@ -33,6 +33,7 @@ describe(
           slotId   : 2,
           startDate: bookingMock.startDate,
           updatedAt: bookingMock.updatedAt,
+          userId   : 1,
         };
         const fakeReq: BookingCreateRequest = getRequestMock({
           body: bookingCreateBody,

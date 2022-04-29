@@ -15,8 +15,10 @@ const bookingRepository = (): IBookingRepository => Database.getConnection()
     findById(id: number): Promise<Booking> {
       return this.findOne({ where: { id } });
     },
-    findByIdAndDates(
-      slotId: number, startDate: string, endDate: string,
+    findBySlotIdAndDates(
+      slotId: number,
+      startDate: string,
+      endDate: string,
     ): Promise<Booking[]> {
       return this.find({
         relations: { slot: true },
@@ -43,6 +45,40 @@ const bookingRepository = (): IBookingRepository => Database.getConnection()
               id: slotId,
             },
             startDate: LessThanOrEqual(startDate),
+          },
+        ],
+      });
+    },
+    findByUserIdAndDates(
+      userId: number,
+      startDate: string,
+      endDate: string,
+    ): Promise<Booking[]> {
+      return this.find({
+        relations: { user: true },
+        where    : [
+          {
+            endDate: Between(
+              startDate, endDate,
+            ),
+            user: {
+              id: userId,
+            },
+          },
+          {
+            startDate: Between(
+              startDate, endDate,
+            ),
+            user: {
+              id: userId,
+            },
+          },
+          {
+            endDate  : MoreThanOrEqual(endDate),
+            startDate: LessThanOrEqual(startDate),
+            user     : {
+              id: userId,
+            },
           },
         ],
       });

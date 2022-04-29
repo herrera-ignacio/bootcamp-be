@@ -23,14 +23,22 @@ describe(
           endDate  : bookingMock.endDate,
           slotId   : 5,
           startDate: bookingMock.endDate,
+          userId   : 1,
         };
 
         const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
+        const hasTheUserAlreadyBooked = sinon.fake.resolves(false);
 
         // When
         fakeRepo.save.resolves(bookingMock);
         sandbox.replace(
           BookingService.prototype, "isThereABookingInThisTimeFrame", isThereABookingInTheTimeFrame,
+        );
+
+        sandbox.replace(
+          BookingService.prototype,
+          "hasTheUserAlreadyBooked",
+          hasTheUserAlreadyBooked,
         );
 
         sandbox.replace(
@@ -43,6 +51,7 @@ describe(
         expect(fakeRepo.save.calledOnceWithExactly({
           ...userInput,
           slot: { id: 5 },
+          user: { id: 1 },
         } )).toBeTruthy();
         expect(res).toEqual(bookingMock);
       },
@@ -53,11 +62,18 @@ describe(
 
         const fakeRepo = stubInterface<IBookingRepository>();
         const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
+        const hasTheUserAlreadyBooked = sinon.fake.resolves(false);
 
         fakeRepo.save.throws(new HttpException());
 
         sandbox.replace(
           BookingService.prototype, "isThereABookingInThisTimeFrame", isThereABookingInTheTimeFrame,
+        );
+
+        sandbox.replace(
+          BookingService.prototype,
+          "hasTheUserAlreadyBooked",
+          hasTheUserAlreadyBooked,
         );
 
         sandbox.replace(
@@ -68,6 +84,7 @@ describe(
           endDate  : undefined,
           slotId   : undefined,
           startDate: undefined,
+          userId   : undefined,
         }))
           .rejects.
           toThrow(HttpException);
@@ -91,6 +108,7 @@ describe(
           endDate  : bookingMock.startDate,
           slotId   : 5,
           startDate: bookingMock.endDate,
+          userId   : 1,
         })).rejects.toThrow(HttpException);
 
 
@@ -111,9 +129,39 @@ describe(
           endDate  : bookingMock.endDate,
           slotId   : 5,
           startDate: new Date("2021-04-25").toDateString(),
+          userId   : 1,
         })).rejects.toThrow(HttpException);
 
 
+      },
+    );
+
+    it(
+      "create fails due to the user having another booking in the same time frame", async () => {
+        // Given
+        const bookingMock = getBookingMock();
+        const fakeRepo = stubInterface<IBookingRepository>();
+        const userInput = {
+          endDate  : bookingMock.endDate,
+          slotId   : 5,
+          startDate: bookingMock.endDate,
+          userId   : 1,
+        };
+
+        const isThereABookingInTheTimeFrame = sinon.fake.resolves(false);
+
+        // When
+        fakeRepo.findByUserIdAndDates.resolves([ bookingMock ]);
+        sandbox.replace(
+          BookingService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        sandbox.replace(
+          BookingService.prototype, "isThereABookingInThisTimeFrame", isThereABookingInTheTimeFrame,
+        );
+
+        // Then
+        await expect(new BookingService().create(userInput)).rejects.toThrow(HttpException);
       },
     );
 

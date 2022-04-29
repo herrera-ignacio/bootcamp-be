@@ -33,27 +33,48 @@ class BookingService {
     );
 
     if (slotRequested.isDisabled === true) {
-      throw new HttpException();
+      throw new HttpException(
+        400, "Slot is disabled.",
+      );
     }
+
     const repo = this.getRepository();
-    const isThereABookingInTheTimeFrame = await repo.findByIdAndDates(
-      slotId,
-      startDate,
-      endDate,
+    const foundBookings = await repo.findBySlotIdAndDates(
+      slotId, startDate, endDate,
     );
 
-    const bookingsAmount = isThereABookingInTheTimeFrame.length;
+    const isAlreadyBooked = foundBookings.length !== 0;
 
-
-    if (bookingsAmount !== 0) {
-      throw new HttpException();
+    if (isAlreadyBooked) {
+      throw new HttpException(
+        400, "Slot is already occupied.",
+      );
     }
-
 
     return false;
   }
 
+  public async hasTheUserAlreadyBooked(
+    userId: number,
+    startDate: string,
+    endDate: string,
+  ): Promise<boolean> {
+    const repo = this.getRepository();
 
+    const userBookings = await repo.findByUserIdAndDates(
+      userId, startDate, endDate,
+    );
+
+    const hasTheUserAlreadyBooked = userBookings.length !== 0;
+
+    if (hasTheUserAlreadyBooked) {
+      throw new HttpException(
+        400, "User already has a booking slot in this time frame",
+      );
+    }
+
+    return false;
+  }
 
 
   public async create(bookingData: BookingCreateBodyValidator): Promise<Booking> {
@@ -63,6 +84,7 @@ class BookingService {
       slotId,
       startDate,
       endDate,
+      userId,
     } = bookingData;
 
     if (endDate < startDate || new Date(startDate) < new Date()) {
@@ -78,10 +100,19 @@ class BookingService {
       endDate,
     );
 
+    await this.hasTheUserAlreadyBooked(
+      userId,
+      startDate,
+      endDate,
+    );
+
     const booking = await repo.save({
       ...bookingData,
       slot: {
         id: slotId,
+      },
+      user: {
+        id: userId,
       },
     });
 

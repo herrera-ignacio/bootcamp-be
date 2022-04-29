@@ -9,6 +9,7 @@ import {
 
 import EntityWithFactoryMethod from "../types/EntityWithFactoryMethod";
 import Slot from "./Slot";
+import User from "./User";
 
 @Entity()
 export default class Booking extends EntityWithFactoryMethod {
@@ -31,4 +32,9 @@ export default class Booking extends EntityWithFactoryMethod {
     () => Slot, (slot: Slot) => slot.bookings,
   )
     slot: Slot;
+
+  @ManyToOne(
+    () => User, (user: User) => user.bookings,
+  )
+    user: User;
 }

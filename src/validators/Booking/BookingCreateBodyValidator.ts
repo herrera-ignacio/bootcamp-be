@@ -21,4 +21,7 @@ export default class BookingCreateBodyValidator implements BookingCreateBody {
   @IsNotEmpty()
   public endDate: string;
 
+  @IsNotEmpty()
+  @IsInt()
+  public userId: number;
 }
