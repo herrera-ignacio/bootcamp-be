@@ -2,6 +2,7 @@ import {
   IsOptional,
   IsString,
   IsBoolean,
+  IsNotEmpty,
 } from "class-validator";
 import { RoomUpdateBody } from "../../types/Room/RoomUpdateRequest";
 
@@ -12,6 +13,7 @@ export default class RoomUpdateBodyValidator implements RoomUpdateBody {
   [x: string]: string | boolean;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   public name: string;
 
