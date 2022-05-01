@@ -6,7 +6,7 @@ import { IService } from "../types/IService";
 import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator";
 import SlotUpdateBodyValidator from "../validators/Slot/SlotUpdateBodyValidator";
 import BookingService from "./BookingService";
-import RoomDisableBodyValidator from "../validators/Room/RoomDisableBodyValidator";
+import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
 
 
 
@@ -127,7 +127,7 @@ export default class SlotService implements IService<Slot> {
 
   public async disableSlotsByRoomId(
     roomId: number,
-    roomData: RoomDisableBodyValidator,
+    roomData: RoomUpdateBodyValidator,
   ): Promise<void> {
 
     const repo = this.getRepository();
