@@ -15,6 +15,28 @@ describe(
     afterEach(() => sandbox.restore());
 
     it(
+      "getAllSlotsByRoomId should return an array with all the slots linked to a room",
+
+      async () => {
+
+        const slotMock = [ getSlotMock(), getSlotMock(), getSlotMock() ];
+        const fakeRepo = stubInterface<IRepository<Slot>>();
+
+        fakeRepo.find.resolves(slotMock);
+        sandbox.replace(
+          SlotService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new SlotService().getAllSlotsByRoomId(25);
+
+        expect(res).toEqual(slotMock);
+        expect(fakeRepo.find.called).toBeTruthy();
+
+
+      },
+    );
+
+    it(
       "create should generate a new slot when called and return its data", async () => {
         // Given
         const slotMock = getSlotMock();

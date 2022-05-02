@@ -1,3 +1,4 @@
+import { In } from "typeorm";
 import sinon from "sinon";
 import { stubInterface } from "ts-sinon";
 import NotFoundException from "../exceptions/NotFoundException";
@@ -5,6 +6,7 @@ import HttpException from "../exceptions/HttpException";
 import getBookingMock from "../mocks/BookingMock";
 import IBookingRepository from "../types/Booking/IBookingRepository";
 import BookingService from "./BookingService";
+
 
 describe(
   "BookingService", () => {
@@ -210,6 +212,34 @@ describe(
         await expect(bookingService.deleteById(1)).rejects.toThrow(NotFoundException);
 
         expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
+      },
+    );
+
+    it(
+      "deleteBookingsBySeveralSlotsIds success", async () => {
+        // Given
+        const fakeRepo = stubInterface<IBookingRepository>();
+
+        // When
+        fakeRepo.delete.resolves({
+          affected: 1,
+          raw     : undefined,
+        });
+
+        sandbox.replace(
+          BookingService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        const res = await new BookingService().deleteBookingsBySeveralSlotIds([ 1, 2, 3 ]);
+
+        // Then
+        expect(fakeRepo.delete.calledOnceWithExactly({
+          slot: {
+            id: In([ 1, 2, 3 ] ),
+          },
+        })).toBeTruthy();
+
+        expect(res).toBeUndefined();
       },
     );
 
