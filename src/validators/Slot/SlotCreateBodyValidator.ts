@@ -18,5 +18,5 @@ export default class SlotCreateBodyValidator implements SlotCreateBody {
 
   @IsBoolean()
   @IsOptional()
-  public isDisabled: boolean;
+  public isDisabled?: boolean;
 }

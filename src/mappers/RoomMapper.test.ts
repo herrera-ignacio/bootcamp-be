@@ -12,10 +12,11 @@ describe(
 
 
         expect(roomDto).toEqual({
-          createdAt: new Date(room.createdAt),
-          id       : room.id,
-          name     : room.name,
-          updatedAt: new Date(room.updatedAt),
+          createdAt : new Date(room.createdAt),
+          id        : room.id,
+          isDisabled: room.isDisabled,
+          name      : room.name,
+          updatedAt : new Date(room.updatedAt),
         });
 
       },

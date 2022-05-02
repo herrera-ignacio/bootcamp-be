@@ -145,13 +145,9 @@ class BookingService {
 
   public async deleteBookingsBySeveralSlotIds(slotIds: number[]): Promise<void> {
     const repo = this.getRepository();
-    const affectedData = await repo.delete({ slot: { id: In(slotIds) } } );
 
-    if (affectedData.affected === 0) {
-      throw new NotFoundException(BookingService.notFoundErrorMessage(
-        "slotId", "Bookings associated to room's slots",
-      ));
-    }
+    await repo.delete({ slot: { id: In(slotIds) } } );
+
   }
 }
 

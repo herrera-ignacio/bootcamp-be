@@ -132,7 +132,10 @@ describe(
         );
 
         const res = await new RoomService().updateById(
-          roomMock.id, { name: expectedRoom.name },
+          roomMock.id, {
+            isDisabled: expectedRoom.isDisabled,
+            name      : expectedRoom.name,
+          },
         );
 
         // Then
@@ -164,7 +167,10 @@ describe(
 
         // Then
         await expect(roomService.updateById(
-          999, { name: "" },
+          999, {
+            isDisabled: false,
+            name      : "",
+          },
         )).rejects.toThrow(NotFoundException);
         expect(getByKey.calledOnceWithExactly(
           "id", 999,

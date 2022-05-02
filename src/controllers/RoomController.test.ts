@@ -187,7 +187,8 @@ describe(
 
         // Given
         const roomUpdateBody: RoomUpdateBody = {
-          name: "Dummy room",
+          isDisabled: true,
+          name      : "Dummy room",
         };
 
         const expectedRoom = {
@@ -234,7 +235,8 @@ describe(
         // Given
 
         const roomUpdateBody: RoomUpdateBody = {
-          name: "Dummy room",
+          isDisabled: true,
+          name      : "Dummy room",
         };
         const fakeService = sinon.createStubInstance(RoomService);
         const fakeReq = getRequestMock({

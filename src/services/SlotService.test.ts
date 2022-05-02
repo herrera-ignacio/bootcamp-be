@@ -20,8 +20,7 @@ describe(
         const slotMock = getSlotMock();
         const fakeRepo = stubInterface<IRepository<Slot>>();
         const userInput = {
-          isDisabled: false,
-          roomId    : 17,
+          roomId: 17,
         };
 
         // When
@@ -34,7 +33,10 @@ describe(
         const res = await new SlotService().create(userInput);
 
         expect(res).toEqual(slotMock);
-        expect(fakeRepo.save.calledWithExactly(userInput)).toBeTruthy();
+        expect(fakeRepo.save.calledWithExactly({
+          ...userInput,
+          room: { id: userInput.roomId },
+        })).toBeTruthy();
       },
     );
 
