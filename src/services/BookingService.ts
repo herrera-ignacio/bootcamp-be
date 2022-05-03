@@ -5,6 +5,8 @@ import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyV
 import SlotService from "./SlotService";
 import HttpException from "../exceptions/HttpException";
 import NotFoundException from "../exceptions/NotFoundException";
+import { UserRole } from "../entities/User";
+import NotAuthorizedException from "../exceptions/NotAuthorizedException";
 
 
 
@@ -119,13 +121,48 @@ class BookingService {
     return booking;
   }
 
-  public async deleteById(id: number): Promise<void> {
+  public async bookingBelongsToTheUser(
+    bookingId: number, userId: number,
+  ): Promise<boolean> {
     const repo = this.getRepository();
-    const affectedData = await repo.delete({ id });
+    const booking = await repo.findOneBy({ id: bookingId });
+
+    console.log("Booking:");
+    console.log(booking);
+
+    if (Number(booking.user) === userId) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public async deleteById(
+    bookingId: number, userId: number, userRole: string,
+  ): Promise<void> {
+    const isBookingBelongToTheUser = await this.bookingBelongsToTheUser(
+      bookingId, userId,
+    );
+
+    console.log("isBookingBelongToTheUser:");
+    console.log(isBookingBelongToTheUser);
+
+    const isAllowedUser = userRole === UserRole.ADMIN
+    || userRole === UserRole.CONTRACTOR && isBookingBelongToTheUser;
+
+    console.log("isAllowedUser");
+    console.log(isAllowedUser);
+
+    if (!isAllowedUser) {
+      throw new NotAuthorizedException();
+    }
+
+    const repo = this.getRepository();
+    const affectedData = await repo.delete({ id: bookingId });
 
     if (affectedData.affected === 0) {
       throw new NotFoundException(BookingService.notFoundErrorMessage(
-        "id", id,
+        "id", bookingId,
       ));
     }
   }

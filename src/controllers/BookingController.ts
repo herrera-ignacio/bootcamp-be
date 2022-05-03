@@ -2,6 +2,7 @@ import { IController } from "../types/IController";
 import BookingService from "../services/BookingService";
 import { IRequestHandler } from "../types/IRequestHandler";
 import BookingMapper from "../mappers/BookingMapper";
+import { RequestWithAuth } from "../types/Auth/RequestWithAuth";
 
 class BookingController implements IController {
 
@@ -29,11 +30,19 @@ class BookingController implements IController {
   };
 
   public deleteById: IRequestHandler = async (
-    req, res,
+    req: RequestWithAuth, res,
   ) => {
-    const id = Number(req.params.id);
+    const {
+      role,
+      id,
+    } = req.auth.user;
+    const userId = id;
+    const userRole = role;
+    const bookingId = Number(req.params.id);
 
-    await this.bookingService.deleteById(id);
+    await this.bookingService.deleteById(
+      bookingId, userId, userRole,
+    );
 
     res.sendStatus(204);
   };

@@ -5,6 +5,7 @@ import HttpException from "../exceptions/HttpException";
 import getBookingMock from "../mocks/BookingMock";
 import IBookingRepository from "../types/Booking/IBookingRepository";
 import BookingService from "./BookingService";
+import NotAuthorizedException from "../exceptions/NotAuthorizedException";
 
 describe(
   "BookingService", () => {
@@ -176,11 +177,21 @@ describe(
           raw     : undefined,
         });
 
+        fakeRepo.findOneBy.resolves(getBookingMock());
+
+        const bookingBelongsToTheUser = sinon.fake.resolves(true);
+
+        sandbox.replace(
+          BookingService.prototype, "bookingBelongsToTheUser", bookingBelongsToTheUser,
+        );
+
         sandbox.replace(
           BookingService.prototype, "getRepository", () => fakeRepo,
         );
 
-        const res = await new BookingService().deleteById(1);
+        const res = await new BookingService().deleteById(
+          1, 1, "CONTRACTOR",
+        );
 
         // Then
         expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
@@ -200,6 +211,12 @@ describe(
           raw     : undefined,
         });
 
+        const bookingBelongsToTheUser = sinon.fake.resolves(true);
+
+        sandbox.replace(
+          BookingService.prototype, "bookingBelongsToTheUser", bookingBelongsToTheUser,
+        );
+
         sandbox.replace(
           BookingService.prototype, "getRepository", () => fakeRepo,
         );
@@ -207,11 +224,32 @@ describe(
         const bookingService = new BookingService();
 
         // Then
-        await expect(bookingService.deleteById(1)).rejects.toThrow(NotFoundException);
+        await expect(bookingService.deleteById(
+          1, 1, "CONTRACTOR",
+        )).rejects.toThrow(NotFoundException);
 
         expect(fakeRepo.delete.calledOnceWithExactly({ id: 1 })).toBeTruthy();
       },
     );
 
+    it(
+      "deleteById should fail when the booking doesn't belong to the contractor", async () => {
+        // Given
+        const bookingService = new BookingService();
+        const fakeRepo = stubInterface<IBookingRepository>();
+
+        // When
+        sandbox.replace(
+          BookingService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        fakeRepo.findOneBy.resolves(getBookingMock());
+
+        // Then
+        await expect(bookingService.deleteById(
+          5, 5, "CONTRACTOR",
+        )).rejects.toThrow(NotAuthorizedException);
+      },
+    );
   },
 );

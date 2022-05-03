@@ -41,7 +41,7 @@ class SlotRouter implements IRouter {
       `${this.path}/:id(\\d+)`,
       JWTCheck.use(),
       Authentication.use(),
-      Authorization.use(),
+      Authorization.use([ UserRole.CONTRACTOR ]),
       ParamsValidator(BaseParamsValidator),
       this.bookingController.deleteById,
     );

@@ -12,6 +12,11 @@ import {
   BookingCreateRequest,
 } from "../types/Booking/BookingCreateRequest";
 import NotFoundException from "../exceptions/NotFoundException";
+import {
+  RequestWithAuth,
+  AuthData,
+} from "../types/Auth/RequestWithAuth";
+import getUserMock from "../mocks/UserMock";
 
 describe(
 
@@ -85,7 +90,12 @@ describe(
         // Given
         const fakeService = sinon.createStubInstance(BookingService);
         const controller = new BookingController(fakeService);
-        const fakeReq = getRequestMock({ params: { id: "1" } });
+        const fakeReq: RequestWithAuth = getRequestMock({
+          auth: {
+            user: getUserMock(),
+          } as AuthData,
+          params: { id: "1" },
+        });
         const fakeRes = getResponseMock();
 
         // When
@@ -95,8 +105,11 @@ describe(
         );
 
         // Then
-        expect(fakeService.deleteById.calledWith(sinon.match(Number(fakeReq.params.id))))
-          .toBeTruthy();
+        expect(fakeService.deleteById.calledWithExactly(
+          Number(fakeReq.params.id),
+          fakeReq.auth.user.id,
+          fakeReq.auth.user.role,
+        )).toBeTruthy();
 
         expect(fakeRes.sendStatus.calledOnceWithExactly(204)).toBeTruthy();
       },
@@ -107,7 +120,12 @@ describe(
         // Given
         const fakeService = sinon.createStubInstance(BookingService);
         const controller = new BookingController(fakeService);
-        const fakeReq = getRequestMock({ params: { id: "1" } });
+        const fakeReq: RequestWithAuth = getRequestMock({
+          auth: {
+            user: getUserMock(),
+          } as AuthData,
+          params: { id: "1" },
+        });
         const fakeRes = getResponseMock();
 
         // When
@@ -118,8 +136,11 @@ describe(
           fakeReq, fakeRes as any, null,
         )).rejects.toThrow(NotFoundException);
 
-        expect(fakeService.deleteById.calledOnceWithExactly(Number(fakeReq.params.id)))
-          .toBeTruthy();
+        expect(fakeService.deleteById.calledOnceWithExactly(
+          Number(fakeReq.params.id),
+          fakeReq.auth.user.id,
+          fakeReq.auth.user.role,
+        )).toBeTruthy();
       },
     );
   },
