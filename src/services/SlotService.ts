@@ -46,9 +46,7 @@ export default class SlotService implements IService<Slot> {
 
     const repo = this.getRepository();
 
-    const slots = await repo.findAllSlotsByRoomId(roomId);
-
-    return slots;
+    return repo.findAllSlotsByRoomId(roomId);
 
   }
 
@@ -124,7 +122,6 @@ export default class SlotService implements IService<Slot> {
 
     const slots = await this.getAllSlotsByRoomId(roomId);
 
-    console.log(slots);
     const bookingService = new BookingService();
 
     await Promise.all([
