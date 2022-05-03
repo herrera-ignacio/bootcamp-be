@@ -4,7 +4,7 @@ import { AuthData } from "../types/Auth/RequestWithAuth";
 export type RequestParams = {
   [k in "headers" | "params" | "query"]?: Record<string, string>;
 } & {
-  body?: Record<string, string | boolean | number>;
+  body?: string | boolean | number | object;
   auth?: AuthData;
 };
 

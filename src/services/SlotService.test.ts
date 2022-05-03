@@ -7,6 +7,7 @@ import SlotService from "./SlotService";
 import NotFoundException from "../exceptions/NotFoundException";
 import BookingService from "./BookingService";
 import IBookingRepository from "../types/Booking/IBookingRepository";
+import ISlotRepository from "../types/Slot/ISlotRepository";
 
 describe(
   "SlotService", () => {
@@ -15,12 +16,35 @@ describe(
     afterEach(() => sandbox.restore());
 
     it(
+      "getAllSlotsByRoomId should return an array with all the slots linked to a room",
+
+      async () => {
+        // Given
+        const slotMock = [ getSlotMock(), getSlotMock(), getSlotMock() ];
+        const fakeRepo = stubInterface<ISlotRepository>();
+        // When
+
+        fakeRepo.findAllSlotsByRoomId.resolves(slotMock);
+        sandbox.replace(
+          SlotService.prototype, "getRepository", () => fakeRepo,
+        );
+        // Then
+        const res = await new SlotService().getAllSlotsByRoomId(25);
+
+
+        expect(fakeRepo.findAllSlotsByRoomId.called).toBeTruthy();
+        expect(res).toEqual(slotMock);
+
+      },
+    );
+
+    it(
       "create should generate a new slot when called and return its data", async () => {
         // Given
         const slotMock = getSlotMock();
         const fakeRepo = stubInterface<IRepository<Slot>>();
         const userInput = {
-          isDisabled: true,
+          roomId: 17,
         };
 
         // When
@@ -33,7 +57,10 @@ describe(
         const res = await new SlotService().create(userInput);
 
         expect(res).toEqual(slotMock);
-        expect(fakeRepo.save.calledWithExactly(userInput)).toBeTruthy();
+        expect(fakeRepo.save.calledWithExactly({
+          ...userInput,
+          room: { id: userInput.roomId },
+        })).toBeTruthy();
       },
     );
 
@@ -51,6 +78,7 @@ describe(
         // Then
         await expect(new SlotService().create({
           isDisabled: undefined,
+          roomId    : undefined,
         }))
           .rejects.toThrow();
 
@@ -62,7 +90,6 @@ describe(
       "updateById success", async () => {
         // Given
         const slotMock = getSlotMock();
-        // const bookingMock = getBookingMock();
         const expectedSlot = {
           ...slotMock,
           isDisabled: true,
@@ -133,6 +160,45 @@ describe(
         expect(getByKey.calledOnceWithExactly(
           "id", 999,
         )).toBeTruthy();
+      },
+    );
+
+    it(
+      "disableSlotsByRoomId success", async () => {
+
+        const slotMock = [ getSlotMock(), getSlotMock() ];
+        const fakeRepo = stubInterface<ISlotRepository>();
+        const fakeBookingRepo = stubInterface<IBookingRepository>();
+
+        const getAllSlotsByRoomId = sinon.fake.resolves(slotMock);
+
+        fakeRepo.disableSlotsByRoomId.resolves();
+
+
+        sandbox.replace(
+          SlotService.prototype, "getAllSlotsByRoomId", getAllSlotsByRoomId,
+        );
+
+        sandbox.replace(
+          SlotService.prototype, "getRepository", () => fakeRepo,
+        );
+
+        sandbox.replace(
+          BookingService.prototype, "getRepository", () => fakeBookingRepo,
+        );
+
+        const res = await new SlotService().disableSlotsByRoomId(
+          25,
+          {
+            isDisabled: true,
+          },
+        );
+
+        expect(getAllSlotsByRoomId.calledOnceWithExactly(25)).toBeTruthy();
+        expect(fakeRepo.disableSlotsByRoomId.calledOnceWithExactly(25)).toBeTruthy();
+        expect(res).toBeUndefined();
+
+
       },
     );
 

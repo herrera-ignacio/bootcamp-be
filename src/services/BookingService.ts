@@ -1,3 +1,4 @@
+import { In } from "typeorm";
 import bookingRepository from "../repositories/BookingRepository";
 import IBookingRepository from "../types/Booking/IBookingRepository";
 import Booking from "../entities/Booking";
@@ -5,6 +6,7 @@ import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyV
 import SlotService from "./SlotService";
 import HttpException from "../exceptions/HttpException";
 import NotFoundException from "../exceptions/NotFoundException";
+
 
 
 
@@ -134,6 +136,13 @@ class BookingService {
     const repo = this.getRepository();
 
     await repo.delete({ slot: { id: slotId } });
+
+  }
+
+  public async deleteBookingsBySeveralSlotIds(slotIds: number[]): Promise<void> {
+    const repo = this.getRepository();
+
+    await repo.delete({ slot: { id: In(slotIds) } } );
 
   }
 }

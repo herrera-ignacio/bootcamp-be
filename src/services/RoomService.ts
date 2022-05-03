@@ -5,6 +5,7 @@ import IRepository from "../types/IRepository";
 import { IService } from "../types/IService";
 import NotFoundException from "../exceptions/NotFoundException";
 import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
+import SlotService from "./SlotService";
 
 
 class RoomService implements IService<Room> {
@@ -53,13 +54,24 @@ class RoomService implements IService<Room> {
       "id", id,
     );
     const repo = this.getRepository();
+    const slotService = new SlotService();
 
-    return repo.save({
-      ...room,
-      ...roomData,
-    });
+    const [ roomUpdated ] = await Promise.all([
+      repo.save({
+        ...room,
+        ...roomData,
+      }),
+      roomData.isDisabled === true
+        ? slotService.disableSlotsByRoomId(
+          id, roomData,
+        )
+        : Promise.resolve(),
+    ]);
+
+    return roomUpdated;
 
   }
+
 
   public async deleteById(id: number): Promise<void> {
 

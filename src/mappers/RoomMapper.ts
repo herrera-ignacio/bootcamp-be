@@ -7,6 +7,7 @@ export interface RoomDto {
   createdAt: Date,
   updatedAt: Date,
   name: string;
+  isDisabled: boolean,
 }
 
 /**
@@ -17,10 +18,11 @@ export class RoomMapper implements IMapper<Room, RoomDto> {
 
   toDto(room: Room): RoomDto {
     return {
-      createdAt: new Date(room.createdAt),
-      id       : room.id,
-      name     : room.name,
-      updatedAt: new Date(room.updatedAt),
+      createdAt : new Date(room.createdAt),
+      id        : room.id,
+      isDisabled: room.isDisabled,
+      name      : room.name,
+      updatedAt : new Date(room.updatedAt),
     };
   }
 
