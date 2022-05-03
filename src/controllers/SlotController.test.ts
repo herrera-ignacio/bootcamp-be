@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import sinon from "sinon";
 import getSlotMock from "../mocks/SlotMock";
 import SlotService from "../services/SlotService";
@@ -5,6 +6,11 @@ import SlotController from "./SlotController";
 import getRequestMock from "../mocks/RequestMock";
 import getResponseMock from "../mocks/ResponseMock";
 import { SlotMapper } from "../mappers/SlotMapper";
+import {
+  SlotUpdateBody,
+  SlotUpdateRequest,
+} from "../types/Slot/SlotUpdateRequest";
+import Slot from "../entities/Slot";
 
 describe(
   "SlotController", () => {
@@ -56,6 +62,74 @@ describe(
         )).rejects.toThrow();
 
         expect(fakeService.create.calledOnce).toBeTruthy();
+      },
+    );
+
+    it(
+      "updateById should return 200 and booking", async () => {
+
+        // Given
+        const slotMock = getSlotMock();
+        const fakeService = sinon.createStubInstance(SlotService);
+        const controller = new SlotController(fakeService);
+        const slotUpdateBody: SlotUpdateBody = {
+          isDisabled: true,
+        };
+        const expectedSlot = {
+          ...slotMock,
+          ...slotUpdateBody,
+        } as Slot;
+
+        const fakeRes = getResponseMock();
+        const fakeReq: SlotUpdateRequest = getRequestMock({
+          body  : slotUpdateBody,
+          params: { id: "1" },
+        });
+
+        fakeService.updateById.resolves(expectedSlot);
+
+        await controller.updateById(
+          fakeReq, fakeRes as any, null,
+        );
+
+        expect(fakeService.updateById.calledOnceWithExactly(
+          Number(fakeReq.params.id),
+          slotUpdateBody,
+        )).toBeTruthy();
+
+        expect(fakeRes.status.calledOnceWithExactly(200)).toBeTruthy();
+
+      },
+
+    );
+
+    it(
+      "updateById should bubble up exception", async () => {
+
+        // Given
+
+        const slotUpdateBody: SlotUpdateBody = {
+          isDisabled: true,
+        };
+        const fakeService = sinon.createStubInstance(SlotService);
+        const fakeReq = getRequestMock({
+          body  : slotUpdateBody,
+          params: { id: "1" },
+        });
+
+        // When
+        const fakeRes = getResponseMock();
+        const controller = new SlotController(fakeService);
+
+        fakeService.updateById.throws();
+
+        // Then
+        await expect(controller.updateById(
+          fakeReq, fakeRes as any, null,
+        )).rejects.toThrow();
+        expect(fakeService.updateById.calledOnceWithExactly(
+          Number(fakeReq.params.id), slotUpdateBody,
+        )).toBeTruthy();
       },
     );
 
