@@ -1,5 +1,4 @@
 import slotRepository from "../repositories/SlotRepository";
-import IRepository from "../types/IRepository";
 import Slot from "../entities/Slot";
 import NotFoundException from "../exceptions/NotFoundException";
 import { IService } from "../types/IService";
@@ -7,13 +6,14 @@ import SlotCreateBodyValidator from "../validators/Slot/SlotCreateBodyValidator"
 import SlotUpdateBodyValidator from "../validators/Slot/SlotUpdateBodyValidator";
 import BookingService from "./BookingService";
 import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
+import ISlotRepository from "../types/Slot/ISlotRepository";
 
 
 
 export default class SlotService implements IService<Slot> {
 
 
-  public getRepository(): IRepository<Slot> {
+  public getRepository(): ISlotRepository {
     return slotRepository();
   }
 
@@ -46,17 +46,7 @@ export default class SlotService implements IService<Slot> {
 
     const repo = this.getRepository();
 
-    const slots = await repo.find({
-      relations: {
-        room: true,
-      },
-      where: {
-        room:
-        {
-          id: roomId,
-        },
-      },
-    });
+    const slots = await repo.findAllSlotsByRoomId(roomId);
 
     return slots;
 
@@ -143,13 +133,7 @@ export default class SlotService implements IService<Slot> {
     const bookingService = new BookingService();
 
     await Promise.all([
-      repo.createQueryBuilder()
-        .update(Slot)
-        .set({ isDisabled: true })
-        .where(
-          "roomId = :roomId", { roomId },
-        )
-        .execute(),
+      repo.disableSlotsByRoomId(roomId),
       roomData.isDisabled === true
         ? bookingService.deleteBookingsBySeveralSlotIds(slotsIds)
         : Promise.resolve(),

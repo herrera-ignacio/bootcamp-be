@@ -15,9 +15,9 @@ export default class RoomUpdateBodyValidator implements RoomUpdateBody {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  public name: string;
+  public name?: string;
 
   @IsBoolean()
   @IsOptional()
-  public isDisabled: boolean;
+  public isDisabled?: boolean;
 }
