@@ -15,22 +15,18 @@ const slotRepository = (): ISlotRepository => Database.getConnection()
     },
 
     findAllSlotsByRoomId(roomId: number): Promise<Slot[]> {
-      return this.find({
-        relations: {
-          room: true,
-        },
-        where: {
-          room:
-          {
-            id: roomId,
-          },
-        },
-      });
+      return this.createQueryBuilder()
+        .select("slot")
+        .from(
+          Slot, "slot",
+        )
+        .where(
+          "slot.roomId = :roomId",
+          { roomId },
+        )
+        .getMany();
     },
 
-    findById(id: number): Promise<Slot> {
-      return this.findOne({ where: { id } });
-    },
 
   });
 

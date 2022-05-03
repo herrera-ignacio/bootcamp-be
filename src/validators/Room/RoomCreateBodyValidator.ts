@@ -18,6 +18,6 @@ export default class RoomCreateBodyValidator implements RoomCreateBody {
 
   @IsBoolean()
   @IsOptional()
-  public isDisabled: boolean;
+  public isDisabled?: boolean;
 
 }

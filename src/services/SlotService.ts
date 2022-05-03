@@ -124,18 +124,13 @@ export default class SlotService implements IService<Slot> {
 
     const slots = await this.getAllSlotsByRoomId(roomId);
 
-    const slotsIds = [];
-
-    for (let i = 0; i < slots.length; i += 1) {
-      slotsIds.push(slots[i].id);
-    }
-
+    console.log(slots);
     const bookingService = new BookingService();
 
     await Promise.all([
       repo.disableSlotsByRoomId(roomId),
       roomData.isDisabled === true
-        ? bookingService.deleteBookingsBySeveralSlotIds(slotsIds)
+        ? bookingService.deleteBookingsBySeveralSlotIds(slots.map(s => s.id))
         : Promise.resolve(),
     ]);
 

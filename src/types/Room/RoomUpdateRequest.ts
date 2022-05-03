@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-export interface RoomUpdateBody extends Record<string, string | boolean>{
+export interface RoomUpdateBody {
   name?: string,
   isDisabled?: boolean,
 }
