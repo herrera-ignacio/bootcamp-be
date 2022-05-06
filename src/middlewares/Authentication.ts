@@ -1,4 +1,4 @@
-import {
+import express, {
   NextFunction,
   Response,
 } from "express";
@@ -15,10 +15,7 @@ import NotFoundException from "../exceptions/NotFoundException";
 export class AuthenticationMiddleware implements IMiddleware {
   protected static initMessage = "AuthenticationMiddleware :: Setup authentication middleware...";
 
-
-
   private readonly userService: UserService;
-
 
   constructor(
     msg?: string, userService = new UserService(),
@@ -28,13 +25,13 @@ export class AuthenticationMiddleware implements IMiddleware {
 
   }
 
-  public use() {
+  public use(): express.RequestHandler {
     return async (
       req: RequestWithAuth, _res: Response, next: NextFunction,
     ) => {
 
       /*
-      req.auth is pupulated by JWTCheck Middleware
+      req.auth is populated by JWTCheck Middleware
       and sub is the user id that auth0Id token returns
        */
 

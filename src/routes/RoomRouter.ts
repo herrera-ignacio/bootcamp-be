@@ -1,12 +1,12 @@
 import { Router } from "express";
 import IRouter from "../types/IRouter";
 import RoomController from "../controllers/RoomController";
-import BodyValidator from "../middlewares/BodyValidator";
+import BodyValidator from "../middlewares/getBodyValidator";
 import RoomCreateBodyValidator from "../validators/Room/RoomCreateBodyValidator";
 import JWTCheck from "../middlewares/JWTCheck";
 import Authentication from "../middlewares/Authentication";
 import Authorization from "../middlewares/Authorization";
-import ParamsValidator from "../middlewares/ParamsValidator";
+import ParamsValidator from "../middlewares/getParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
 import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
 

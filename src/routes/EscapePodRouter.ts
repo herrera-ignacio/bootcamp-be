@@ -1,9 +1,9 @@
 import { Router } from "express";
 import EscapePodController from "../controllers/EscapePodController";
 import IRouter from "../types/IRouter";
-import BodyValidator from "../middlewares/BodyValidator";
+import BodyValidator from "../middlewares/getBodyValidator";
 import EscapePodCreateBodyValidator from "../validators/EscapePod/EscapePodCreateBodyValidator";
-import ParamsValidator from "../middlewares/ParamsValidator";
+import ParamsValidator from "../middlewares/getParamsValidator";
 import EscapePodUpdateParamsValidator from "../validators/EscapePod/EscapePodUpdateParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
 import JWTCheck from "../middlewares/JWTCheck";

@@ -15,7 +15,7 @@ import SlotRouter from "./SlotRouter";
 const router = Router();
 
 router.use((new HomeRouter()).router);
-router.use((new UserRouter()).router);
+router.use((new UserRouter()).getRoutes());
 router.use((new AuthRouter()).router);
 router.use((new EscapePodRouter()).router);
 router.use((new RoomRouter()).router);
