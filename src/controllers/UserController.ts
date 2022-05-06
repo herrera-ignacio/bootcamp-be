@@ -38,6 +38,7 @@ class UserController implements IController {
   public async getById(
     req: Request, res: Response, _next: NextFunction,
   ) {
+    console.log("GET BY ID ...)");
     const id = Number(req.params.id);
     const user = await this.userService.getByKey(
       "id", id,
