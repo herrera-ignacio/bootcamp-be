@@ -5,7 +5,7 @@ import BodyValidator from "../middlewares/getBodyValidator";
 import RoomCreateBodyValidator from "../validators/Room/RoomCreateBodyValidator";
 import JWTCheck from "../middlewares/JWTCheck";
 import Authentication from "../middlewares/Authentication";
-import Authorization from "../middlewares/Authorization";
+import RoleBasedAuthorization from "../middlewares/RoleBasedAuthorization";
 import ParamsValidator from "../middlewares/getParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
 import RoomUpdateBodyValidator from "../validators/Room/RoomUpdateBodyValidator";
@@ -40,7 +40,7 @@ class RoomRouter implements IRouter {
       this.path,
       JWTCheck.use(),
       Authentication.use(),
-      Authorization.use(),
+      RoleBasedAuthorization.use(),
       BodyValidator(RoomCreateBodyValidator),
       this.roomController.create,
     );
@@ -60,7 +60,7 @@ class RoomRouter implements IRouter {
       `${this.path}/:id(\\d+)`,
       JWTCheck.use(),
       Authentication.use(),
-      Authorization.use(),
+      RoleBasedAuthorization.use(),
       ParamsValidator(BaseParamsValidator),
       this.roomController.deleteById,
     );

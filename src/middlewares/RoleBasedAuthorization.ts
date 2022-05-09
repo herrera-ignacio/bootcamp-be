@@ -33,7 +33,6 @@ export class AuthorizationMiddleware implements IMiddleware {
 
       const userRole =  req.auth.user?.role;
 
-
       if (userRole === UserRole.ADMIN || allowedRoles?.includes(userRole)) {
         next();
       } else {

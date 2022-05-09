@@ -3,14 +3,12 @@ import IRouter from "../types/IRouter";
 import BookingController from "../controllers/BookingController";
 import JWTCheck from "../middlewares/JWTCheck";
 import Authentication from "../middlewares/Authentication";
-import Authorization from "../middlewares/Authorization";
-import { UserRole } from "../entities/User";
-import BodyValidator from "../middlewares/BodyValidator";
+import RoleBasedAuthorization from "../middlewares/RoleBasedAuthorization";
+import BodyValidator from "../middlewares/getBodyValidator";
+import ParamsValidator from "../middlewares/getParamsValidator";
 import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyValidator";
-import ParamsValidator from "../middlewares/ParamsValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
-
-
+import { UserRole } from "../entities/User";
 
 class SlotRouter implements IRouter {
 
@@ -32,7 +30,7 @@ class SlotRouter implements IRouter {
       this.path,
       JWTCheck.use(),
       Authentication.use(),
-      Authorization.use([ UserRole.CONTRACTOR ]),
+      RoleBasedAuthorization.use([ UserRole.CONTRACTOR ]),
       BodyValidator(BookingCreateBodyValidator),
       this.bookingController.create,
     );
@@ -41,7 +39,7 @@ class SlotRouter implements IRouter {
       `${this.path}/:id(\\d+)`,
       JWTCheck.use(),
       Authentication.use(),
-      Authorization.use(),
+      RoleBasedAuthorization.use([ UserRole.CONTRACTOR ]),
       ParamsValidator(BaseParamsValidator),
       this.bookingController.deleteById,
     );

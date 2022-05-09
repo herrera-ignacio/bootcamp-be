@@ -1,5 +1,5 @@
 import sinon from "sinon";
-import { AuthorizationMiddleware } from "./Authorization";
+import { AuthorizationMiddleware } from "./RoleBasedAuthorization";
 import getRequestMock from "../mocks/RequestMock";
 import {
   AuthData,

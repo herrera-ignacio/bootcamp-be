@@ -2,13 +2,13 @@ import { Router } from "express";
 import UserController from "../controllers/UserController";
 import IRouter from "../types/IRouter";
 import getParamsValidator from "../middlewares/getParamsValidator";
-import BaseParamsValidator from "../validators/BaseParamsValidator";
 import getBodyValidator from "../middlewares/getBodyValidator";
+import BaseParamsValidator from "../validators/BaseParamsValidator";
 import UserUpdateBodyValidator from "../validators/User/UserUpdateBodyValidator";
 import UserUpdateParamsValidator from "../validators/User/UserUpdateParamsValidator";
 import UserCreateBodyValidator from "../validators/User/UserCreateBodyValidator";
-import authentication  from "../middlewares/Authentication";
-import authorization from "../middlewares/Authorization";
+import Authentication  from "../middlewares/Authentication";
+import RoleBasedAuthorization from "../middlewares/RoleBasedAuthorization";
 import JWTCheck from "../middlewares/JWTCheck";
 
 
@@ -38,7 +38,7 @@ class UserRouter implements IRouter {
 
   initializeMiddlewares() {
     this.router.use(JWTCheck.use());
-    this.router.use(authentication.use());
+    this.router.use(Authentication.use());
   }
 
   initializeRoutes() {
@@ -50,14 +50,14 @@ class UserRouter implements IRouter {
 
     this.router.post(
       this.path,
-      authorization.use(),
+      RoleBasedAuthorization.use(),
       UserRouter.bodyValidator(UserCreateBodyValidator),
       this.userController.create,
     );
 
     this.router.patch(
       `${this.path}/:id(\\d+)`,
-      authorization.use(),
+      RoleBasedAuthorization.use(),
       UserRouter.paramsValidator(UserUpdateParamsValidator),
       UserRouter.bodyValidator(
         UserUpdateBodyValidator, true,
@@ -68,7 +68,7 @@ class UserRouter implements IRouter {
 
     this.router.delete(
       `${this.path}/:id(\\d+)`,
-      authorization.use(),
+      RoleBasedAuthorization.use(),
       this.userController.deleteById,
     );
   }
