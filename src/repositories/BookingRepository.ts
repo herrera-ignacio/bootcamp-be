@@ -12,9 +12,17 @@ import IBookingRepository from "../types/Booking/IBookingRepository";
 
 const bookingRepository = (): IBookingRepository => Database.getConnection()
   .getRepository(Booking).extend({
-    findById(id: number): Promise<Booking> {
-      return this.findOne({ where: { id } });
+    findById(
+      id: number, withUser: boolean,
+    ): Promise<Booking> {
+      return this.findOne({
+        relations: withUser
+          ? { user: true }
+          : null,
+        where: { id },
+      });
     },
+
     findBySlotIdAndDates(
       slotId: number,
       startDate: string,
@@ -49,6 +57,7 @@ const bookingRepository = (): IBookingRepository => Database.getConnection()
         ],
       });
     },
+
     findByUserIdAndDates(
       userId: number,
       startDate: string,

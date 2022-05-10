@@ -9,14 +9,19 @@ import ParamsValidator from "../middlewares/getParamsValidator";
 import BookingCreateBodyValidator from "../validators/Booking/BookingCreateBodyValidator";
 import BaseParamsValidator from "../validators/BaseParamsValidator";
 import { UserRole } from "../entities/User";
+import ResourceBasedAuthorizationMw from "../middlewares/UserResourceBasedAuthorization";
+import Booking from "../entities/Booking";
+import BookingService from "../services/BookingService";
 
-class SlotRouter implements IRouter {
+class BookingRouter implements IRouter {
 
   public router: Router;
 
   public path = "/bookings";
 
   private bookingController = new BookingController();
+
+  private resourceAuthorizationMw = new ResourceBasedAuthorizationMw<Booking>(new BookingService());
 
   constructor() {
 
@@ -40,9 +45,10 @@ class SlotRouter implements IRouter {
       JWTCheck.use(),
       Authentication.use(),
       RoleBasedAuthorization.use([ UserRole.CONTRACTOR ]),
+      this.resourceAuthorizationMw.use(),
       ParamsValidator(BaseParamsValidator),
       this.bookingController.deleteById,
     );
   }
 }
-export default SlotRouter;
+export default BookingRouter;

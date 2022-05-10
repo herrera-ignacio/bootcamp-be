@@ -7,22 +7,13 @@ import Log from "../utils/Log";
 import IMiddleware from "../types/IMiddleware";
 import { RequestWithAuth } from "../types/Auth/RequestWithAuth";
 import NotAuthorizedException from "../exceptions/NotAuthorizedException";
-import UserService from "../services/UserService";
 import { UserRole } from "../entities/User";
 
 export class AuthorizationMiddleware implements IMiddleware {
   protected static initMessage = "AuthorizationMiddleware :: Setup authorization middleware...";
 
-  private readonly userService: UserService;
-
-
-  constructor(
-    msg?: string, userService =  new UserService(),
-  ) {
-
+  constructor(msg?: string) {
     Log.info(msg ?? AuthorizationMiddleware.initMessage);
-    this.userService =  userService;
-
   }
 
 
