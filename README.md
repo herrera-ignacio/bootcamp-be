@@ -1,4 +1,4 @@
-# Express/TS Boilerplate
+# Escape Pods API
 
 ## Setup
 
