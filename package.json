@@ -14,7 +14,8 @@
     "serve-debug": "nodemon --inspect dist/index.js",
     "watch-test": "yarn run test -- --watchAll",
     "watch-ts": "tsc -w",
-    "start": "yarn run build && node dist/index.js"
+    "start": "node dist/index.js",
+    "postinstall": "tsc && rm -v -rf src"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
@@ -58,5 +59,6 @@
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.0"
-  }
+  },
+  "engines": { "node": "16.13.2" }
 }
