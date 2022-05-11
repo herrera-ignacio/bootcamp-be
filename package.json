@@ -13,7 +13,8 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"yarn run watch-ts\" \"yarn run serve-debug\"",
     "serve-debug": "nodemon --inspect dist/index.js",
     "watch-test": "yarn run test -- --watchAll",
-    "watch-ts": "tsc -w"
+    "watch-ts": "tsc -w",
+    "start": "yarn run build && node dist/index.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
