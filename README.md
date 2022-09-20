@@ -37,3 +37,4 @@
 4. User can self-get.
 5. Slot get by id.
 6. Join Bookings with Slots and Rooms.
+7. Refactor resource-based authorization middleware used in Bookings and apply it to User.

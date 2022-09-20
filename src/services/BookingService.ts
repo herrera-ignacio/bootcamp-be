@@ -8,10 +8,6 @@ import HttpException from "../exceptions/HttpException";
 import NotFoundException from "../exceptions/NotFoundException";
 import { IService } from "../types/IService";
 
-
-
-
-
 class BookingService implements IService<Booking> {
 
   public getRepository(): IBookingRepository {
