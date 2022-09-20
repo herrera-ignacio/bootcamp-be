@@ -28,7 +28,6 @@ class UserRouter implements IRouter {
   constructor(userController: UserController = new UserController()) {
     this.router = Router();
     this.userController = userController;
-    this.initializeMiddlewares();
   }
 
   getRoutes() {
@@ -36,20 +35,26 @@ class UserRouter implements IRouter {
     return this.router;
   }
 
-  initializeMiddlewares() {
-    this.router.use(JWTCheck.use());
-    this.router.use(Authentication.use());
-  }
-
   initializeRoutes() {
     this.router.get(
-      this.path, this.userController.getAll,
+      this.path,
+      JWTCheck.use(),
+      Authentication.use(),
+      this.userController.getAll,
     );
 
-    this.setGetByIdRoute();
+    this.router.get(
+      `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
+      UserRouter.paramsValidator(BaseParamsValidator),
+      this.userController.getById,
+    );
 
     this.router.post(
       this.path,
+      JWTCheck.use(),
+      Authentication.use(),
       RoleBasedAuthorization.use(),
       UserRouter.bodyValidator(UserCreateBodyValidator),
       this.userController.create,
@@ -57,6 +62,8 @@ class UserRouter implements IRouter {
 
     this.router.patch(
       `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
       RoleBasedAuthorization.use(),
       UserRouter.paramsValidator(UserUpdateParamsValidator),
       UserRouter.bodyValidator(
@@ -65,19 +72,12 @@ class UserRouter implements IRouter {
       this.userController.updateById,
     );
 
-
     this.router.delete(
       `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
       RoleBasedAuthorization.use(),
       this.userController.deleteById,
-    );
-  }
-
-  setGetByIdRoute() {
-    this.router.get(
-      `${this.path}/:id(\\d+)`,
-      UserRouter.paramsValidator(BaseParamsValidator),
-      this.userController.getById,
     );
   }
 }

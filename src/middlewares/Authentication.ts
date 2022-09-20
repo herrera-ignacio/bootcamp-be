@@ -38,6 +38,7 @@ export class AuthenticationMiddleware implements IMiddleware {
       if (!req.auth?.sub) throw new NotAuthenticatedException();
 
       try {
+
         const user = await this.userService.getByKey(
           "auth0Id", req.auth.sub,
         );
