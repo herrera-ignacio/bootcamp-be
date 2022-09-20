@@ -45,12 +45,12 @@ export default class Config implements IMiddleware {
         appDescription: process.env.APP_DESCRIPTION
         || "API for Agile Engine employees to make reservations",
         appName            : process.env.APP_NAME || "Uncharted-scape-pods",
-        appURL             : process.env.APP_URL || "localhost",
+        appURL             : process.env.APP_URL || "https://localhost:3000",
         auth0ClientAudience: process.env.AUTH0_CLIENT_AUDIENCE,
         auth0Issuer        : process.env.AUTH0_ISSUER,
         auth0jwksUri       : process.env.AUTH0_JWKS_URI,
         auth0ServerAudience: process.env.AUTH0_SERVER_AUDIENCE,
-        databaseHost       : process.env.DATABASE_HOST || "localhost",
+        databaseHost       : process.env.DATABASE_HOST || "https://localhost:3000",
         databaseName       : process.env.DATABASE_NAME || "mydb",
         databasePassword   : process.env.DATABASE_PASSWORD || "postgres",
         databasePort       : !Number.isNaN(Number(process.env.DATABASE_PORT))
