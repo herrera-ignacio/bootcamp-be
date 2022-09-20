@@ -35,4 +35,5 @@
 2. Join Bookings with User.
 3. User can self-update.
 4. User can self-get.
-5. Join Bookings with Slots and Rooms.
+5. Slot get by id.
+6. Join Bookings with Slots and Rooms.
