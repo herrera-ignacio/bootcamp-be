@@ -28,3 +28,10 @@
   * `types`: Shared interfaces for reusable code.
   * `utils`: Utility functions.
   * `validators`: Class validators for parsing request parameters.
+
+## TODO
+
+1. Get Bookings by user ID.
+2. Join Bookings with User.
+3. User can self-update.
+4. User can self-get.
