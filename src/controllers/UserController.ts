@@ -6,6 +6,7 @@ import {
 import UserService from "../services/UserService";
 import User from "../entities/User";
 import { IController } from "../types/IController";
+import { IRequestHandler } from "../types/IRequestHandler";
 import {
   UserDto,
   UserMapper,
@@ -25,9 +26,9 @@ class UserController implements IController {
     this.userMapper = userMapper;
   }
 
-  public async getAll(
+  public getAll: IRequestHandler = async (
     req: Request, res: Response, _next: NextFunction,
-  ) {
+  ) => {
     const users = await this.userService.getAll();
 
     res.status(200).json({

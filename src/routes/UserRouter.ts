@@ -28,11 +28,7 @@ class UserRouter implements IRouter {
   constructor(userController: UserController = new UserController()) {
     this.router = Router();
     this.userController = userController;
-  }
-
-  getRoutes() {
     this.initializeRoutes();
-    return this.router;
   }
 
   initializeRoutes() {
@@ -40,6 +36,7 @@ class UserRouter implements IRouter {
       this.path,
       JWTCheck.use(),
       Authentication.use(),
+      RoleBasedAuthorization.use(),
       this.userController.getAll,
     );
 
