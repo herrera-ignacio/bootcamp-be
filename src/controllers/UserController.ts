@@ -34,11 +34,11 @@ class UserController implements IController {
     res.status(200).json({
       data: users.map((user) => new UserMapper().toDto(user)),
     });
-  }
+  };
 
-  public async getById(
+  public getById: IRequestHandler = async (
     req: Request, res: Response, _next: NextFunction,
-  ) {
+  ) => {
     const id = Number(req.params.id);
     const user = await this.userService.getByKey(
       "id", id,
@@ -47,34 +47,34 @@ class UserController implements IController {
     res.status(200).json({
       data: this.userMapper.toDto(user),
     });
-  }
+  };
 
-  public async create(
+  public create: IRequestHandler = async (
     req: Request, res: Response, _next: NextFunction,
-  ) {
+  ) => {
     const user = await this.userService.create(req.body);
 
     res.status(201).json({ data: this.userMapper.toDto(user) });
-  }
+  };
 
-  public async updateById(
+  public updateById: IRequestHandler = async (
     req: Request, res: Response, _next: NextFunction,
-  ) {
+  ) => {
     const user = await this.userService.updateById(
       Number(req.params.id), req.body,
     );
 
     res.status(200).json({ data: this.userMapper.toDto(user) });
-  }
+  };
 
-  public async deleteById(
+  public deleteById: IRequestHandler = async (
     req: Request, res: Response, _next: NextFunction,
-  ) {
+  ) => {
     const id = Number(req.params.id);
 
     await this.userService.deleteById(id);
     res.sendStatus(204);
-  }
+  };
 }
 
 export default UserController;
