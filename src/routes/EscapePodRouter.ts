@@ -29,11 +29,15 @@ class EscapePodRouter implements IRouter {
 
     this.router.get(
       `${this.path}`,
+      JWTCheck.use(),
+      Authentication.use(),
       this.escapePodController.getAll,
     );
 
     this.router.get(
       `${this.path}/:id(\\d+)`,
+      JWTCheck.use(),
+      Authentication.use(),
       ParamsValidator(BaseParamsValidator),
       this.escapePodController.getById,
     );
