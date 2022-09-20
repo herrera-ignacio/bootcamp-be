@@ -44,6 +44,7 @@ class UserRouter implements IRouter {
       `${this.path}/:id(\\d+)`,
       JWTCheck.use(),
       Authentication.use(),
+      RoleBasedAuthorization.use(), // TODO: Also allow self
       UserRouter.paramsValidator(BaseParamsValidator),
       this.userController.getById,
     );
@@ -61,7 +62,7 @@ class UserRouter implements IRouter {
       `${this.path}/:id(\\d+)`,
       JWTCheck.use(),
       Authentication.use(),
-      RoleBasedAuthorization.use(),
+      RoleBasedAuthorization.use(), // TODO: Also allow self
       UserRouter.paramsValidator(UserUpdateParamsValidator),
       UserRouter.bodyValidator(
         UserUpdateBodyValidator, true,
