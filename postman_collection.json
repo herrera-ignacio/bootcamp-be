@@ -1,0 +1,605 @@
+{
+	"info": {
+		"_postman_id": "79d28b41-a8af-4ea8-b1b6-901408a87127",
+		"name": "Escape Pods",
+		"description": "Escape Pods API\n\nAll endpoints, except for successful sign-in callback, require authentication.\n\n`Authorization` header should be included using _Bearer Token_ provided by Auth0.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20594563"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "onSuccess",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "X-OIDC",
+								"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRVdTNlMnhiRDg3MmhEeHZaY3hwUSJ9.eyJnaXZlbl9uYW1lIjoiTmFjaG8iLCJmYW1pbHlfbmFtZSI6IkhlcnJlcmEiLCJuaWNrbmFtZSI6ImlnbmFjaW8uaGVycmVyYSIsIm5hbWUiOiJOYWNobyBIZXJyZXJhIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BQ05QRXUtd3ktTVZuU0IzQ1d6Tks5YllmMGcxLVo3YjFuUkZIZHI5V0RsazZ3PXM5Ni1jIiwibG9jYWxlIjoiZW4iLCJ1cGRhdGVkX2F0IjoiMjAyMi0wOS0yMFQxMzo1MzowMS4xMjhaIiwiZW1haWwiOiJpZ25hY2lvLmhlcnJlcmFAYWdpbGVlbmdpbmUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImlzcyI6Imh0dHBzOi8vZGV2LXFqLWlkczdoLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNDg4ODgyMTY5NTg0MzExMzI3MSIsImF1ZCI6InNVMTVBTndMU3FER052QlNCR1owMlpTWk5QdE1ZZ1VzIiwiaWF0IjoxNjYzNjgxOTgyLCJleHAiOjE2NjM3MTc5ODIsInNpZCI6IjF3QTNPTndoN182U1pNTVlnUVZaS3hqd3I2U2R3UFJCIiwibm9uY2UiOiJNRlorVDJaaFFVSnBPRVo0UjB0VWZuTlJabXhHYnk0eFlrRndlVlJsVms0elFUUlZaamN5Ymk1T1RRPT0ifQ.nUKCjpVbiN6P8bH7ziU-HSv5uRDidkAR9C8jhaQUkNIePJTlSoHIkW5xMG2bNeMMp3bFdrEej1dNi_ovFY5jIf8dXFJq8y2sfcLs4IwiSQaRCHAvNv32sUHEDNDOBcppXK8Pnu-tn8ZFEVezGvUJoqZ0KHuLe0Esxlg13PYrfKe27Aur2iedoYA3zAUvK2ViJ7Pz7JQ9nTlN9wTF4huVJsWlBZXBoTHVGzuyfjj5YktXcncPWB25XrQoNxVxK8m27lL2moAqJ6KlmVUHTXbG3nNzPaSUJSNZuKbpmmAtrb45k19pvpR8r2RxbkdcHaXVt3Mp9hOLetpi77iaqqnN8Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/auth/onSuccess",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"auth",
+								"onSuccess"
+							]
+						},
+						"description": "Callback endpoint after successful sign in. It will return `User` information or create a new one if needed."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/users",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "List all `Users`. Only available for `ADMIN` role."
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/users/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": "Get `User` by id. Only available for `ADMIN` role.\n\nTODO: Allow self."
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRVdTNlMnhiRDg3MmhEeHZaY3hwUSJ9.eyJpc3MiOiJodHRwczovL2Rldi1xai1pZHM3aC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQ4ODg4MjE2OTU4NDMxMTMyNzEiLCJhdWQiOlsiZXNjYXBlLXBvZHMtYXBpIiwiaHR0cHM6Ly9kZXYtcWotaWRzN2gudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY2MzY3Njc4MSwiZXhwIjoxNjYzNzYzMTgxLCJhenAiOiJzVTE1QU53TFNxREdOdkJTQkdaMDJaU1pOUHRNWWdVcyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.KmxQYW9EvhHYk3wq1MKCbJGHjxOs2FxUjzZ90Qrd07u8ym6PRCnigls-MVogJWe5-M-zkc9LrmunSJMh0pam9Lubjt4LIRdnfCbmVbljxCRurNrKUK0jf5uYZgLCkfO0QrsJfjIknAAJIbVHUAcqmNEbkz6_Iz82sFoXlVpHuVln2MeHfL5x-6g8mNfsMylwh9fTSip2jJVcOAjyzpw8HUBLNZJ51U6pKlDttcS5I8C-70WUgLIoGxh3rv6RHfCQ01hTq98rRUZae_a9bHf10b6az3ffN0b-j8-IFbrHrpPjxchR1A8c96jsfI0vI2A-aRqy9HzimTq7KRzrxmxr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ignacio.herrera@agileengine.com\",\r\n    \"firstName\": \"Ignacio\",\r\n    \"lastName\": \"Herrera\",\r\n    \"role\": \"CONTRACTOR\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/users",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Create new `User`. Only available for `ADMIN`."
+					},
+					"response": []
+				},
+				{
+					"name": "Update by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Nacho\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/users/63",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"users",
+								"63"
+							]
+						},
+						"description": "Update `User` by id. Only available for `ADMIN`.\n\nTODO: Allow for self updates."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/users/63",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"users",
+								"63"
+							]
+						},
+						"description": "Delete `User` by id. Only available for `ADMIN`.\n\nIt will delate relations _on cascade_."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pod",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/escapePods",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"escapePods"
+							]
+						},
+						"description": "List all `EscapePods`."
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/escapePods/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"escapePods",
+								"1"
+							]
+						},
+						"description": "Get `EscapePod` by id."
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRVdTNlMnhiRDg3MmhEeHZaY3hwUSJ9.eyJpc3MiOiJodHRwczovL2Rldi1xai1pZHM3aC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQ4ODg4MjE2OTU4NDMxMTMyNzEiLCJhdWQiOlsiZXNjYXBlLXBvZHMtYXBpIiwiaHR0cHM6Ly9kZXYtcWotaWRzN2gudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY2MzY3Njc4MSwiZXhwIjoxNjYzNzYzMTgxLCJhenAiOiJzVTE1QU53TFNxREdOdkJTQkdaMDJaU1pOUHRNWWdVcyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.KmxQYW9EvhHYk3wq1MKCbJGHjxOs2FxUjzZ90Qrd07u8ym6PRCnigls-MVogJWe5-M-zkc9LrmunSJMh0pam9Lubjt4LIRdnfCbmVbljxCRurNrKUK0jf5uYZgLCkfO0QrsJfjIknAAJIbVHUAcqmNEbkz6_Iz82sFoXlVpHuVln2MeHfL5x-6g8mNfsMylwh9fTSip2jJVcOAjyzpw8HUBLNZJ51U6pKlDttcS5I8C-70WUgLIoGxh3rv6RHfCQ01hTq98rRUZae_a9bHf10b6az3ffN0b-j8-IFbrHrpPjxchR1A8c96jsfI0vI2A-aRqy9HzimTq7KRzrxmxr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/escapePods",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"escapePods"
+							]
+						},
+						"description": "Create new `EscapePod`. Only available for `ADMIN`.\n\n`EscapePods` are just abstract entities for grouping `Rooms`. Therefore, they don't require any field for now."
+					},
+					"response": []
+				},
+				{
+					"name": "Update by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Nacho\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/escapePods/63",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"escapePods",
+								"63"
+							]
+						},
+						"description": "Update `EscapePod` by id. Only available for `ADMIN`.\n\n`EscapePods` are just abstract entities for now and therefore don't have fields to update yet."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/escapePods/63",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"escapePods",
+								"63"
+							]
+						},
+						"description": "Delete `EscapePod` by id. Only available for `ADMIN`.\n\nIt will delete relations _on cascade_."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/rooms",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"rooms"
+							]
+						},
+						"description": "List all `Rooms`."
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/rooms/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"rooms",
+								"1"
+							]
+						},
+						"description": "Get `Room` by id."
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRVdTNlMnhiRDg3MmhEeHZaY3hwUSJ9.eyJpc3MiOiJodHRwczovL2Rldi1xai1pZHM3aC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQ4ODg4MjE2OTU4NDMxMTMyNzEiLCJhdWQiOlsiZXNjYXBlLXBvZHMtYXBpIiwiaHR0cHM6Ly9kZXYtcWotaWRzN2gudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY2MzY3Njc4MSwiZXhwIjoxNjYzNzYzMTgxLCJhenAiOiJzVTE1QU53TFNxREdOdkJTQkdaMDJaU1pOUHRNWWdVcyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.KmxQYW9EvhHYk3wq1MKCbJGHjxOs2FxUjzZ90Qrd07u8ym6PRCnigls-MVogJWe5-M-zkc9LrmunSJMh0pam9Lubjt4LIRdnfCbmVbljxCRurNrKUK0jf5uYZgLCkfO0QrsJfjIknAAJIbVHUAcqmNEbkz6_Iz82sFoXlVpHuVln2MeHfL5x-6g8mNfsMylwh9fTSip2jJVcOAjyzpw8HUBLNZJ51U6pKlDttcS5I8C-70WUgLIoGxh3rv6RHfCQ01hTq98rRUZae_a9bHf10b6az3ffN0b-j8-IFbrHrpPjxchR1A8c96jsfI0vI2A-aRqy9HzimTq7KRzrxmxr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"My Room\",\r\n    \"isDisabled\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/rooms",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"rooms"
+							]
+						},
+						"description": "Create new `Room`. Only available for `ADMIN`."
+					},
+					"response": []
+				},
+				{
+					"name": "Update by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isDisabled\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/rooms/63",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"rooms",
+								"63"
+							]
+						},
+						"description": "Update `Room` by id. Only available for `ADMIN`."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/rooms/63",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"rooms",
+								"63"
+							]
+						},
+						"description": "Delete `Room` by id. Only available for `ADMIN`.\n\nIt will delete relations _on cascade_."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Slot",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRVdTNlMnhiRDg3MmhEeHZaY3hwUSJ9.eyJpc3MiOiJodHRwczovL2Rldi1xai1pZHM3aC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQ4ODg4MjE2OTU4NDMxMTMyNzEiLCJhdWQiOlsiZXNjYXBlLXBvZHMtYXBpIiwiaHR0cHM6Ly9kZXYtcWotaWRzN2gudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY2MzY3Njc4MSwiZXhwIjoxNjYzNzYzMTgxLCJhenAiOiJzVTE1QU53TFNxREdOdkJTQkdaMDJaU1pOUHRNWWdVcyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.KmxQYW9EvhHYk3wq1MKCbJGHjxOs2FxUjzZ90Qrd07u8ym6PRCnigls-MVogJWe5-M-zkc9LrmunSJMh0pam9Lubjt4LIRdnfCbmVbljxCRurNrKUK0jf5uYZgLCkfO0QrsJfjIknAAJIbVHUAcqmNEbkz6_Iz82sFoXlVpHuVln2MeHfL5x-6g8mNfsMylwh9fTSip2jJVcOAjyzpw8HUBLNZJ51U6pKlDttcS5I8C-70WUgLIoGxh3rv6RHfCQ01hTq98rRUZae_a9bHf10b6az3ffN0b-j8-IFbrHrpPjxchR1A8c96jsfI0vI2A-aRqy9HzimTq7KRzrxmxr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roomId\": 1,\r\n    \"isDisabled\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/slots",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"slots"
+							]
+						},
+						"description": "Create new `Slot`. Only available for `ADMIN`."
+					},
+					"response": []
+				},
+				{
+					"name": "Update by id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isDisabled\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/slots/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"slots",
+								"1"
+							]
+						},
+						"description": "Update `Slot` by id. Only available for `ADMIN`."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/slots/1",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"slots",
+								"1"
+							]
+						},
+						"description": "Delete `Slot` by id. Only available for `ADMIN`.\n\nIt will delete relations _on cascade_."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRVdTNlMnhiRDg3MmhEeHZaY3hwUSJ9.eyJpc3MiOiJodHRwczovL2Rldi1xai1pZHM3aC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQ4ODg4MjE2OTU4NDMxMTMyNzEiLCJhdWQiOlsiZXNjYXBlLXBvZHMtYXBpIiwiaHR0cHM6Ly9kZXYtcWotaWRzN2gudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY2MzY3Njc4MSwiZXhwIjoxNjYzNzYzMTgxLCJhenAiOiJzVTE1QU53TFNxREdOdkJTQkdaMDJaU1pOUHRNWWdVcyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.KmxQYW9EvhHYk3wq1MKCbJGHjxOs2FxUjzZ90Qrd07u8ym6PRCnigls-MVogJWe5-M-zkc9LrmunSJMh0pam9Lubjt4LIRdnfCbmVbljxCRurNrKUK0jf5uYZgLCkfO0QrsJfjIknAAJIbVHUAcqmNEbkz6_Iz82sFoXlVpHuVln2MeHfL5x-6g8mNfsMylwh9fTSip2jJVcOAjyzpw8HUBLNZJ51U6pKlDttcS5I8C-70WUgLIoGxh3rv6RHfCQ01hTq98rRUZae_a9bHf10b6az3ffN0b-j8-IFbrHrpPjxchR1A8c96jsfI0vI2A-aRqy9HzimTq7KRzrxmxr0g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"slotId\": 1,\r\n    \"userId\": 1,\r\n    \"startDate\": \"2022-09-21\",\r\n    \"endDate\": \"2022-09-22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/bookings",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"bookings"
+							]
+						},
+						"description": "Create new `Booking`. Only available for `ADMIN`and `CONTRACTOR`.\n\nUse ISO 8601 syntax (YYYY-MM-DD) for `startDate` and `endDate`.\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/bookings/63",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"bookings",
+								"63"
+							]
+						},
+						"description": "Delete `EscapePod` by id. Only available for `ADMIN`.\n\nIt will delete relations _on cascade_."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRVdTNlMnhiRDg3MmhEeHZaY3hwUSJ9.eyJpc3MiOiJodHRwczovL2Rldi1xai1pZHM3aC51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMDQ4ODg4MjE2OTU4NDMxMTMyNzEiLCJhdWQiOlsiZXNjYXBlLXBvZHMtYXBpIiwiaHR0cHM6Ly9kZXYtcWotaWRzN2gudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY2MzY4MTk4MiwiZXhwIjoxNjYzNzY4MzgyLCJhenAiOiJzVTE1QU53TFNxREdOdkJTQkdaMDJaU1pOUHRNWWdVcyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwifQ.EAGgP425CpwvQCRTPtuQFdowlNc_0DbB5Of7cnUNAMBaanOAAzP7h9KsWDi-w5mbI1mOTc6i7WVb0gQcc7oif3jESsmgTUlUTb4D62dw-8HuFpeZhr9F0Yw9JKFOfsAd1nWUBpYH_WyeXd53cIIwbg9CSegSWbE_Gn_k58quJeOn-Vh3t7x1XvwhuVgxpx7eaoOFqtIYjEBnqfSxA7p5ypieDBjitK0kMCtda-Ub5-RPaIYZSGetWmbIQZEvMbTHKom-DWkgBzQ7KSTjsBqLBXeeO12biVwNe-XNKWF1cBmNwo5N3eU0xIWhXlKB6rOtLuOWM7-bJ3eXP12O07YO_g",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
